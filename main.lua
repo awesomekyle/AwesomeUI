@@ -14,34 +14,84 @@ frame:SetScript("OnEvent",function(self,event,id)
         -- Reposition tooltip --
         --
         hooksecurefunc("GameTooltip_SetDefaultAnchor", function(tooltip, parent)
-            tooltip:SetOwner(parent, "ANCHOR_NONE");
-            tooltip:SetPoint("BOTTOMLEFT", "UIParent", "CENTER", 300,-100);
-            tooltip.default = 1;
+            tooltip:SetOwner(parent, "ANCHOR_NONE")
+            tooltip:SetPoint("BOTTOMLEFT", "UIParent", "CENTER", 300,-100)
+            tooltip.default = 1
         end);
 
         --
         -- Move debuffs
         --
         hooksecurefunc("CreateFrame", function(frameType, name, frame, ...)
+            local _, playerClass = UnitClass("player")
             if (name ~= "DebuffButton1") then return end
 
             DebuffButton1:ClearAllPoints()
             if( playerClass == "PALADIN") then
-                DebuffButton1:SetPoint("TOPRIGHT", PaladinPowerBar, "BOTTOMRIGHT", 0, 0);
+                DebuffButton1:SetPoint("TOPRIGHT", PaladinPowerBar, "BOTTOMRIGHT", 0, 0)
             elseif ( playerClass == "DEATHKNIGHT" ) then
-                DebuffButton1:SetPoint("TOPRIGHT", RuneFrame, "BOTTOMRIGHT", 0, -10);
+                DebuffButton1:SetPoint("TOPRIGHT", RuneFrame, "BOTTOMRIGHT", 0, -10)
             elseif ( playerClass == "WARLOCK" ) then
-                DebuffButton1:SetPoint("TOPRIGHT", PlayerFrame, "BOTTOMRIGHT", 0, 10);
+                DebuffButton1:SetPoint("TOPRIGHT", PlayerFrame, "BOTTOMRIGHT", 0, 10)
             elseif ( playerClass == "SHAMAN" ) then
-                DebuffButton1:SetPoint("TOPRIGHT", TotemFrame, "BOTTOMRIGHT", 0, 0);
+                DebuffButton1:SetPoint("TOPRIGHT", TotemFrame, "BOTTOMRIGHT", 0, 0)
             elseif ( playerClass == "MONK") then
-                DebuffButton1:SetPoint("TOPRIGHT", PlayerFrame, "BOTTOMRIGHT", 0, -6);
+                DebuffButton1:SetPoint("TOPRIGHT", PlayerFrame, "BOTTOMRIGHT", 0, -6)
+            elseif ( playerClass == "HUNTER" or playerClass == "WARLOCK") then
+                DebuffButton1:SetPoint("TOPRIGHT", PetFrame, "BOTTOMRIGHT", 9, -7)
             else
-                DebuffButton1:SetPoint("TOPRIGHT", PlayerFrame, "BOTTOMRIGHT", 0, 25);
+                DebuffButton1:SetPoint("TOPRIGHT", PlayerFrame, "BOTTOMRIGHT", 0, 25)
             end
+            print(playerClass);
             DebuffButton1.SetPoint = function() end
             DebuffButton1.SetParent = function() end
         end);
+
+        --
+        -- Setup cast bars --
+        --
+        CastingBarFrame:ClearAllPoints()
+        CastingBarFrame:SetPoint("CENTER", UIParent, "CENTER", 0, -200)
+        CastingBarFrame:SetHeight(12)
+        CastingBarFrame.SetPoint = function() end
+
+        CastingBarFrameBorder:ClearAllPoints()
+        CastingBarFrameBorder:SetPoint("TOP", 0, 26)
+
+        CastingBarFrameBorder:SetTexture("Interface\\CastingBar\\UI-CastingBar-Border-Small.blp")
+        CastingBarFrameFlash:SetTexture(nil)
+        CastingBarFrameSpark:SetTexture(nil)
+
+        CastingBarFrameText:ClearAllPoints()
+        CastingBarFrameText:SetPoint("CENTER",0,1)
+
+        TargetFrameSpellBar:ClearAllPoints()
+        TargetFrameSpellBar:SetPoint("CENTER", UIParent, "CENTER", 0, 160)
+        TargetFrameSpellBar.SetPoint = function() end
+        TargetFrameSpellBar:SetScale( 1.5 )
+
+        --
+        -- Casting bar timer
+        --
+        CastingBarFrame.timer = CastingBarFrame:CreateFontString(nil)
+        CastingBarFrame.timer:SetFont(STANDARD_TEXT_FONT,12,"OUTLINE")
+        CastingBarFrame.timer:SetPoint("RIGHT", CastingBarFrame, "RIGHT", 2, -16)
+        CastingBarFrame.update = .1
+        hooksecurefunc("CastingBarFrame_OnUpdate", function(self, elapsed)
+            if not self.timer then return end
+            if self.update and self.update < elapsed then
+                if self.casting then
+                    self.timer:SetText(format("%2.1f/%1.1f", max(self.maxValue - self.value, 0), self.maxValue))
+                elseif self.channeling then
+                    self.timer:SetText(format("%.1f", max(self.value, 0)))
+                else
+                    self.timer:SetText("")
+                end
+                self.update = .1
+            else
+                self.update = self.update - elapsed
+            end
+        end)
     end
 end)
 
