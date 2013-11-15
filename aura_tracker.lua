@@ -5,7 +5,17 @@ local d = 0
 local _, player_class = UnitClass("player")
 local player_guid = UnitGUID("player")
 local auras_to_track = {
-    ["HUNTER"] = { "Steady Focus" }
+    ["MAGE"] = {  },
+    ["PRIEST"] = {  },
+    ["WARLOCK"] = {  },
+    ["DRUID"] = {  },
+    ["MONK"] = {  },
+    ["ROGUE"] = {  },
+    ["HUNTER"] = { "Steady Focus" },
+    ["SHAMAN"] = {  },
+    ["DEATH KNIGHT"] = {  },
+    ["PALADIN"] = {  },
+    ["WARRIOR"] = {  },
 }
 local aura_size = 32
 local num_auras_across = 4
@@ -35,7 +45,6 @@ frame:SetScript("OnEvent",function(self,event,...)
         --
         -- Create each aura button
         --
-        print(player_class)
         self.auras = {}
         local xoffset = 0
         local yoffset = 0
@@ -53,7 +62,7 @@ frame:SetScript("OnEvent",function(self,event,...)
             aura:SetSize(aura_size,aura_size)
             aura:Hide()
 
-            table.insert(self.auras,aura)
+            self.auras[i] = aura
             xoffset = xoffset - (aura_size + 2)
         end
 
