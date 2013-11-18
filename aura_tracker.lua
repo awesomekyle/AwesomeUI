@@ -14,7 +14,7 @@ local auras_to_track = {
     ["HUNTER"] = { "Steady Focus" },
     ["SHAMAN"] = {  },
     ["DEATH KNIGHT"] = {  },
-    ["PALADIN"] = {  },
+    ["PALADIN"] = { "Inquisition" },
     ["WARRIOR"] = {  },
 }
 local aura_size = 32
