@@ -15,7 +15,7 @@ local auras_to_track = {
     ["SHAMAN"] = {  },
     ["DEATH KNIGHT"] = {  },
     ["PALADIN"] = { "Inquisition", "Sacred Shield" },
-    ["WARRIOR"] = {  },
+    ["WARRIOR"] = { "Victorious" },
 }
 local aura_size = 32
 local num_auras_across = 4
