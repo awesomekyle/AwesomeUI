@@ -14,11 +14,23 @@ local auras_to_track = {
     ["HUNTER"] = { "Steady Focus" },
     ["SHAMAN"] = {  },
     ["DEATH KNIGHT"] = {  },
-    ["PALADIN"] = { "Inquisition", "Sacred Shield" },
+    ["PALADIN"] = {
+        { "Inquisition", },
+        { "Sacred Shield", },
+        { "Blessing of Kings", }
+    },
     ["WARRIOR"] = { "Victorious" },
 }
 local aura_size = 32
 local num_auras_across = 4
+
+
+local function format_time(time)
+    if(time > 3599) then return ceil(time/3600).."h" end
+    if(time > 599) then return ceil(time/60).."m" end
+    if(time > 30) then return ceil(time) end
+    return format("%.1f", time)
+end
 
 -- Set up frame to run on login
 local frame = CreateFrame("Frame", "Aura Tracker", UIParent)
@@ -31,11 +43,16 @@ frame:SetScript("OnEvent",function(self,event,...)
         local timestamp, type, hideCaster, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags = ...
         if( destGUID == player_guid or sourceGUID == player_guid or true ) then
             for i=1, #self.auras do
-                local exists = UnitAura("player",self.auras[i].name)
-                if(exists ~= nil) then
-                    self.auras[i]:Show()
-                else
-                    self.auras[i]:Hide()
+                for j=1, #auras_to_track[player_class][i] do
+                    local exists,_,icon,_,_,_,expires = UnitAura("player",auras_to_track[player_class][i][j])
+                    if(exists ~= nil) then
+                        self.auras[i].texture:SetTexture(icon)
+                        self.auras[i]:Show()
+                        self.auras[i].expires = expires
+                    else
+                        self.auras[i]:Hide()
+                        self.auras[i].expires = 0
+                    end
                 end
             end
         end
@@ -49,13 +66,23 @@ frame:SetScript("OnEvent",function(self,event,...)
         local xoffset = 0
         local yoffset = 0
         for i=1, #auras_to_track[player_class] do
-            local aura_name = auras_to_track[player_class][i]
+            local aura_name = auras_to_track[player_class][i][1]
             local aura = CreateFrame("Frame", aura_name, self)
             local _,_,icon = GetSpellInfo(aura_name)
+
             local texture = aura:CreateTexture(nil,"OVERLAY")
             texture:SetTexture(icon)
             texture:SetAllPoints(aura)
             aura.texture = texture
+
+            local timer_text = aura:CreateFontString(nil)
+            timer_text:SetFont("Fonts\\FRIZQT__.TTF", 14)
+            timer_text:SetText("Test")
+            timer_text:Show()
+            timer_text:SetPoint("TOP",aura,"BOTTOM")
+            aura.text = timer_text
+
+            aura.expires = 0
             aura.name = aura_name
 
             aura:SetPoint("BOTTOMRIGHT",self,"BOTTOMRIGHT", xoffset, yoffset)
@@ -74,6 +101,17 @@ frame:SetScript("OnEvent",function(self,event,...)
         self:UnregisterEvent("ADDON_LOADED");
     end
 end)
+
+frame:SetScript("OnUpdate",function(self,event,...)
+    for i=1, #self.auras do
+        if(self.auras[i].expires ~= 0) then
+            local remaining = self.auras[i].expires - GetTime()
+            -- self.auras[i].text:SetFormattedText("%.2f", remaining)
+            self.auras[i].text:SetFormattedText(format_time(remaining))
+        end
+    end
+end)
+
 
 --
 -- Slash commands
