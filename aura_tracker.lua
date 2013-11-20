@@ -19,7 +19,11 @@ local auras_to_track = {
         { "Sacred Shield", },
         { "Blessing of Kings", }
     },
-    ["WARRIOR"] = { "Victorious" },
+    ["WARRIOR"] = {
+        { "Battle Shout", "Trueshot Aura", },
+        { "Commanding Shout", "Power Word: Fortitude", },
+        { "Victorious" },
+    }
 }
 local aura_size = 32
 local num_auras_across = 4
@@ -28,7 +32,7 @@ local num_auras_across = 4
 local function format_time(time)
     if(time > 3599) then return ceil(time/3600).."h" end
     if(time > 599) then return ceil(time/60).."m" end
-    if(time > 30) then return ceil(time) end
+    if(time > 30) then return floor(time/60)..":"..format("%02d", ceil(time%60)) end
     return format("%.1f", time)
 end
 
@@ -49,6 +53,7 @@ frame:SetScript("OnEvent",function(self,event,...)
                         self.auras[i].texture:SetTexture(icon)
                         self.auras[i]:Show()
                         self.auras[i].expires = expires
+                        break
                     else
                         self.auras[i]:Hide()
                         self.auras[i].expires = 0
@@ -76,7 +81,7 @@ frame:SetScript("OnEvent",function(self,event,...)
             aura.texture = texture
 
             local timer_text = aura:CreateFontString(nil)
-            timer_text:SetFont("Fonts\\FRIZQT__.TTF", 14)
+            timer_text:SetFont("Fonts\\FRIZQT__.TTF", 14, "OUTLINE")
             timer_text:SetText("Test")
             timer_text:Show()
             timer_text:SetPoint("TOP",aura,"BOTTOM")
