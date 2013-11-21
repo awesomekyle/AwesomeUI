@@ -96,6 +96,9 @@ frame:SetScript("OnEvent",function(self,event,...)
 
             self.auras[i] = aura
             xoffset = xoffset - (aura_size + 2)
+            if((i-1)%num_auras_across == 0) then
+                yoffset = yoffset + aura_size + 16
+            end
         end
 
         self:SetPoint("BOTTOMRIGHT",PlayerFrame,"TOPRIGHT",0,0)
