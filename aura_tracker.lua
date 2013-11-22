@@ -20,9 +20,10 @@ local auras_to_track = {
         { "Blessing of Kings", }
     },
     ["WARRIOR"] = {
+        { "Shield Barrier", "Sweeping Strikes" },
+        { "Shield Block" },
         { "Battle Shout", "Trueshot Aura", },
         { "Commanding Shout", "Power Word: Fortitude", },
-        { "Victorious" },
     }
 }
 local aura_size = 32
@@ -69,7 +70,7 @@ frame:SetScript("OnEvent",function(self,event,...)
         --
         self.auras = {}
         local xoffset = 0
-        local yoffset = 0
+        local yoffset = 5
         for i=1, #auras_to_track[player_class] do
             local aura_name = auras_to_track[player_class][i][1]
             local aura = CreateFrame("Frame", aura_name, self)
