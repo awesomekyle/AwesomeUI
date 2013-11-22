@@ -22,8 +22,9 @@ local auras_to_track = {
     ["WARRIOR"] = {
         { "Shield Barrier", "Sweeping Strikes" },
         { "Shield Block" },
-        { "Battle Shout", "Trueshot Aura", },
-        { "Commanding Shout", "Power Word: Fortitude", },
+        { "Berserker Rage", "Enrage" },
+        { "Battle Shout", "Trueshot Aura", "Horn of Winter" },
+        { "Commanding Shout", "Power Word: Fortitude", "Dark Intent", "Qiraji Fortitude" },
     }
 }
 local aura_size = 32
@@ -33,7 +34,7 @@ local num_auras_across = 4
 local function format_time(time)
     if(time > 3599) then return ceil(time/3600).."h" end
     if(time > 599) then return ceil(time/60).."m" end
-    if(time > 30) then return floor(time/60)..":"..format("%02d", ceil(time%60)) end
+    if(time > 30) then return floor(time/60)..":"..format("%02d", floor(time%60)) end
     return format("%.1f", time)
 end
 
@@ -97,6 +98,9 @@ frame:SetScript("OnEvent",function(self,event,...)
 
             self.auras[i] = aura
             xoffset = xoffset - (aura_size + 2)
+            if((i-1)%num_auras_across == 0) then
+                yoffset = yoffset + aura_size + 16
+            end
         end
 
         self:SetPoint("BOTTOMRIGHT",PlayerFrame,"TOPRIGHT",0,0)
@@ -112,7 +116,6 @@ frame:SetScript("OnUpdate",function(self,event,...)
     for i=1, #self.auras do
         if(self.auras[i].expires ~= 0) then
             local remaining = self.auras[i].expires - GetTime()
-            -- self.auras[i].text:SetFormattedText("%.2f", remaining)
             self.auras[i].text:SetFormattedText(format_time(remaining))
         end
     end
