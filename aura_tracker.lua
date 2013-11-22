@@ -20,9 +20,9 @@ local auras_to_track = {
         { "Blessing of Kings", }
     },
     ["WARRIOR"] = {
-        { "Battle Shout", "Trueshot Aura", },
-        { "Commanding Shout", "Power Word: Fortitude", },
-        { "Victorious" },
+        { "Berserker Rage", "Enrage" },
+        { "Battle Shout", "Trueshot Aura", "Horn of Winter" },
+        { "Commanding Shout", "Power Word: Fortitude", "Dark Intent", "Qiraji Fortitude" },
     }
 }
 local aura_size = 32
