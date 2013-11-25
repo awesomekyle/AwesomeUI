@@ -9,9 +9,11 @@ local auras_to_track = {
     ["PRIEST"] = {  },
     ["WARLOCK"] = {  },
     ["DRUID"] = {  },
-    ["MONK"] = {  },
+    ["MONK"] = { { "Tiger Power" } },
     ["ROGUE"] = {  },
-    ["HUNTER"] = { "Steady Focus" },
+    ["HUNTER"] = {
+        { "Steady Focus" },
+    },
     ["SHAMAN"] = {  },
     ["DEATH KNIGHT"] = {  },
     ["PALADIN"] = {
