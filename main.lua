@@ -42,7 +42,6 @@ frame:SetScript("OnEvent",function(self,event,id)
             else
                 DebuffButton1:SetPoint("TOPRIGHT", PlayerFrame, "BOTTOMRIGHT", 0, 25)
             end
-            print(playerClass);
             DebuffButton1.SetPoint = function() end
             DebuffButton1.SetParent = function() end
         end);
