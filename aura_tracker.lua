@@ -6,10 +6,14 @@ local _, player_class = UnitClass("player")
 local player_guid = UnitGUID("player")
 local auras_to_track = {
     ["MAGE"] = {  },
-    ["PRIEST"] = {  },
+    ["PRIEST"] = { 
+        { "Evangelism" } 
+    },
     ["WARLOCK"] = {  },
     ["DRUID"] = {  },
-    ["MONK"] = { { "Tiger Power" } },
+    ["MONK"] = { 
+        { "Tiger Power" } 
+    },
     ["ROGUE"] = {  },
     ["HUNTER"] = {
         { "Steady Focus" },

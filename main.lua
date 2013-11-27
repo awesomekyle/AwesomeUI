@@ -11,6 +11,12 @@ frame:SetScript("OnEvent",function(self,event,id)
         MainMenuBarRightEndCap:Hide()
 
         --
+        -- Resize target and player frames
+        --
+        PlayerFrame:SetScale(1.1)
+        TargetFrame:SetScale(1.1)
+
+        --
         -- Reposition tooltip --
         --
         hooksecurefunc("GameTooltip_SetDefaultAnchor", function(tooltip, parent)
