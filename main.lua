@@ -54,21 +54,23 @@ frame:SetScript("OnEvent",function(self,event,id)
 
         --
         -- Setup cast bars --
-        --
-        CastingBarFrame:ClearAllPoints()
-        CastingBarFrame:SetPoint("CENTER", UIParent, "CENTER", 0, -200)
-        CastingBarFrame:SetHeight(12)
-        CastingBarFrame.SetPoint = function() end
+        --6
+        -- CastingBarFrame:ClearAllPoints()
+        -- CastingBarFrame:SetPoint("CENTER", UIParent, "CENTER", 0, -200)
+        -- CastingBarFrame:SetHeight(12)
+        -- CastingBarFrame.SetPoint = function() end
 
-        CastingBarFrameBorder:ClearAllPoints()
-        CastingBarFrameBorder:SetPoint("TOP", 0, 26)
+        -- CastingBarFrameBorder:ClearAllPoints()
+        -- CastingBarFrameBorder:SetPoint("TOP", 0, 26)
 
-        CastingBarFrameBorder:SetTexture("Interface\\CastingBar\\UI-CastingBar-Border-Small.blp")
-        CastingBarFrameFlash:SetTexture(nil)
-        CastingBarFrameSpark:SetTexture(nil)
+        -- CastingBarFrameBorder:SetTexture("Interface\\CastingBar\\UI-CastingBar-Border-Small.blp")
+        -- CastingBarFrameFlash:SetTexture(nil)
+        -- CastingBarFrameSpark:SetTexture(nil)
 
-        CastingBarFrameText:ClearAllPoints()
-        CastingBarFrameText:SetPoint("CENTER",0,1)
+        -- CastingBarFrameText:ClearAllPoints()
+        -- CastingBarFrameText:SetPoint("CENTER",0,1)
+
+        CastingBarFrame:SetScale(1.1)
 
         TargetFrameSpellBar:ClearAllPoints()
         TargetFrameSpellBar:SetPoint("CENTER", UIParent, "CENTER", 0, 160)
@@ -187,6 +189,8 @@ local function Install()
     ToggleChatColorNamesByClassGroup(true, "WHISPER")
     ToggleChatColorNamesByClassGroup(true, "PARTY")
     ToggleChatColorNamesByClassGroup(true, "PARTY_LEADER")
+    ToggleChatColorNamesByClassGroup(true, "INSTANCE")
+    ToggleChatColorNamesByClassGroup(true, "INSTANCE_LEADER")
     ToggleChatColorNamesByClassGroup(true, "RAID")
     ToggleChatColorNamesByClassGroup(true, "RAID_LEADER")
     ToggleChatColorNamesByClassGroup(true, "RAID_WARNING")
