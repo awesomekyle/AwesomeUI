@@ -15,6 +15,7 @@ frame:SetScript("OnEvent",function(self,event,id)
         --
         PlayerFrame:SetScale(1.1)
         TargetFrame:SetScale(1.1)
+        CastingBarFrame:SetScale(1.1)
 
         --
         -- Reposition tooltip --
@@ -42,7 +43,7 @@ frame:SetScript("OnEvent",function(self,event,id)
             elseif ( playerClass == "SHAMAN" ) then
                 DebuffButton1:SetPoint("TOPRIGHT", TotemFrame, "BOTTOMRIGHT", 0, 0)
             elseif ( playerClass == "MONK") then
-                DebuffButton1:SetPoint("TOPRIGHT", PlayerFrame, "BOTTOMRIGHT", 0, -6)
+                DebuffButton1:SetPoint("TOPRIGHT", CastingBarFrame, "BOTTOMRIGHT", 0, 0)
             elseif ( playerClass == "HUNTER" or playerClass == "WARLOCK") then
                 DebuffButton1:SetPoint("TOPRIGHT", PetFrame, "BOTTOMRIGHT", 9, -7)
             else
@@ -54,7 +55,7 @@ frame:SetScript("OnEvent",function(self,event,id)
 
         --
         -- Setup cast bars --
-        --6
+        --
         -- CastingBarFrame:ClearAllPoints()
         -- CastingBarFrame:SetPoint("CENTER", UIParent, "CENTER", 0, -200)
         -- CastingBarFrame:SetHeight(12)
@@ -70,7 +71,6 @@ frame:SetScript("OnEvent",function(self,event,id)
         -- CastingBarFrameText:ClearAllPoints()
         -- CastingBarFrameText:SetPoint("CENTER",0,1)
 
-        CastingBarFrame:SetScale(1.1)
 
         TargetFrameSpellBar:ClearAllPoints()
         TargetFrameSpellBar:SetPoint("CENTER", UIParent, "CENTER", 0, 160)

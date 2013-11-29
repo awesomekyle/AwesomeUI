@@ -12,7 +12,10 @@ local auras_to_track = {
     ["WARLOCK"] = {  },
     ["DRUID"] = {  },
     ["MONK"] = { 
-        { "Tiger Power" } 
+        { "Tiger Power" },
+        { "Vital Mists" },
+        { "Serpent's Zeal" },
+        { "Legacy of the Emperor" }
     },
     ["ROGUE"] = {  },
     ["HUNTER"] = {
@@ -53,14 +56,20 @@ frame:RegisterEvent("UNIT_PET")
 frame:SetScript("OnEvent",function(self,event,...)
     if( event == "COMBAT_LOG_EVENT_UNFILTERED" or event == "UNIT_PET") then
         local timestamp, type, hideCaster, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags = ...
-        if( destGUID == player_guid or sourceGUID == player_guid or true ) then
+        if( destGUID == player_guid or sourceGUID == player_guid ) then
             for i=1, #self.auras do
                 for j=1, #auras_to_track[player_class][i] do
-                    local exists,_,icon,_,_,_,expires = UnitAura("player",auras_to_track[player_class][i][j])
+                    local exists,_,icon,count,_,_,expires = UnitAura("player",auras_to_track[player_class][i][j])
                     if(exists ~= nil) then
                         self.auras[i].texture:SetTexture(icon)
                         self.auras[i]:Show()
                         self.auras[i].expires = expires
+                        if( count == 0 ) then
+                            self.auras[i].stack_text:Hide()
+                        else
+                            self.auras[i].stack_text:SetText(count)
+                            self.auras[i].stack_text:Show()
+                        end
                         break
                     else
                         self.auras[i]:Hide()
@@ -83,7 +92,7 @@ frame:SetScript("OnEvent",function(self,event,...)
             local aura = CreateFrame("Frame", aura_name, self)
             local _,_,icon = GetSpellInfo(aura_name)
 
-            local texture = aura:CreateTexture(nil,"OVERLAY")
+            local texture = aura:CreateTexture(nil)
             texture:SetTexture(icon)
             texture:SetAllPoints(aura)
             aura.texture = texture
@@ -95,6 +104,14 @@ frame:SetScript("OnEvent",function(self,event,...)
             timer_text:SetPoint("TOP",aura,"BOTTOM")
             aura.text = timer_text
 
+            local stack_text = aura:CreateFontString(nil)
+            stack_text:SetFont("Fonts\\FRIZQT__.TTF", 14, "THICKOUTLINE")
+            stack_text:SetText("1")
+            stack_text:SetParent(aura)
+            stack_text:Show()
+            stack_text:SetPoint("TOPRIGHT",aura,"TOPRIGHT")
+            aura.stack_text = stack_text
+
             aura.expires = 0
             aura.name = aura_name
 
@@ -104,7 +121,7 @@ frame:SetScript("OnEvent",function(self,event,...)
 
             self.auras[i] = aura
             xoffset = xoffset - (aura_size + 2)
-            if((i-1)%num_auras_across == 0) then
+            if( i == num_auras_across) then
                 yoffset = yoffset + aura_size + 16
             end
         end
