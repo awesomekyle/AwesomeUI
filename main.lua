@@ -15,7 +15,6 @@ frame:SetScript("OnEvent",function(self,event,id)
         --
         PlayerFrame:SetScale(1.1)
         TargetFrame:SetScale(1.1)
-        CastingBarFrame:SetScale(1.1)
 
         --
         -- Reposition tooltip --
@@ -42,8 +41,6 @@ frame:SetScript("OnEvent",function(self,event,id)
                 DebuffButton1:SetPoint("TOPRIGHT", PlayerFrame, "BOTTOMRIGHT", 0, 10)
             elseif ( playerClass == "SHAMAN" ) then
                 DebuffButton1:SetPoint("TOPRIGHT", TotemFrame, "BOTTOMRIGHT", 0, 0)
-            elseif ( playerClass == "MONK") then
-                DebuffButton1:SetPoint("TOPRIGHT", CastingBarFrame, "BOTTOMRIGHT", 0, 0)
             elseif ( playerClass == "HUNTER" or playerClass == "WARLOCK") then
                 DebuffButton1:SetPoint("TOPRIGHT", PetFrame, "BOTTOMRIGHT", 9, -7)
             else
@@ -56,20 +53,20 @@ frame:SetScript("OnEvent",function(self,event,id)
         --
         -- Setup cast bars --
         --
-        -- CastingBarFrame:ClearAllPoints()
-        -- CastingBarFrame:SetPoint("CENTER", UIParent, "CENTER", 0, -200)
-        -- CastingBarFrame:SetHeight(12)
-        -- CastingBarFrame.SetPoint = function() end
+        CastingBarFrame:ClearAllPoints()
+        CastingBarFrame:SetPoint("CENTER", UIParent, "CENTER", 0, -200)
+        CastingBarFrame:SetHeight(12)
+        CastingBarFrame.SetPoint = function() end
 
-        -- CastingBarFrameBorder:ClearAllPoints()
-        -- CastingBarFrameBorder:SetPoint("TOP", 0, 26)
+        CastingBarFrameBorder:ClearAllPoints()
+        CastingBarFrameBorder:SetPoint("TOP", 0, 26)
 
-        -- CastingBarFrameBorder:SetTexture("Interface\\CastingBar\\UI-CastingBar-Border-Small.blp")
-        -- CastingBarFrameFlash:SetTexture(nil)
-        -- CastingBarFrameSpark:SetTexture(nil)
+        CastingBarFrameBorder:SetTexture("Interface\\CastingBar\\UI-CastingBar-Border-Small.blp")
+        CastingBarFrameFlash:SetTexture(nil)
+        CastingBarFrameSpark:SetTexture(nil)
 
-        -- CastingBarFrameText:ClearAllPoints()
-        -- CastingBarFrameText:SetPoint("CENTER",0,1)
+        CastingBarFrameText:ClearAllPoints()
+        CastingBarFrameText:SetPoint("CENTER",0,1)
 
 
         TargetFrameSpellBar:ClearAllPoints()

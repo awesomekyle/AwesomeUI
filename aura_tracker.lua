@@ -15,9 +15,13 @@ local auras_to_track = {
         { "Tiger Power" },
         { "Vital Mists" },
         { "Serpent's Zeal" },
+        { "Renewing Mist" },
         { "Legacy of the Emperor" }
     },
-    ["ROGUE"] = {  },
+    ["ROGUE"] = { 
+        { "Slice and Dice" },
+        { "Recuperate" },
+    },
     ["HUNTER"] = {
         { "Steady Focus" },
     },
@@ -105,11 +109,11 @@ frame:SetScript("OnEvent",function(self,event,...)
             aura.text = timer_text
 
             local stack_text = aura:CreateFontString(nil)
-            stack_text:SetFont("Fonts\\FRIZQT__.TTF", 14, "THICKOUTLINE")
+            stack_text:SetFont("Fonts\\FRIZQT__.TTF", 14, "OUTLINE")
             stack_text:SetText("1")
             stack_text:SetParent(aura)
             stack_text:Show()
-            stack_text:SetPoint("TOPRIGHT",aura,"TOPRIGHT")
+            stack_text:SetPoint("TOPRIGHT",aura,"TOPRIGHT",0,-3)
             aura.stack_text = stack_text
 
             aura.expires = 0
@@ -123,6 +127,7 @@ frame:SetScript("OnEvent",function(self,event,...)
             xoffset = xoffset - (aura_size + 2)
             if( i == num_auras_across) then
                 yoffset = yoffset + aura_size + 16
+                xoffset = 0
             end
         end
 
