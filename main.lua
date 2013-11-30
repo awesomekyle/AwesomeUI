@@ -13,8 +13,8 @@ frame:SetScript("OnEvent",function(self,event,id)
         --
         -- Resize target and player frames
         --
-        PlayerFrame:SetScale(1.1)
-        TargetFrame:SetScale(1.1)
+        PlayerFrame:SetScale(1.2)
+        TargetFrame:SetScale(1.2)
 
         --
         -- Reposition tooltip --
@@ -24,6 +24,41 @@ frame:SetScript("OnEvent",function(self,event,id)
             tooltip:SetPoint("BOTTOMLEFT", "UIParent", "CENTER", 300,-100)
             tooltip.default = 1
         end);
+
+        --
+        -- Class icons instead of portraits
+        --
+        hooksecurefunc("UnitFramePortrait_Update",function(self)
+            if self.portrait then
+                    if UnitIsPlayer(self.unit) then                         
+                            local t = CLASS_ICON_TCOORDS[select(2, UnitClass(self.unit))]
+                            if t then
+                                    self.portrait:SetTexture("Interface\\TargetingFrame\\UI-Classes-Circles")
+                                    self.portrait:SetTexCoord(unpack(t))
+                            end
+                    else
+                            self.portrait:SetTexCoord(0,1,0,1)
+                    end
+            end
+        end)
+
+        --
+        -- Class color in HP bars
+        --
+        local function colour(statusbar, unit)
+            local _, class, c
+            if UnitIsPlayer(unit) and UnitIsConnected(unit) and unit == statusbar.unit and UnitClass(unit) then
+                    _, class = UnitClass(unit)
+                    c = CUSTOM_CLASS_COLORS and CUSTOM_CLASS_COLORS[class] or RAID_CLASS_COLORS[class]
+                    statusbar:SetStatusBarColor(c.r, c.g, c.b)
+                    PlayerFrameHealthBar:SetStatusBarColor(0,1,0)
+            end
+        end
+
+        hooksecurefunc("UnitFrameHealthBar_Update", colour)
+        hooksecurefunc("HealthBar_OnValueChanged", function(self)
+                colour(self, self.unit)
+        end)
 
         --
         -- Move debuffs
@@ -51,6 +86,26 @@ frame:SetScript("OnEvent",function(self,event,id)
         end);
 
         --
+        -- Darken stuff
+        --
+        if (addon == "Blizzard_TimeManager") then
+                for i, v in pairs({PlayerFrameTexture, TargetFrameTextureFrameTexture, PetFrameTexture, PartyMemberFrame1Texture, PartyMemberFrame2Texture, PartyMemberFrame3Texture, PartyMemberFrame4Texture,
+                        PartyMemberFrame1PetFrameTexture, PartyMemberFrame2PetFrameTexture, PartyMemberFrame3PetFrameTexture, PartyMemberFrame4PetFrameTexture, FocusFrameTextureFrameTexture,
+                        TargetFrameToTTextureFrameTexture, FocusFrameToTTextureFrameTexture, BonusActionBarFrameTexture0, BonusActionBarFrameTexture1, BonusActionBarFrameTexture2, BonusActionBarFrameTexture3,
+                        BonusActionBarFrameTexture4, MainMenuBarTexture0, MainMenuBarTexture1, MainMenuBarTexture2, MainMenuBarTexture3, MainMenuMaxLevelBar0, MainMenuMaxLevelBar1, MainMenuMaxLevelBar2,
+                        MainMenuMaxLevelBar3, MinimapBorder, CastingBarFrameBorder, FocusFrameSpellBarBorder, TargetFrameSpellBarBorder, MiniMapTrackingButtonBorder, MiniMapLFGFrameBorder, MiniMapBattlefieldBorder,
+                        MiniMapMailBorder, MinimapBorderTop,
+                        select(1, TimeManagerClockButton:GetRegions())
+                }) do
+                        v:SetVertexColor(.4, .4, .4)
+                end
+
+                for i,v in pairs({ select(2, TimeManagerClockButton:GetRegions()) }) do
+                        v:SetVertexColor(1, 1, 1)
+                end
+        end
+
+        --
         -- Setup cast bars --
         --
         CastingBarFrame:ClearAllPoints()
@@ -68,9 +123,8 @@ frame:SetScript("OnEvent",function(self,event,id)
         CastingBarFrameText:ClearAllPoints()
         CastingBarFrameText:SetPoint("CENTER",0,1)
 
-
         TargetFrameSpellBar:ClearAllPoints()
-        TargetFrameSpellBar:SetPoint("CENTER", UIParent, "CENTER", 0, 160)
+        TargetFrameSpellBar:SetPoint("CENTER", UIParent, "CENTER", 0, 140)
         TargetFrameSpellBar.SetPoint = function() end
         TargetFrameSpellBar:SetScale( 1.5 )
 
@@ -96,6 +150,23 @@ frame:SetScript("OnEvent",function(self,event,id)
                 self.update = self.update - elapsed
             end
         end)
+
+        --
+        -- Minimap tweaks
+        --
+        MinimapZoomIn:Hide()
+        MinimapZoomOut:Hide()
+        Minimap:EnableMouseWheel(true)
+        Minimap:SetScript('OnMouseWheel', function(self, delta)
+            if delta > 0 then
+                Minimap_ZoomIn()
+            else
+                Minimap_ZoomOut()
+            end
+        end)
+        MiniMapTracking:ClearAllPoints()
+        MiniMapTracking:SetPoint("TOPRIGHT", -26, 7)
+
     end
 end)
 

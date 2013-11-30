@@ -11,12 +11,11 @@ local auras_to_track = {
     },
     ["WARLOCK"] = {  },
     ["DRUID"] = {  },
-    ["MONK"] = { 
+    ["MONK"] = {
+        { "Mana Tea" },
         { "Tiger Power" },
         { "Vital Mists" },
         { "Serpent's Zeal" },
-        { "Renewing Mist" },
-        { "Legacy of the Emperor" }
     },
     ["ROGUE"] = { 
         { "Slice and Dice" },
