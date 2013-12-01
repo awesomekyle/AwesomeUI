@@ -1,6 +1,99 @@
 -- Set up frame to run on login
 local frame = CreateFrame("Frame");
 frame:RegisterEvent("PLAYER_LOGIN")
+frame:RegisterEvent("PLAYER_ENTERING_WORLD")
+frame:RegisterEvent("PLAYER_TALENT_UPDATE")
+frame:RegisterEvent("ADDON_LOADED")
+frame:RegisterEvent("GROUP_ROSTER_UPDATE")
+frame:RegisterEvent("PLAYER_TARGET_CHANGED")
+frame:RegisterEvent("PLAYER_FOCUS_CHANGED")
+frame:RegisterEvent("UNIT_FACTION")
+frame:RegisterEvent("UPDATE_STEALTH")
+frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+frame:RegisterEvent("UPDATE_SHAPESHIFT_FORMS")
+frame:RegisterEvent("UPDATE_SHAPESHIFT_USABLE")
+frame:RegisterEvent("UPDATE_SHAPESHIFT_COOLDOWN")
+frame:RegisterEvent("UPDATE_SHAPESHIFT_FORM")
+
+
+local show_macros = true
+local show_keybinds = true
+
+
+local function toggle_keybinds()
+    show_keybinds = not show_keybinds
+    if(show_keybinds == true) then
+        for i=1, 12 do
+            _G["ActionButton"..i.."HotKey"]:SetAlpha(1) -- main bar
+            _G["MultiBarBottomRightButton"..i.."HotKey"]:SetAlpha(1) -- bottom right bar
+            _G["MultiBarBottomLeftButton"..i.."HotKey"]:SetAlpha(1) -- bottom left bar
+            _G["MultiBarRightButton"..i.."HotKey"]:SetAlpha(1) -- right bar
+            _G["MultiBarLeftButton"..i.."HotKey"]:SetAlpha(1) -- left bar
+        end
+    else
+        for i=1, 12 do
+            _G["ActionButton"..i.."HotKey"]:SetAlpha(0) -- main bar
+            _G["MultiBarBottomRightButton"..i.."HotKey"]:SetAlpha(0) -- bottom right bar
+            _G["MultiBarBottomLeftButton"..i.."HotKey"]:SetAlpha(0) -- bottom left bar
+            _G["MultiBarRightButton"..i.."HotKey"]:SetAlpha(0) -- right bar
+            _G["MultiBarLeftButton"..i.."HotKey"]:SetAlpha(0) -- left bar
+        end
+    end
+end
+
+local function toggle_macros()
+    show_macros = not show_macros
+    if(show_macros == true) then
+        for i=1, 12 do
+            _G["ActionButton"..i.."Name"]:SetAlpha(1) -- main bar
+            _G["MultiBarBottomRightButton"..i.."Name"]:SetAlpha(1) -- bottom right bar
+            _G["MultiBarBottomLeftButton"..i.."Name"]:SetAlpha(1) -- bottom left bar
+            _G["MultiBarRightButton"..i.."Name"]:SetAlpha(1) -- right bar
+            _G["MultiBarLeftButton"..i.."Name"]:SetAlpha(1) -- left bar
+        end
+    else
+        for i=1, 12 do
+            _G["ActionButton"..i.."Name"]:SetAlpha(0) -- main bar
+            _G["MultiBarBottomRightButton"..i.."Name"]:SetAlpha(0) -- bottom right bar
+            _G["MultiBarBottomLeftButton"..i.."Name"]:SetAlpha(0) -- bottom left bar
+            _G["MultiBarRightButton"..i.."Name"]:SetAlpha(0) -- right bar
+            _G["MultiBarLeftButton"..i.."Name"]:SetAlpha(0) -- left bar
+        end
+    end
+end
+
+function update_actionbars()
+    local kActionBarSpacing = 4
+
+    MultiBarBottomRight:ClearAllPoints()
+    MultiBarBottomRight:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, kActionBarSpacing/2)
+    MultiBarBottomLeft:SetParent(UIParent)
+    MultiBarBottomLeft:ClearAllPoints()
+    MultiBarBottomLeft:SetPoint("BOTTOM", MultiBarBottomRight, "TOP", 0, kActionBarSpacing)
+
+    ActionButton1:ClearAllPoints()
+    ActionButton1:SetPoint("LEFT", UIParent, "CENTER", -123, -190)
+    ActionButton7:ClearAllPoints()
+    ActionButton7:SetPoint("TOP", ActionButton1, "BOTTOM", 0, -kActionBarSpacing)
+
+    for i=1, 12 do
+        _G["ActionButton"..i]:SetAlpha(.8) -- main bar
+    end
+
+    PetActionBarFrame:ClearAllPoints()
+    PetActionBarFrame:SetPoint("BOTTOM", MultiBarBottomLeft, "TOP", 31, kActionBarSpacing)
+    PetActionBarFrame:SetScale(0.9)
+
+    StanceButton1:ClearAllPoints()
+    StanceButton1:SetPoint("BOTTOMRIGHT", MultiBarBottomRight, "BOTTOMLEFT", -kActionBarSpacing, 0)
+    StanceButton1:SetScale(0.8)
+
+    for i=2, 8 do
+        _G["StanceButton"..i]:ClearAllPoints()
+        _G["StanceButton"..i]:SetPoint("BOTTOM", _G["StanceButton"..i-1], "TOP", 0, kActionBarSpacing)
+        _G["StanceButton"..i]:SetScale(0.8)
+    end
+end
 
 frame:SetScript("OnEvent",function(self,event,id)
     if(event == "PLAYER_LOGIN") then
@@ -9,6 +102,53 @@ frame:SetScript("OnEvent",function(self,event,id)
         --
         MainMenuBarLeftEndCap:Hide()
         MainMenuBarRightEndCap:Hide()
+
+        --
+        -- Hide Blizzard stuff
+        --
+        CharacterMicroButton:ClearAllPoints()
+        CharacterMicroButton:SetPoint("RIGHT",25,0)
+        MainMenuBarBackpackButton:SetPoint("BOTTOMRIGHT", HelpMicroButton, "TOPRIGHT", 0, -20)
+
+        MainMenuBarTexture0:Hide()
+        MainMenuBarTexture1:Hide()
+        MainMenuBarTexture2:Hide()
+        MainMenuBarTexture3:Hide()
+
+        ActionBarUpButton:Hide()
+        ActionBarDownButton:Hide()
+        MainMenuBarPageNumber:SetAlpha(0)
+
+        CharacterMicroButton:Hide()
+        SpellbookMicroButton:Hide()
+        TalentMicroButton:Hide()
+        AchievementMicroButton:Hide()
+        QuestLogMicroButton:Hide()
+        GuildMicroButton:Hide()
+        PVPMicroButton:Hide()
+        LFDMicroButton:Hide()
+        CompanionsMicroButton:Hide()
+        EJMicroButton:Hide()
+        MainMenuMicroButton:Hide()
+        HelpMicroButton:SetAlpha(0)
+        HelpMicroButton:Hide()
+        MainMenuBarBackpackButton:Hide()
+        CharacterBag0Slot:Hide()
+        CharacterBag1Slot:Hide()
+        CharacterBag2Slot:Hide()
+        CharacterBag3Slot:Hide()
+
+
+        ReputationWatchBar:Hide()
+        MainMenuExpBar:Hide()
+        MainMenuBarMaxLevelBar:SetAlpha(0) -- hide the xp bar
+
+
+        --
+        -- Turn off keybinds and macro names
+        --
+        toggle_keybinds()
+        toggle_macros()
 
         --
         -- Resize target and player frames
@@ -21,26 +161,45 @@ frame:SetScript("OnEvent",function(self,event,id)
         --
         hooksecurefunc("GameTooltip_SetDefaultAnchor", function(tooltip, parent)
             tooltip:SetOwner(parent, "ANCHOR_NONE")
-            tooltip:SetPoint("BOTTOMLEFT", "UIParent", "CENTER", 300,-100)
+            tooltip:SetPoint("BOTTOMLEFT", "UIParent", "CENTER", 300,-80)
             tooltip.default = 1
-        end);
+            end);
+
+        --
+        -- Create information frame in lower left corner
+        --
+        local info_frame = CreateFrame("Frame")
+        info_frame:SetParent(UIParent)
+        info_frame:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT")
+        info_frame:SetSize(200,200)
+        info_frame:Show()
+
+        local text = info_frame:CreateFontString(nil)
+        text:SetFont("Fonts\\FRIZQT__.TTF", 16, "OUTLINE")
+        text:SetText("FPS")
+        text:SetJustifyH("RIGHT")
+        text:Show()
+        text:SetPoint("BOTTOMRIGHT",info_frame,"BOTTOMRIGHT")
+
+        info_frame.text = text
+        frame.info_frame = info_frame     
 
         --
         -- Class icons instead of portraits
         --
         hooksecurefunc("UnitFramePortrait_Update",function(self)
             if self.portrait then
-                    if UnitIsPlayer(self.unit) then                         
-                            local t = CLASS_ICON_TCOORDS[select(2, UnitClass(self.unit))]
-                            if t then
-                                    self.portrait:SetTexture("Interface\\TargetingFrame\\UI-Classes-Circles")
-                                    self.portrait:SetTexCoord(unpack(t))
-                            end
-                    else
-                            self.portrait:SetTexCoord(0,1,0,1)
+                if UnitIsPlayer(self.unit) then                         
+                    local t = CLASS_ICON_TCOORDS[select(2, UnitClass(self.unit))]
+                    if t then
+                        self.portrait:SetTexture("Interface\\TargetingFrame\\UI-Classes-Circles")
+                        self.portrait:SetTexCoord(unpack(t))
                     end
+                else
+                    self.portrait:SetTexCoord(0,1,0,1)
+                end
             end
-        end)
+            end)
 
         --
         -- Class color in HP bars
@@ -48,17 +207,17 @@ frame:SetScript("OnEvent",function(self,event,id)
         local function colour(statusbar, unit)
             local _, class, c
             if UnitIsPlayer(unit) and UnitIsConnected(unit) and unit == statusbar.unit and UnitClass(unit) then
-                    _, class = UnitClass(unit)
-                    c = CUSTOM_CLASS_COLORS and CUSTOM_CLASS_COLORS[class] or RAID_CLASS_COLORS[class]
-                    statusbar:SetStatusBarColor(c.r, c.g, c.b)
-                    PlayerFrameHealthBar:SetStatusBarColor(0,1,0)
+                _, class = UnitClass(unit)
+                c = CUSTOM_CLASS_COLORS and CUSTOM_CLASS_COLORS[class] or RAID_CLASS_COLORS[class]
+                statusbar:SetStatusBarColor(c.r, c.g, c.b)
+                PlayerFrameHealthBar:SetStatusBarColor(0,1,0)
             end
         end
 
         hooksecurefunc("UnitFrameHealthBar_Update", colour)
         hooksecurefunc("HealthBar_OnValueChanged", function(self)
-                colour(self, self.unit)
-        end)
+            colour(self, self.unit)
+            end)
 
         --
         -- Move debuffs
@@ -70,46 +229,46 @@ frame:SetScript("OnEvent",function(self,event,id)
             DebuffButton1:ClearAllPoints()
             if( playerClass == "PALADIN") then
                 DebuffButton1:SetPoint("TOPRIGHT", PaladinPowerBar, "BOTTOMRIGHT", 0, 0)
-            elseif ( playerClass == "DEATHKNIGHT" ) then
-                DebuffButton1:SetPoint("TOPRIGHT", RuneFrame, "BOTTOMRIGHT", 0, -10)
-            elseif ( playerClass == "WARLOCK" ) then
-                DebuffButton1:SetPoint("TOPRIGHT", PlayerFrame, "BOTTOMRIGHT", 0, 10)
-            elseif ( playerClass == "SHAMAN" ) then
-                DebuffButton1:SetPoint("TOPRIGHT", TotemFrame, "BOTTOMRIGHT", 0, 0)
-            elseif ( playerClass == "HUNTER" or playerClass == "WARLOCK") then
-                DebuffButton1:SetPoint("TOPRIGHT", PetFrame, "BOTTOMRIGHT", 9, -7)
-            else
-                DebuffButton1:SetPoint("TOPRIGHT", PlayerFrame, "BOTTOMRIGHT", 0, 25)
-            end
-            DebuffButton1.SetPoint = function() end
-            DebuffButton1.SetParent = function() end
-        end);
+                elseif ( playerClass == "DEATHKNIGHT" ) then
+                    DebuffButton1:SetPoint("TOPRIGHT", RuneFrame, "BOTTOMRIGHT", 0, -10)
+                    elseif ( playerClass == "WARLOCK" ) then
+                        DebuffButton1:SetPoint("TOPRIGHT", PlayerFrame, "BOTTOMRIGHT", 0, 10)
+                        elseif ( playerClass == "SHAMAN" ) then
+                            DebuffButton1:SetPoint("TOPRIGHT", TotemFrame, "BOTTOMRIGHT", 0, 0)
+                            elseif ( playerClass == "HUNTER" or playerClass == "WARLOCK") then
+                                DebuffButton1:SetPoint("TOPRIGHT", PetFrame, "BOTTOMRIGHT", 9, -7)
+                            else
+                                DebuffButton1:SetPoint("TOPRIGHT", PlayerFrame, "BOTTOMRIGHT", 0, 25)
+                            end
+                            DebuffButton1.SetPoint = function() end
+                            DebuffButton1.SetParent = function() end
+                            end);
 
         --
         -- Darken stuff
         --
         if (addon == "Blizzard_TimeManager") then
-                for i, v in pairs({PlayerFrameTexture, TargetFrameTextureFrameTexture, PetFrameTexture, PartyMemberFrame1Texture, PartyMemberFrame2Texture, PartyMemberFrame3Texture, PartyMemberFrame4Texture,
-                        PartyMemberFrame1PetFrameTexture, PartyMemberFrame2PetFrameTexture, PartyMemberFrame3PetFrameTexture, PartyMemberFrame4PetFrameTexture, FocusFrameTextureFrameTexture,
-                        TargetFrameToTTextureFrameTexture, FocusFrameToTTextureFrameTexture, BonusActionBarFrameTexture0, BonusActionBarFrameTexture1, BonusActionBarFrameTexture2, BonusActionBarFrameTexture3,
-                        BonusActionBarFrameTexture4, MainMenuBarTexture0, MainMenuBarTexture1, MainMenuBarTexture2, MainMenuBarTexture3, MainMenuMaxLevelBar0, MainMenuMaxLevelBar1, MainMenuMaxLevelBar2,
-                        MainMenuMaxLevelBar3, MinimapBorder, CastingBarFrameBorder, FocusFrameSpellBarBorder, TargetFrameSpellBarBorder, MiniMapTrackingButtonBorder, MiniMapLFGFrameBorder, MiniMapBattlefieldBorder,
-                        MiniMapMailBorder, MinimapBorderTop,
-                        select(1, TimeManagerClockButton:GetRegions())
+            for i, v in pairs({PlayerFrameTexture, TargetFrameTextureFrameTexture, PetFrameTexture, PartyMemberFrame1Texture, PartyMemberFrame2Texture, PartyMemberFrame3Texture, PartyMemberFrame4Texture,
+                PartyMemberFrame1PetFrameTexture, PartyMemberFrame2PetFrameTexture, PartyMemberFrame3PetFrameTexture, PartyMemberFrame4PetFrameTexture, FocusFrameTextureFrameTexture,
+                TargetFrameToTTextureFrameTexture, FocusFrameToTTextureFrameTexture, BonusActionBarFrameTexture0, BonusActionBarFrameTexture1, BonusActionBarFrameTexture2, BonusActionBarFrameTexture3,
+                BonusActionBarFrameTexture4, MainMenuBarTexture0, MainMenuBarTexture1, MainMenuBarTexture2, MainMenuBarTexture3, MainMenuMaxLevelBar0, MainMenuMaxLevelBar1, MainMenuMaxLevelBar2,
+                MainMenuMaxLevelBar3, MinimapBorder, CastingBarFrameBorder, FocusFrameSpellBarBorder, TargetFrameSpellBarBorder, MiniMapTrackingButtonBorder, MiniMapLFGFrameBorder, MiniMapBattlefieldBorder,
+                MiniMapMailBorder, MinimapBorderTop,
+                select(1, TimeManagerClockButton:GetRegions())
                 }) do
-                        v:SetVertexColor(.4, .4, .4)
-                end
+                v:SetVertexColor(.4, .4, .4)
+            end
 
-                for i,v in pairs({ select(2, TimeManagerClockButton:GetRegions()) }) do
-                        v:SetVertexColor(1, 1, 1)
-                end
+            for i,v in pairs({ select(2, TimeManagerClockButton:GetRegions()) }) do
+                v:SetVertexColor(1, 1, 1)
+            end
         end
 
         --
         -- Setup cast bars --
         --
         CastingBarFrame:ClearAllPoints()
-        CastingBarFrame:SetPoint("CENTER", UIParent, "CENTER", 0, -200)
+        CastingBarFrame:SetPoint("CENTER", UIParent, "CENTER", 0, -270)
         CastingBarFrame:SetHeight(12)
         CastingBarFrame.SetPoint = function() end
 
@@ -140,16 +299,16 @@ frame:SetScript("OnEvent",function(self,event,id)
             if self.update and self.update < elapsed then
                 if self.casting then
                     self.timer:SetText(format("%2.1f/%1.1f", max(self.maxValue - self.value, 0), self.maxValue))
-                elseif self.channeling then
-                    self.timer:SetText(format("%.1f", max(self.value, 0)))
+                    elseif self.channeling then
+                        self.timer:SetText(format("%.1f", max(self.value, 0)))
+                    else
+                        self.timer:SetText("")
+                    end
+                    self.update = .1
                 else
-                    self.timer:SetText("")
+                    self.update = self.update - elapsed
                 end
-                self.update = .1
-            else
-                self.update = self.update - elapsed
-            end
-        end)
+                end)
 
         --
         -- Minimap tweaks
@@ -163,12 +322,122 @@ frame:SetScript("OnEvent",function(self,event,id)
             else
                 Minimap_ZoomOut()
             end
-        end)
+            end)
         MiniMapTracking:ClearAllPoints()
         MiniMapTracking:SetPoint("TOPRIGHT", -26, 7)
 
+        --
+        -- Create button to toggle blizzard UI
+        --
+        local f = CreateFrame("Button",nil,UIParent)
+        f:SetSize(30,30)
+        f.t=f:CreateTexture(nil,"BORDER")
+        f.t:SetTexture("Interface\\CHATFRAME\\UI-ChatIcon-Minimize-Up.blp")
+        f.t:SetAllPoints(f)
+        f:SetPoint("BOTTOMRIGHT", info_frame,"BOTTOM",0,0)
+        f:Show()
+
+        local BlizzHide = true
+        f:SetScript("OnMouseDown", function(self, button)
+                if BlizzHide  == false then
+                        if button == "LeftButton" then
+                                f.t:SetTexture("Interface\\CHATFRAME\\UI-ChatIcon-Minimize-Down.blp")
+                        end
+                elseif BlizzHide == true then
+                        if button == "LeftButton" then
+                                f.t:SetTexture("Interface\\CHATFRAME\\UI-ChatIcon-Maximize-Down.blp")
+                        end
+                end
+        end)
+
+        f:SetScript("OnMouseUp", function(self, button)
+                if BlizzHide  == false then
+                        if button == "LeftButton" then
+                                f.t:SetTexture("Interface\\CHATFRAME\\UI-ChatIcon-Minimize-Up.blp")
+                        end
+                elseif BlizzHide == true then
+                        if button == "LeftButton" then
+                                f.t:SetTexture("Interface\\CHATFRAME\\UI-ChatIcon-Maximize-Up.blp")
+                        end
+                end
+        end)
+
+        f:SetScript("OnClick", function(self, button)
+            if BlizzHide == false then
+                f.t:SetTexture("Interface\\CHATFRAME\\UI-ChatIcon-Maximize-Up.blp")
+                CharacterMicroButton:Hide()
+                SpellbookMicroButton:Hide()
+                TalentMicroButton:Hide()
+                AchievementMicroButton:Hide()
+                QuestLogMicroButton:Hide()
+                GuildMicroButton:Hide()
+                PVPMicroButton:Hide()
+                LFDMicroButton:Hide()
+                CompanionsMicroButton:Hide()
+                EJMicroButton:Hide()
+                MainMenuMicroButton:Hide()
+                HelpMicroButton:SetAlpha(0)
+                HelpMicroButton:Hide()
+                MainMenuBarBackpackButton:Hide()
+                CharacterBag0Slot:Hide()
+                CharacterBag1Slot:Hide()
+                CharacterBag2Slot:Hide()
+                CharacterBag3Slot:Hide()
+                BlizzHide = true
+            elseif BlizzHide == true then
+                f.t:SetTexture("Interface\\CHATFRAME\\UI-ChatIcon-Minimize-Up.blp")
+                CharacterMicroButton:Show()
+                SpellbookMicroButton:Show()
+                TalentMicroButton:Show()
+                AchievementMicroButton:Show()
+                QuestLogMicroButton:Show()
+                GuildMicroButton:Show()
+                PVPMicroButton:Show()
+                LFDMicroButton:Show()
+                CompanionsMicroButton:Show()
+                EJMicroButton:Show()
+                MainMenuMicroButton:Show()
+                HelpMicroButton:SetAlpha(1)
+                HelpMicroButton:Show()
+                MainMenuBarBackpackButton:Show()
+                CharacterBag0Slot:Show()
+                CharacterBag1Slot:Show()
+                CharacterBag2Slot:Show()
+                CharacterBag3Slot:Show()
+                BlizzHide = false
+            end
+        end)
+
+    elseif( event == "GROUP_ROSTER_UPDATE" or
+        event == "PLAYER_TARGET_CHANGED" or
+        event == "PLAYER_FOCUS_CHANGED" or
+        event == "UNIT_FACTION") then
+        if UnitIsPlayer("target") then
+            c = RAID_CLASS_COLORS[select(2, UnitClass("target"))]
+            TargetFrameNameBackground:SetVertexColor(c.r, c.g, c.b)
+        end
+        if UnitIsPlayer("focus") then
+            c = RAID_CLASS_COLORS[select(2, UnitClass("focus"))]
+            FocusFrameNameBackground:SetVertexColor(c.r, c.g, c.b)
+        end
     end
+    update_actionbars()
 end)
+
+frame:SetScript("OnUpdate",function(self,event,id)
+    local _,_,home,world = GetNetStats()
+    local fps = GetFramerate()
+    local num_free_slots = GetContainerNumFreeSlots(0)
+    local total_num_slots = GetContainerNumSlots(0)
+    for i=1,NUM_BAG_SLOTS do
+        num_free_slots = num_free_slots + GetContainerNumFreeSlots(i)
+        total_num_slots = total_num_slots + GetContainerNumSlots(i)
+    end
+    local text = num_free_slots.."/"..total_num_slots
+    text = text.."\n"..world.." ms"
+    text = text.."\n"..format("%d", fps).." FPS"
+    frame.info_frame.text:SetText(text)
+    end)
 
 -------------------------------------------------------------
 -- Install function, used to set up common things on characters
@@ -274,7 +543,6 @@ local function Install()
 end -- Install
 -------------------------------------------------------------
 
-
 --
 -- Slash commands
 --
@@ -283,3 +551,21 @@ SlashCmdList["RL"] = function() ReloadUI() end
 
 SLASH_INSTALL1 = "/install";
 SlashCmdList["INSTALL"] = function() Install() end
+
+SLASH_KEYBINDS1 = "/keybinds"
+SlashCmdList["KEYBINDS"] = function() toggle_keybinds() end
+
+SLASH_MACROS1 = "/macros"
+SlashCmdList["MACROS"] = function() toggle_macros() end
+
+SlashCmdList["CLCE"] = function() CombatLogClearEntries() end
+SLASH_CLCE1 = "/clc"
+
+SlashCmdList["TICKET"] = function() ToggleHelpFrame() end
+SLASH_TICKET1 = "/gm"
+
+SlashCmdList["READYCHECK"] = function() DoReadyCheck() end
+SLASH_READYCHECK1 = '/rc'
+
+SlashCmdList["CHECKROLE"] = function() InitiateRolePoll() end
+SLASH_CHECKROLE1 = '/cr'
