@@ -8,13 +8,6 @@ frame:RegisterEvent("GROUP_ROSTER_UPDATE")
 frame:RegisterEvent("PLAYER_TARGET_CHANGED")
 frame:RegisterEvent("PLAYER_FOCUS_CHANGED")
 frame:RegisterEvent("UNIT_FACTION")
-frame:RegisterEvent("UPDATE_STEALTH")
-frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
-frame:RegisterEvent("UPDATE_SHAPESHIFT_FORMS")
-frame:RegisterEvent("UPDATE_SHAPESHIFT_USABLE")
-frame:RegisterEvent("UPDATE_SHAPESHIFT_COOLDOWN")
-frame:RegisterEvent("UPDATE_SHAPESHIFT_FORM")
-
 
 local show_macros = true
 local show_keybinds = true
@@ -65,11 +58,13 @@ end
 function update_actionbars()
     local kActionBarSpacing = 4
 
+    MultiBarBottomRight:SetParent(UIParent)
     MultiBarBottomRight:ClearAllPoints()
     MultiBarBottomRight:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, kActionBarSpacing/2)
     MultiBarBottomLeft:SetParent(UIParent)
     MultiBarBottomLeft:ClearAllPoints()
     MultiBarBottomLeft:SetPoint("BOTTOM", MultiBarBottomRight, "TOP", 0, kActionBarSpacing)
+    MultiBarBottomLeft.SetPoint = function() end
 
     ActionButton1:ClearAllPoints()
     ActionButton1:SetPoint("LEFT", UIParent, "CENTER", -123, -190)
@@ -81,24 +76,23 @@ function update_actionbars()
     end
 
     PetActionBarFrame:ClearAllPoints()
-    PetActionBarFrame:SetPoint("BOTTOM", MultiBarBottomLeft, "TOP", 31, kActionBarSpacing)
+    PetActionBarFrame:SetPoint("BOTTOMRIGHT", MultiBarBottomLeft, "TOPRIGHT", 31, kActionBarSpacing)
     PetActionBarFrame:SetScale(0.9)
 
     StanceButton1:ClearAllPoints()
-    StanceButton1:SetPoint("BOTTOMRIGHT", MultiBarBottomRight, "BOTTOMLEFT", -kActionBarSpacing, 0)
-    StanceButton1:SetScale(0.8)
+    StanceButton1:SetPoint("BOTTOMLEFT", MultiBarBottomLeft, "TOPLEFT", 10, kActionBarSpacing+2)
+    StanceButton1:SetScale(0.75)
 
     for i=2, 8 do
-        _G["StanceButton"..i]:ClearAllPoints()
-        _G["StanceButton"..i]:SetPoint("BOTTOM", _G["StanceButton"..i-1], "TOP", 0, kActionBarSpacing)
-        _G["StanceButton"..i]:SetScale(0.8)
+        -- _G["StanceButton"..i]:ClearAllPoints()
+        -- _G["StanceButton"..i]:SetPoint("BOTTOM", _G["StanceButton"..i-1], "TOP", 0, kActionBarSpacing)
+        _G["StanceButton"..i]:SetScale(0.75)
     end
 end
-frame:SetScript("OnUpdate",function(self,event,id)
-    update_actionbars()
-end)
+-- frame:SetScript("OnUpdate",function(self,event,id)
+--     update_actionbars()
+-- end)
 frame:SetScript("OnEvent",function(self,event,id)
-    update_actionbars()
     if(event == "PLAYER_LOGIN") then
         --
         -- Disable Dragon end caps
@@ -114,7 +108,7 @@ frame:SetScript("OnEvent",function(self,event,id)
         MainMenuExpBar:ClearAllPoints()
         MainMenuExpBar:SetPoint("BOTTOMRIGHT", HelpMicroButton, "TOPRIGHT", 0, -39)
         MainMenuExpBar:SetScale(0.5)
-        MainMenuBarBackpackButton:SetPoint("BOTTOMRIGHT", MainMenuExpBar, "TOPRIGHT", 0, 0)
+        MainMenuBarBackpackButton:SetPoint("BOTTOMRIGHT", MainMenuExpBar, "TOPRIGHT", 0, 5)
 
         MainMenuBarTexture0:Hide()
         MainMenuBarTexture1:Hide()
@@ -153,6 +147,7 @@ frame:SetScript("OnEvent",function(self,event,id)
         MainMenuExpBar:SetAlpha(0)
         MainMenuBarMaxLevelBar:SetAlpha(0) -- hide the xp bar
 
+        update_actionbars()
 
         --
         -- Turn off keybinds and macro names
