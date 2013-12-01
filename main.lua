@@ -94,7 +94,9 @@ function update_actionbars()
         _G["StanceButton"..i]:SetScale(0.8)
     end
 end
-
+frame:SetScript("OnUpdate",function(self,event,id)
+    update_actionbars()
+end)
 frame:SetScript("OnEvent",function(self,event,id)
     update_actionbars()
     if(event == "PLAYER_LOGIN") then
@@ -108,7 +110,7 @@ frame:SetScript("OnEvent",function(self,event,id)
         -- Hide Blizzard stuff
         --
         CharacterMicroButton:ClearAllPoints()
-        CharacterMicroButton:SetPoint("RIGHT",25,0)
+        CharacterMicroButton:SetPoint("RIGHT",145,0)
         MainMenuExpBar:ClearAllPoints()
         MainMenuExpBar:SetPoint("BOTTOMRIGHT", HelpMicroButton, "TOPRIGHT", 0, -39)
         MainMenuExpBar:SetScale(0.5)
@@ -172,25 +174,6 @@ frame:SetScript("OnEvent",function(self,event,id)
             tooltip:SetPoint("BOTTOMLEFT", "UIParent", "CENTER", 300,-80)
             tooltip.default = 1
             end);
-
-        --
-        -- Create information frame in lower left corner
-        --
-        local info_frame = CreateFrame("Frame")
-        info_frame:SetParent(UIParent)
-        info_frame:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT")
-        info_frame:SetSize(200,200)
-        info_frame:Show()
-
-        local text = info_frame:CreateFontString(nil)
-        text:SetFont("Fonts\\FRIZQT__.TTF", 16, "OUTLINE")
-        text:SetText("FPS")
-        text:SetJustifyH("RIGHT")
-        text:Show()
-        text:SetPoint("BOTTOMRIGHT",info_frame,"BOTTOMRIGHT")
-
-        info_frame.text = text
-        frame.info_frame = info_frame     
 
         --
         -- Class icons instead of portraits
@@ -438,24 +421,6 @@ frame:SetScript("OnEvent",function(self,event,id)
         end
     end
 end)
-
--- frame:SetScript("OnUpdate",function(self,event,id)
---     --
---     -- Set info text
---     --
---     local _,_,home,world = GetNetStats()
---     local fps = GetFramerate()
---     local num_free_slots = GetContainerNumFreeSlots(0)
---     local total_num_slots = GetContainerNumSlots(0)
---     for i=1,NUM_BAG_SLOTS do
---         num_free_slots = num_free_slots + GetContainerNumFreeSlots(i)
---         total_num_slots = total_num_slots + GetContainerNumSlots(i)
---     end
---     local text = num_free_slots.."/"..total_num_slots
---     text = text.."\n"..world.." ms"
---     text = text.."\n"..format("%d", fps).." FPS"
---     frame.info_frame.text:SetText(text)
--- end)
 
 -------------------------------------------------------------
 -- Install function, used to set up common things on characters
