@@ -96,6 +96,7 @@ function update_actionbars()
 end
 
 frame:SetScript("OnEvent",function(self,event,id)
+    update_actionbars()
     if(event == "PLAYER_LOGIN") then
         --
         -- Disable Dragon end caps
@@ -108,7 +109,10 @@ frame:SetScript("OnEvent",function(self,event,id)
         --
         CharacterMicroButton:ClearAllPoints()
         CharacterMicroButton:SetPoint("RIGHT",25,0)
-        MainMenuBarBackpackButton:SetPoint("BOTTOMRIGHT", HelpMicroButton, "TOPRIGHT", 0, -20)
+        MainMenuExpBar:ClearAllPoints()
+        MainMenuExpBar:SetPoint("BOTTOMRIGHT", HelpMicroButton, "TOPRIGHT", 0, -39)
+        MainMenuExpBar:SetScale(0.5)
+        MainMenuBarBackpackButton:SetPoint("BOTTOMRIGHT", MainMenuExpBar, "TOPRIGHT", 0, 0)
 
         MainMenuBarTexture0:Hide()
         MainMenuBarTexture1:Hide()
@@ -138,9 +142,13 @@ frame:SetScript("OnEvent",function(self,event,id)
         CharacterBag2Slot:Hide()
         CharacterBag3Slot:Hide()
 
+        MainMenuExpBar:SetStatusBarColor(1,0,0)
+
 
         ReputationWatchBar:Hide()
+        ReputationWatchBar:SetAlpha(0)
         MainMenuExpBar:Hide()
+        MainMenuExpBar:SetAlpha(0)
         MainMenuBarMaxLevelBar:SetAlpha(0) -- hide the xp bar
 
 
@@ -199,7 +207,7 @@ frame:SetScript("OnEvent",function(self,event,id)
                     self.portrait:SetTexCoord(0,1,0,1)
                 end
             end
-            end)
+        end)
 
         --
         -- Class color in HP bars
@@ -217,7 +225,7 @@ frame:SetScript("OnEvent",function(self,event,id)
         hooksecurefunc("UnitFrameHealthBar_Update", colour)
         hooksecurefunc("HealthBar_OnValueChanged", function(self)
             colour(self, self.unit)
-            end)
+        end)
 
         --
         -- Move debuffs
@@ -229,20 +237,20 @@ frame:SetScript("OnEvent",function(self,event,id)
             DebuffButton1:ClearAllPoints()
             if( playerClass == "PALADIN") then
                 DebuffButton1:SetPoint("TOPRIGHT", PaladinPowerBar, "BOTTOMRIGHT", 0, 0)
-                elseif ( playerClass == "DEATHKNIGHT" ) then
-                    DebuffButton1:SetPoint("TOPRIGHT", RuneFrame, "BOTTOMRIGHT", 0, -10)
-                    elseif ( playerClass == "WARLOCK" ) then
-                        DebuffButton1:SetPoint("TOPRIGHT", PlayerFrame, "BOTTOMRIGHT", 0, 10)
-                        elseif ( playerClass == "SHAMAN" ) then
-                            DebuffButton1:SetPoint("TOPRIGHT", TotemFrame, "BOTTOMRIGHT", 0, 0)
-                            elseif ( playerClass == "HUNTER" or playerClass == "WARLOCK") then
-                                DebuffButton1:SetPoint("TOPRIGHT", PetFrame, "BOTTOMRIGHT", 9, -7)
-                            else
-                                DebuffButton1:SetPoint("TOPRIGHT", PlayerFrame, "BOTTOMRIGHT", 0, 25)
-                            end
-                            DebuffButton1.SetPoint = function() end
-                            DebuffButton1.SetParent = function() end
-                            end);
+            elseif ( playerClass == "DEATHKNIGHT" ) then
+                DebuffButton1:SetPoint("TOPRIGHT", RuneFrame, "BOTTOMRIGHT", 0, -10)
+            elseif ( playerClass == "WARLOCK" ) then
+                DebuffButton1:SetPoint("TOPRIGHT", PlayerFrame, "BOTTOMRIGHT", 0, 10)
+            elseif ( playerClass == "SHAMAN" ) then
+                DebuffButton1:SetPoint("TOPRIGHT", TotemFrame, "BOTTOMRIGHT", 0, 0)
+            elseif ( playerClass == "HUNTER" or playerClass == "WARLOCK") then
+                DebuffButton1:SetPoint("TOPRIGHT", PetFrame, "BOTTOMRIGHT", 9, -7)
+            else
+                DebuffButton1:SetPoint("TOPRIGHT", PlayerFrame, "BOTTOMRIGHT", 0, 25)
+            end
+            DebuffButton1.SetPoint = function() end
+            DebuffButton1.SetParent = function() end
+        end);   
 
         --
         -- Darken stuff
@@ -334,7 +342,7 @@ frame:SetScript("OnEvent",function(self,event,id)
         f.t=f:CreateTexture(nil,"BORDER")
         f.t:SetTexture("Interface\\CHATFRAME\\UI-ChatIcon-Minimize-Up.blp")
         f.t:SetAllPoints(f)
-        f:SetPoint("BOTTOMRIGHT", info_frame,"BOTTOM",0,0)
+        f:SetPoint("BOTTOMRIGHT", UIParent,"BOTTOMRIGHT",0,0)
         f:Show()
 
         local BlizzHide = true
@@ -383,6 +391,10 @@ frame:SetScript("OnEvent",function(self,event,id)
                 CharacterBag1Slot:Hide()
                 CharacterBag2Slot:Hide()
                 CharacterBag3Slot:Hide()
+                MainMenuExpBar:Hide()
+                MainMenuExpBar:SetAlpha(0)
+                -- ReputationWatchBar:Hide()
+                -- ReputationWatchBar:SetAlpha(0)
                 BlizzHide = true
             elseif BlizzHide == true then
                 f.t:SetTexture("Interface\\CHATFRAME\\UI-ChatIcon-Minimize-Up.blp")
@@ -404,6 +416,10 @@ frame:SetScript("OnEvent",function(self,event,id)
                 CharacterBag1Slot:Show()
                 CharacterBag2Slot:Show()
                 CharacterBag3Slot:Show()
+                MainMenuExpBar:Show()
+                MainMenuExpBar:SetAlpha(1)
+                -- ReputationWatchBar:Show()
+                -- ReputationWatchBar:SetAlpha(1)
                 BlizzHide = false
             end
         end)
@@ -421,23 +437,25 @@ frame:SetScript("OnEvent",function(self,event,id)
             FocusFrameNameBackground:SetVertexColor(c.r, c.g, c.b)
         end
     end
-    update_actionbars()
 end)
 
-frame:SetScript("OnUpdate",function(self,event,id)
-    local _,_,home,world = GetNetStats()
-    local fps = GetFramerate()
-    local num_free_slots = GetContainerNumFreeSlots(0)
-    local total_num_slots = GetContainerNumSlots(0)
-    for i=1,NUM_BAG_SLOTS do
-        num_free_slots = num_free_slots + GetContainerNumFreeSlots(i)
-        total_num_slots = total_num_slots + GetContainerNumSlots(i)
-    end
-    local text = num_free_slots.."/"..total_num_slots
-    text = text.."\n"..world.." ms"
-    text = text.."\n"..format("%d", fps).." FPS"
-    frame.info_frame.text:SetText(text)
-    end)
+-- frame:SetScript("OnUpdate",function(self,event,id)
+--     --
+--     -- Set info text
+--     --
+--     local _,_,home,world = GetNetStats()
+--     local fps = GetFramerate()
+--     local num_free_slots = GetContainerNumFreeSlots(0)
+--     local total_num_slots = GetContainerNumSlots(0)
+--     for i=1,NUM_BAG_SLOTS do
+--         num_free_slots = num_free_slots + GetContainerNumFreeSlots(i)
+--         total_num_slots = total_num_slots + GetContainerNumSlots(i)
+--     end
+--     local text = num_free_slots.."/"..total_num_slots
+--     text = text.."\n"..world.." ms"
+--     text = text.."\n"..format("%d", fps).." FPS"
+--     frame.info_frame.text:SetText(text)
+-- end)
 
 -------------------------------------------------------------
 -- Install function, used to set up common things on characters
