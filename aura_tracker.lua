@@ -59,7 +59,7 @@ frame:RegisterEvent("UNIT_PET")
 frame:SetScript("OnEvent",function(self,event,...)
     if( event == "COMBAT_LOG_EVENT_UNFILTERED" or event == "UNIT_PET") then
         local timestamp, type, hideCaster, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags = ...
-        if( destGUID == player_guid or sourceGUID == player_guid ) then
+        if( destGUID == player_guid or sourceGUID == player_guid or true ) then
             for i=1, #self.auras do
                 for j=1, #auras_to_track[player_class][i] do
                     local exists,_,icon,count,_,_,expires = UnitAura("player",auras_to_track[player_class][i][j])
