@@ -12,9 +12,9 @@ local auras_to_track = {
     ["WARLOCK"] = {  },
     ["DRUID"] = {  },
     ["MONK"] = {
-        { "Mana Tea" },
+        { "Mana Tea", "Tigereye Brew" },
         { "Tiger Power" },
-        { "Vital Mists" },
+        { "Vital Mists", "Storm, Earth, and Fire" },
         { "Serpent's Zeal" },
     },
     ["ROGUE"] = { 
@@ -102,7 +102,6 @@ frame:SetScript("OnEvent",function(self,event,...)
 
             local timer_text = aura:CreateFontString(nil)
             timer_text:SetFont("Fonts\\FRIZQT__.TTF", 14, "OUTLINE")
-            timer_text:SetText("Test")
             timer_text:Show()
             timer_text:SetPoint("TOP",aura,"BOTTOM")
             aura.text = timer_text

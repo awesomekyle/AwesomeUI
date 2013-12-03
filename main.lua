@@ -224,6 +224,8 @@ frame:SetScript("OnEvent",function(self,event,id)
                 DebuffButton1:SetPoint("TOPRIGHT", TotemFrame, "BOTTOMRIGHT", 0, 0)
             elseif ( playerClass == "HUNTER" or playerClass == "WARLOCK") then
                 DebuffButton1:SetPoint("TOPRIGHT", PetFrame, "BOTTOMRIGHT", 9, -7)
+            elseif ( playerClass == "MONK" ) then
+                DebuffButton1:SetPoint("TOPRIGHT", PlayerFrame, "BOTTOMRIGHT", 0, 0)
             else
                 DebuffButton1:SetPoint("TOPRIGHT", PlayerFrame, "BOTTOMRIGHT", 0, 25)
             end
