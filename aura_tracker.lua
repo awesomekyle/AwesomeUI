@@ -12,10 +12,10 @@ local auras_to_track = {
     ["WARLOCK"] = {  },
     ["DRUID"] = {  },
     ["MONK"] = {
-        { "Mana Tea", "Tigereye Brew" },
+        { "Mana Tea", "Tigereye Brew", "Shuffle" },
         { "Tiger Power" },
         { "Vital Mists", "Storm, Earth, and Fire" },
-        { "Serpent's Zeal" },
+        { "Serpent's Zeal", "Touch of Karma" },
     },
     ["ROGUE"] = { 
         { "Slice and Dice" },
