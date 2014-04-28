@@ -58,10 +58,10 @@ end
 function update_actionbars()
     local kActionBarSpacing = 4
 
-    MultiBarBottomRight:SetParent(UIParent)
+    --MultiBarBottomRight:SetParent(UIParent)
     MultiBarBottomRight:ClearAllPoints()
     MultiBarBottomRight:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, kActionBarSpacing/2)
-    MultiBarBottomLeft:SetParent(UIParent)
+    --MultiBarBottomLeft:SetParent(UIParent)
     MultiBarBottomLeft:ClearAllPoints()
     MultiBarBottomLeft:SetPoint("BOTTOM", MultiBarBottomRight, "TOP", 0, kActionBarSpacing)
     MultiBarBottomLeft.SetPoint = function() end
@@ -107,10 +107,10 @@ frame:SetScript("OnEvent",function(self,event,id)
         CharacterMicroButton:SetPoint("RIGHT",145,0)
         MainMenuExpBar:ClearAllPoints()
         MainMenuExpBar:SetPoint("BOTTOMRIGHT", HelpMicroButton, "TOPRIGHT", 0, -39)
-        MainMenuExpBar.SetPoint = function() end
+        --MainMenuExpBar.SetPoint = function() end
         MainMenuExpBar:SetScale(0.5)
         MainMenuBarBackpackButton:SetPoint("BOTTOMRIGHT", MainMenuExpBar, "TOPRIGHT", 0, 5)
-        MainMenuBarBackpackButton.SetPoint = function() end
+        --MainMenuBarBackpackButton.SetPoint = function() end
 
         MainMenuBarTexture0:Hide()
         MainMenuBarTexture1:Hide()
@@ -381,6 +381,15 @@ frame:SetScript("OnEvent",function(self,event,id)
                 BlizzHide = true
             elseif BlizzHide == true then
                 f.t:SetTexture("Interface\\CHATFRAME\\UI-ChatIcon-Minimize-Up.blp")
+		        CharacterMicroButton:ClearAllPoints()
+		        CharacterMicroButton:SetPoint("RIGHT",200,0)
+		        MainMenuExpBar:ClearAllPoints()
+		        MainMenuExpBar:SetPoint("BOTTOMRIGHT", HelpMicroButton, "TOPRIGHT", 0, -39)
+		        --MainMenuExpBar.SetPoint = function() end
+		        MainMenuExpBar:SetScale(0.5)
+
+		        MainMenuBarBackpackButton:SetPoint("BOTTOMRIGHT", MainMenuExpBar, "TOPRIGHT", 0, 5)
+		        --MainMenuBarBackpackButton.SetPoint = function() end
                 CharacterMicroButton:Show()
                 SpellbookMicroButton:Show()
                 TalentMicroButton:Show()
@@ -510,8 +519,8 @@ local function Install()
     ToggleChatColorNamesByClassGroup(true, "WHISPER")
     ToggleChatColorNamesByClassGroup(true, "PARTY")
     ToggleChatColorNamesByClassGroup(true, "PARTY_LEADER")
-    ToggleChatColorNamesByClassGroup(true, "INSTANCE")
-    ToggleChatColorNamesByClassGroup(true, "INSTANCE_LEADER")
+    ToggleChatColorNamesByClassGroup(true, "INSTANCE_CHAT")
+    ToggleChatColorNamesByClassGroup(true, "INSTANCE_CHAT_LEADER")
     ToggleChatColorNamesByClassGroup(true, "RAID")
     ToggleChatColorNamesByClassGroup(true, "RAID_LEADER")
     ToggleChatColorNamesByClassGroup(true, "RAID_WARNING")

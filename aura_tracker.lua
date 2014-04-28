@@ -24,8 +24,12 @@ local auras_to_track = {
     ["HUNTER"] = {
         { "Steady Focus" },
     },
-    ["SHAMAN"] = {  },
-    ["DEATH KNIGHT"] = {  },
+    ["SHAMAN"] = { 
+        { "Maelstrom Weapon" },
+        { "Searing Flames" },
+        { "Lightning Shield", "Water Shield" }
+    },
+    ["DEATHKNIGHT"] = {  },
     ["PALADIN"] = {
         { "Inquisition", },
         { "Sacred Shield", },
