@@ -219,8 +219,10 @@ frame:SetScript("OnEvent",function(self,event,id)
                 DebuffButton1:SetPoint("TOPRIGHT", PaladinPowerBar, "BOTTOMRIGHT", 0, 0)
             elseif ( playerClass == "DEATHKNIGHT" ) then
                 DebuffButton1:SetPoint("TOPRIGHT", RuneFrame, "BOTTOMRIGHT", 0, -10)
-            elseif ( playerClass == "WARLOCK" ) then
-                DebuffButton1:SetPoint("TOPRIGHT", PlayerFrame, "BOTTOMRIGHT", 0, 10)
+            -- elseif ( playerClass == "WARLOCK" ) then
+            --     DebuffButton1:SetPoint("TOPRIGHT", PlayerFrame, "BOTTOMRIGHT", 0, 10)
+            elseif ( playerClass == "PRIEST" ) then
+                DebuffButton1:SetPoint("TOPRIGHT", PlayerFrame, "BOTTOMRIGHT", 0, 13)
             elseif ( playerClass == "SHAMAN" ) then
                 DebuffButton1:SetPoint("TOPRIGHT", TotemFrame, "BOTTOMRIGHT", 0, 0)
             elseif ( playerClass == "HUNTER" or playerClass == "WARLOCK") then
