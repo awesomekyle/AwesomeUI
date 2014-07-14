@@ -384,7 +384,7 @@ frame:SetScript("OnEvent",function(self,event,id)
             elseif BlizzHide == true then
                 f.t:SetTexture("Interface\\CHATFRAME\\UI-ChatIcon-Minimize-Up.blp")
 		        CharacterMicroButton:ClearAllPoints()
-		        CharacterMicroButton:SetPoint("RIGHT",200,0)
+		        CharacterMicroButton:SetPoint("BOTTOMRIGHT", f, "BOTTOMLEFT", -300,0)
 		        MainMenuExpBar:ClearAllPoints()
 		        MainMenuExpBar:SetPoint("BOTTOMRIGHT", HelpMicroButton, "TOPRIGHT", 0, -39)
 		        --MainMenuExpBar.SetPoint = function() end
