@@ -115,9 +115,10 @@ local function toggle_blizz()
         CharacterBag3Slot:Hide()
         MainMenuExpBar:Hide()
         MainMenuExpBar:SetAlpha(0)
+        ReputationWatchBar:Hide()
         BlizzHide = true
     elseif BlizzHide == true then
-        MainMenuBarBackpackButton:SetPoint("BOTTOMRIGHT", MainMenuMicroButton, "TOPRIGHT", 0, -15)
+        MainMenuBarBackpackButton:SetPoint("BOTTOMRIGHT", MainMenuMicroButton, "TOPRIGHT", 0, -20)
         CharacterMicroButton:Show()
         SpellbookMicroButton:Show()
         TalentMicroButton:Show()
@@ -138,6 +139,7 @@ local function toggle_blizz()
         CharacterBag3Slot:Show()
         MainMenuExpBar:Show()
         MainMenuExpBar:SetAlpha(1)
+        ReputationWatchBar:Show()
         BlizzHide = false
     end
 end
@@ -156,7 +158,7 @@ frame:SetScript("OnEvent",function(self,event,id)
         --
         CharacterMicroButton:ClearAllPoints()
         CharacterMicroButton:SetPoint("RIGHT",145,0)
-        MainMenuBarBackpackButton:SetPoint("BOTTOMRIGHT", MainMenuMicroButton, "TOPRIGHT", 0, -15)
+        MainMenuExpBar:SetPoint("RIGHT", 0, 0)
         toggle_blizz()
 
         -- Exp bar
@@ -168,12 +170,23 @@ frame:SetScript("OnEvent",function(self,event,id)
             if texture then
                 texture:Hide()
             end
-        end    
+        end
+
+        -- Rep bar
+        local width, height = ReputationWatchBar:GetSize()
+        ReputationWatchBar:SetSize(width / 2, height)
+        ReputationWatchStatusBar:SetSize(width / 2, height)
+        ReputationWatchBarTexture2:Hide()
+        ReputationWatchBarTexture3:Hide()
+        ReputationXPBarTexture2:Hide()
+        ReputationXPBarTexture3:Hide()
 
         MainMenuBarTexture0:Hide()
         MainMenuBarTexture1:Hide()
         MainMenuBarTexture2:Hide()
         MainMenuBarTexture3:Hide()
+        MainMenuBarOverlayFrame:Hide()
+        MainMenuBarMaxLevelBar:Hide()
 
         ActionBarUpButton:Hide()
         ActionBarDownButton:Hide()
@@ -427,12 +440,14 @@ frame:SetScript("OnEvent",function(self,event,id)
             elseif f.hide == true then
                 f.t:SetTexture("Interface\\CHATFRAME\\UI-ChatIcon-Minimize-Up.blp")
 		        CharacterMicroButton:ClearAllPoints()
-		        CharacterMicroButton:SetPoint("BOTTOMRIGHT", f, "BOTTOMLEFT", -275, 0)
+		        CharacterMicroButton:SetPoint("BOTTOMRIGHT", f, "BOTTOMLEFT", -275, 20)
+                MainMenuExpBar:ClearAllPoints()
+                MainMenuExpBar:SetPoint("BOTTOMRIGHT", f, "BOTTOMLEFT", -10, 5)
+                ReputationWatchBar:ClearAllPoints()
+                ReputationWatchBar:SetPoint("BOTTOMRIGHT", f, "BOTTOMLEFT", -10, 5)
                 f.hide = false
             end
         end)
-        do return end
-
     elseif( event == "GROUP_ROSTER_UPDATE" or
         event == "PLAYER_TARGET_CHANGED" or
         event == "PLAYER_FOCUS_CHANGED" or
