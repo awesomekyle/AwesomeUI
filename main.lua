@@ -168,7 +168,9 @@ frame:SetScript("OnEvent",function(self,event,id)
             if texture then
                 texture:Hide()
             end
-        end    
+        end
+
+        MainMenuExpBar:SetPoint("BOTTOMRIGHT", MainMenuBarBackpackButton, "TOPRIGHT", 0, 0)
 
         MainMenuBarTexture0:Hide()
         MainMenuBarTexture1:Hide()
