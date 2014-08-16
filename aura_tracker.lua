@@ -7,40 +7,23 @@ local player_guid = UnitGUID("player")
 local auras_to_track = {
     ["MAGE"] = {  },
     ["PRIEST"] = { 
-        { "Evangelism" } 
     },
     ["WARLOCK"] = {  },
     ["DRUID"] = {  },
     ["MONK"] = {
-        { "Mana Tea", "Tigereye Brew", "Shuffle" },
-        { "Tiger Power" },
-        { "Vital Mists", "Storm, Earth, and Fire" },
-        { "Serpent's Zeal", "Touch of Karma" },
     },
     ["ROGUE"] = { 
-        { "Slice and Dice" },
-        { "Recuperate" },
     },
     ["HUNTER"] = {
-        { "Steady Focus" },
+        { "Lock and Load" }
     },
     ["SHAMAN"] = { 
-        { "Maelstrom Weapon" },
-        { "Searing Flames" },
         { "Lightning Shield", "Water Shield" }
     },
     ["DEATHKNIGHT"] = {  },
     ["PALADIN"] = {
-        { "Inquisition", },
-        { "Sacred Shield", },
-        { "Blessing of Kings", }
     },
     ["WARRIOR"] = {
-        { "Shield Barrier", "Sweeping Strikes" },
-        { "Shield Block" },
-        { "Berserker Rage", "Enrage" },
-        { "Battle Shout", "Trueshot Aura", "Horn of Winter" },
-        { "Commanding Shout", "Power Word: Fortitude", "Dark Intent", "Qiraji Fortitude" },
     }
 }
 local aura_size = 32
