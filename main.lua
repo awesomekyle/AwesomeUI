@@ -163,7 +163,7 @@ frame:SetScript("OnEvent",function(self,event,id)
 
         -- Exp bar
         local width, height = MainMenuExpBar:GetSize()
-        MainMenuExpBar:SetSize(width / 2, height)
+        MainMenuExpBar:SetSize(width/2, height)
         -- Hide XP bar ticks
         for i=19,10,-1 do
             local texture = _G["MainMenuXPBarDiv"..i];
