@@ -158,12 +158,13 @@ frame:SetScript("OnEvent",function(self,event,id)
         --
         CharacterMicroButton:ClearAllPoints()
         CharacterMicroButton:SetPoint("RIGHT",145,0)
-        MainMenuExpBar:SetPoint("RIGHT", 0, 0)
         toggle_blizz()
 
         -- Exp bar
         local width, height = MainMenuExpBar:GetSize()
         MainMenuExpBar:SetSize(width/2, height)
+        MainMenuExpBar.SetSize = function() end
+        ReputationWatchStatusBar:Hide()
         -- Hide XP bar ticks
         for i=19,10,-1 do
             local texture = _G["MainMenuXPBarDiv"..i];
@@ -172,7 +173,6 @@ frame:SetScript("OnEvent",function(self,event,id)
             end
         end
 
-        MainMenuExpBar:SetPoint("BOTTOMRIGHT", MainMenuBarBackpackButton, "TOPRIGHT", 0, 0)
         -- Rep bar
         local width, height = ReputationWatchBar:GetSize()
         ReputationWatchBar:SetSize(width / 2, height)
