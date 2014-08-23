@@ -188,6 +188,8 @@ frame:SetScript("OnEvent",function(self,event,id)
         MainMenuBarTexture3:Hide()
         MainMenuBarOverlayFrame:Hide()
         MainMenuBarMaxLevelBar:Hide()
+        MainMenuBarMaxLevelBar.Show = function() end
+        --MainMenuBarArtFrame:Hide()
 
         ActionBarUpButton:Hide()
         ActionBarDownButton:Hide()
