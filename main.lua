@@ -242,11 +242,11 @@ frame:SetScript("OnEvent",function(self,event,id)
         --
         -- Reposition tooltip --
         --
-        -- hooksecurefunc("GameTooltip_SetDefaultAnchor", function(tooltip, parent)
-        --     tooltip:SetOwner(parent, "ANCHOR_NONE")
-        --     tooltip:SetPoint("BOTTOMLEFT", "UIParent", "CENTER", 300,-50)
-        --     -- tooltip.default = 1
-        -- end);
+        hooksecurefunc("GameTooltip_SetDefaultAnchor", function(tooltip, parent)
+            tooltip:SetOwner(parent, "ANCHOR_CURSOR")
+            tooltip:SetPoint("BOTTOMLEFT", "UIParent", "CENTER", 300,-50)
+            -- tooltip.default = 1
+        end);
 
 
         --
