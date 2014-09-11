@@ -107,6 +107,9 @@ local function toggle_blizz()
         StoreMicroButton:Hide()
         StoreMicroButton:SetAlpha(0)
         MainMenuMicroButton:Hide()
+        if(PVPMicroButton) then
+            PVPMicroButton:Hide()
+        end
         
         MainMenuBarBackpackButton:Hide()
         CharacterBag0Slot:Hide()
@@ -131,6 +134,9 @@ local function toggle_blizz()
         StoreMicroButton:Show()
         StoreMicroButton:SetAlpha(1)
         MainMenuMicroButton:Show()
+        if(PVPMicroButton) then
+            PVPMicroButton:Show()
+        end
         
         MainMenuBarBackpackButton:Show()
         CharacterBag0Slot:Show()
@@ -443,9 +449,9 @@ frame:SetScript("OnEvent",function(self,event,id)
             elseif f.hide == true then
                 f.t:SetTexture("Interface\\CHATFRAME\\UI-ChatIcon-Minimize-Up.blp")
 		        CharacterMicroButton:ClearAllPoints()
-		        CharacterMicroButton:SetPoint("BOTTOMRIGHT", f, "BOTTOMLEFT", -275, 20)
+		        CharacterMicroButton:SetPoint("BOTTOMRIGHT", f, "BOTTOMLEFT", -275, 15)
                 MainMenuExpBar:ClearAllPoints()
-                MainMenuExpBar:SetPoint("BOTTOMRIGHT", f, "BOTTOMLEFT", -10, 5)
+                MainMenuExpBar:SetPoint("BOTTOMRIGHT", f, "BOTTOMLEFT", -10, 0)
                 ReputationWatchBar:ClearAllPoints()
                 ReputationWatchBar:SetPoint("BOTTOMRIGHT", f, "BOTTOMLEFT", -10, 5)
                 f.hide = false
