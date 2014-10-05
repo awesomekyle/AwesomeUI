@@ -249,9 +249,9 @@ frame:SetScript("OnEvent",function(self,event,id)
         -- Reposition tooltip --
         --
         hooksecurefunc("GameTooltip_SetDefaultAnchor", function(tooltip, parent)
-            tooltip:SetOwner(parent, "ANCHOR_CURSOR")
-            tooltip:SetPoint("BOTTOMLEFT", "UIParent", "CENTER", 300,-50)
-            -- tooltip.default = 1
+            --tooltip:SetOwner(parent, "ANCHOR_CURSOR")
+            --tooltip:SetPoint("BOTTOMLEFT", "UIParent", "CENTER", 300,-50)
+            --tooltip.default = 1
         end);
 
 
@@ -533,8 +533,11 @@ local function Install()
     ChatFrame_AddMessageGroup( ChatFrame5, "PARTY_LEADER" );
     ChatFrame_AddMessageGroup( ChatFrame5, "RAID" );
     ChatFrame_AddMessageGroup( ChatFrame5, "RAID_LEADER" );
+    ChatFrame_AddMessageGroup( ChatFrame5, "RAID_WARNING" );
     ChatFrame_AddMessageGroup( ChatFrame5, "BATTLEGROUND" );
     ChatFrame_AddMessageGroup( ChatFrame5, "BATTLEGROUND_LEADER" );
+    ChatFrame_AddMessageGroup( ChatFrame5, "INSTANCE_CHAT")
+    ChatFrame_AddMessageGroup( ChatFrame5, "INSTANCE_CHAT_LEADER")
     ChatFrame_AddMessageGroup( ChatFrame5, "EMOTE" );
 
     -- Set up the misc tab

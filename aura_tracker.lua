@@ -28,6 +28,8 @@ local auras_to_track = {
     ["PALADIN"] = {
     },
     ["WARRIOR"] = {
+        { "Shield Block" },
+        { "Shield Barrier" },
     }
 }
 local aura_size = 32
