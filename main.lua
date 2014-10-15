@@ -69,7 +69,7 @@ local function update_actionbars()
     MainMenuExpBar:SetPoint("BOTTOM", MultiBarBottomLeft, "TOP", 0, 4)
 
     ActionButton1:ClearAllPoints()
-    ActionButton1:SetPoint("LEFT", UIParent, "CENTER", -123, -190)
+    ActionButton1:SetPoint("LEFT", UIParent, "CENTER", -123, -230)
     ActionButton7:ClearAllPoints()
     ActionButton7:SetPoint("TOP", ActionButton1, "BOTTOM", 0, -kActionBarSpacing)
 
@@ -346,7 +346,7 @@ frame:SetScript("OnEvent",function(self,event,id)
         -- Setup cast bars --
         --
         CastingBarFrame:ClearAllPoints()
-        CastingBarFrame:SetPoint("CENTER", UIParent, "CENTER", 0, -270)
+        CastingBarFrame:SetPoint("CENTER", UIParent, "CENTER", 0, -330)
         CastingBarFrame:SetHeight(12)
         CastingBarFrame.SetPoint = function() end
 
