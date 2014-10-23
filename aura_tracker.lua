@@ -1,3 +1,4 @@
+
 --
 -- Auras to track
 --
@@ -13,15 +14,18 @@ local auras_to_track = {
     ["MONK"] = {
         { "Mana Tea", "Tigereye Brew", "Shuffle" },
         { "Tiger Power" },
-        { "Vital Mists", "Storm, Earth, and Fire" },
+        { "Elusive Brew", "Vital Mists", "Storm, Earth, and Fire" },
         { "Serpent's Zeal", "Touch of Karma" },
     },
     ["ROGUE"] = { 
     },
     ["HUNTER"] = {
-        { "Lock and Load" }
+        { "Lock and Load", "Sniper Training", "Sniper Training: Recently Moved" },
+        { "Steady Focus", },
+        { "Misdirection" }
     },
     ["SHAMAN"] = { 
+        { "Tidal Waves" },
         { "Lightning Shield", "Water Shield" }
     },
     ["DEATHKNIGHT"] = {  },

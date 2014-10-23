@@ -1,60 +1,3 @@
--- Set up frame to run on login
-local frame = CreateFrame("Frame");
-frame:RegisterEvent("PLAYER_LOGIN")
-frame:RegisterEvent("PLAYER_ENTERING_WORLD")
-frame:RegisterEvent("PLAYER_TALENT_UPDATE")
-frame:RegisterEvent("ADDON_LOADED")
-frame:RegisterEvent("GROUP_ROSTER_UPDATE")
-frame:RegisterEvent("PLAYER_TARGET_CHANGED")
-frame:RegisterEvent("PLAYER_FOCUS_CHANGED")
-frame:RegisterEvent("UNIT_FACTION")
-
-local show_macros = true
-local show_keybinds = true
-
-
-local function toggle_keybinds()
-    show_keybinds = not show_keybinds
-    if(show_keybinds == true) then
-        for i=1, 12 do
-            _G["ActionButton"..i.."HotKey"]:SetAlpha(1) -- main bar
-            _G["MultiBarBottomRightButton"..i.."HotKey"]:SetAlpha(1) -- bottom right bar
-            _G["MultiBarBottomLeftButton"..i.."HotKey"]:SetAlpha(1) -- bottom left bar
-            _G["MultiBarRightButton"..i.."HotKey"]:SetAlpha(1) -- right bar
-            _G["MultiBarLeftButton"..i.."HotKey"]:SetAlpha(1) -- left bar
-        end
-    else
-        for i=1, 12 do
-            _G["ActionButton"..i.."HotKey"]:SetAlpha(0) -- main bar
-            _G["MultiBarBottomRightButton"..i.."HotKey"]:SetAlpha(0) -- bottom right bar
-            _G["MultiBarBottomLeftButton"..i.."HotKey"]:SetAlpha(0) -- bottom left bar
-            _G["MultiBarRightButton"..i.."HotKey"]:SetAlpha(0) -- right bar
-            _G["MultiBarLeftButton"..i.."HotKey"]:SetAlpha(0) -- left bar
-        end
-    end
-end
-
-local function toggle_macros()
-    show_macros = not show_macros
-    if(show_macros == true) then
-        for i=1, 12 do
-            _G["ActionButton"..i.."Name"]:SetAlpha(1) -- main bar
-            _G["MultiBarBottomRightButton"..i.."Name"]:SetAlpha(1) -- bottom right bar
-            _G["MultiBarBottomLeftButton"..i.."Name"]:SetAlpha(1) -- bottom left bar
-            _G["MultiBarRightButton"..i.."Name"]:SetAlpha(1) -- right bar
-            _G["MultiBarLeftButton"..i.."Name"]:SetAlpha(1) -- left bar
-        end
-    else
-        for i=1, 12 do
-            _G["ActionButton"..i.."Name"]:SetAlpha(0) -- main bar
-            _G["MultiBarBottomRightButton"..i.."Name"]:SetAlpha(0) -- bottom right bar
-            _G["MultiBarBottomLeftButton"..i.."Name"]:SetAlpha(0) -- bottom left bar
-            _G["MultiBarRightButton"..i.."Name"]:SetAlpha(0) -- right bar
-            _G["MultiBarLeftButton"..i.."Name"]:SetAlpha(0) -- left bar
-        end
-    end
-end
-
 local function update_actionbars()
     local kActionBarSpacing = 4
 
@@ -69,7 +12,7 @@ local function update_actionbars()
     MainMenuExpBar:SetPoint("BOTTOM", MultiBarBottomLeft, "TOP", 0, 4)
 
     ActionButton1:ClearAllPoints()
-    ActionButton1:SetPoint("LEFT", UIParent, "CENTER", -123, -230)
+    ActionButton1:SetPoint("LEFT", UIParent, "CENTER", -123, -160)
     ActionButton7:ClearAllPoints()
     ActionButton7:SetPoint("TOP", ActionButton1, "BOTTOM", 0, -kActionBarSpacing)
 
@@ -150,6 +93,16 @@ local function toggle_blizz()
     end
 end
 
+-- Set up frame to run on login
+local frame = CreateFrame("Frame");
+frame:RegisterEvent("PLAYER_LOGIN")
+frame:RegisterEvent("PLAYER_ENTERING_WORLD")
+frame:RegisterEvent("PLAYER_TALENT_UPDATE")
+frame:RegisterEvent("ADDON_LOADED")
+frame:RegisterEvent("GROUP_ROSTER_UPDATE")
+frame:RegisterEvent("PLAYER_TARGET_CHANGED")
+frame:RegisterEvent("PLAYER_FOCUS_CHANGED")
+frame:RegisterEvent("UNIT_FACTION")
 
 frame:SetScript("OnEvent",function(self,event,id)
     if(event == "PLAYER_LOGIN") then
@@ -163,23 +116,7 @@ frame:SetScript("OnEvent",function(self,event,id)
         -- Hide Blizzard stuff
         --
         CharacterMicroButton:ClearAllPoints()
-        CharacterMicroButton:SetPoint("RIGHT",145,0)
-        toggle_blizz()
-
-        -- Exp bar
-        local width, height = MainMenuExpBar:GetSize()
-        MainMenuExpBar:SetSize(width/2, height)
-        MainMenuExpBar.SetSize = function() end
-        ReputationWatchStatusBar:Hide()
-        -- Hide XP bar ticks
-        for i=19,10,-1 do
-            local texture = _G["MainMenuXPBarDiv"..i];
-            if texture then
-                texture:Hide()
-            end
-        end
-
-        -- Rep bar
+        CharacterMicroButton:SetPoint("RIGHT",145,0)-- Rep bar
         local width, height = ReputationWatchBar:GetSize()
         ReputationWatchBar:SetSize(width / 2, height)
         ReputationWatchStatusBar:SetSize(width / 2, height)
@@ -201,152 +138,125 @@ frame:SetScript("OnEvent",function(self,event,id)
         ActionBarDownButton:Hide()
         MainMenuBarPageNumber:SetAlpha(0)
 
-
-        -- CharacterMicroButton:Hide()
-        -- SpellbookMicroButton:Hide()
-        -- TalentMicroButton:Hide()
-        -- AchievementMicroButton:SetAlpha(0)
-        -- QuestLogMicroButton:Hide()
-        -- GuildMicroButton:Hide()
-        -- PVPMicroButton:Hide()
-        -- LFDMicroButton:Hide()
-        -- CompanionsMicroButton:Hide()
-        -- EJMicroButton:Hide()
-        -- MainMenuMicroButton:Hide()
-        -- HelpMicroButton:SetAlpha(0)
-        -- MainMenuBarBackpackButton:Hide()
-        -- StoreMicroButton:Hide()
-        -- CharacterBag0Slot:Hide()
-        -- CharacterBag1Slot:Hide()
-        -- CharacterBag2Slot:Hide()
-        -- CharacterBag3Slot:Hide()
-
-        -- MainMenuExpBar:SetStatusBarColor(1,0,0)
-
-        -- ReputationWatchBar:Hide()
-        -- ReputationWatchBar:SetAlpha(0)
-        -- MainMenuExpBar:Hide()
-        -- MainMenuExpBar:SetAlpha(0)
-        -- MainMenuBarMaxLevelBar:SetAlpha(0) -- hide the xp bar
-
+        toggle_blizz()
         update_actionbars()
 
-
-        --
-        -- Turn off keybinds and macro names
-        --
-        toggle_keybinds()
-        toggle_macros()
-
-        --
-        -- Resize target and player frames
-        --
-        PlayerFrame:SetScale(1.2)
-        TargetFrame:SetScale(1.2)
-
-
-        --
-        -- Reposition tooltip --
-        --
-        hooksecurefunc("GameTooltip_SetDefaultAnchor", function(tooltip, parent)
-            --tooltip:SetOwner(parent, "ANCHOR_CURSOR")
-            --tooltip:SetPoint("BOTTOMLEFT", "UIParent", "CENTER", 300,-50)
-            --tooltip.default = 1
-        end);
-
-
-        --
-        -- Class icons instead of portraits
-        --
-        hooksecurefunc("UnitFramePortrait_Update",function(self)
-            if self.portrait then
-                if UnitIsPlayer(self.unit) then                         
-                    local t = CLASS_ICON_TCOORDS[select(2, UnitClass(self.unit))]
-                    if t then
-                        self.portrait:SetTexture("Interface\\TargetingFrame\\UI-Classes-Circles")
-                        self.portrait:SetTexCoord(unpack(t))
-                    end
-                else
-                    self.portrait:SetTexCoord(0,1,0,1)
-                end
-            end
-        end)
-
-
-        --
-        -- Class color in HP bars
-        --
-        local function colour(statusbar, unit)
-            local _, class, c
-            if UnitIsPlayer(unit) and UnitIsConnected(unit) and unit == statusbar.unit and UnitClass(unit) then
-                _, class = UnitClass(unit)
-                c = CUSTOM_CLASS_COLORS and CUSTOM_CLASS_COLORS[class] or RAID_CLASS_COLORS[class]
-                statusbar:SetStatusBarColor(c.r, c.g, c.b)
-                PlayerFrameHealthBar:SetStatusBarColor(0,1,0)
+        -- Exp bar
+        local width, height = MainMenuExpBar:GetSize()
+        MainMenuExpBar:SetSize(width/2, height)
+        MainMenuExpBar.SetSize = function() end
+        ReputationWatchStatusBar:Hide()
+        -- Hide XP bar ticks
+        for i=19,10,-1 do
+            local texture = _G["MainMenuXPBarDiv"..i];
+            if texture then
+                texture:Hide()
             end
         end
+ 
+        if(false) then
+            --
+            -- Reposition tooltip --
+            --
+            hooksecurefunc("GameTooltip_SetDefaultAnchor", function(tooltip, parent)
+                tooltip:SetOwner(parent, "ANCHOR_CURSOR")
+                tooltip:SetPoint("BOTTOMLEFT", "UIParent", "CENTER", 300,-50)
+                tooltip.default = 1
+            end);
+        end
 
-        hooksecurefunc("UnitFrameHealthBar_Update", colour)
-        hooksecurefunc("HealthBar_OnValueChanged", function(self)
-            colour(self, self.unit)
-        end)
+        if(true) then
+            --
+            -- Resize target and player frames
+            --
+            PlayerFrame:SetScale(1.2)
+            TargetFrame:SetScale(1.2)
+
+            --
+            -- Class icons instead of portraits
+            --
+            hooksecurefunc("UnitFramePortrait_Update",function(self)
+                if self.portrait then
+                    if UnitIsPlayer(self.unit) then                         
+                        local t = CLASS_ICON_TCOORDS[select(2, UnitClass(self.unit))]
+                        if t then
+                            self.portrait:SetTexture("Interface\\TargetingFrame\\UI-Classes-Circles")
+                            self.portrait:SetTexCoord(unpack(t))
+                        end
+                    else
+                        self.portrait:SetTexCoord(0,1,0,1)
+                    end
+                end
+            end)
 
 
-        --
-        -- Move debuffs
-        --
-        hooksecurefunc("CreateFrame", function(frameType, name, frame, ...)
-            local _, playerClass = UnitClass("player")
-            if (name ~= "DebuffButton1") then return end
-
-            DebuffButton1:ClearAllPoints()
-            if( playerClass == "PALADIN") then
-                DebuffButton1:SetPoint("TOPRIGHT", PaladinPowerBar, "BOTTOMRIGHT", 0, 0)
-            elseif ( playerClass == "DEATHKNIGHT" ) then
-                DebuffButton1:SetPoint("TOPRIGHT", RuneFrame, "BOTTOMRIGHT", 0, -10)
-            -- elseif ( playerClass == "WARLOCK" ) then
-            --     DebuffButton1:SetPoint("TOPRIGHT", PlayerFrame, "BOTTOMRIGHT", 0, 10)
-            elseif ( playerClass == "PRIEST" ) then
-                DebuffButton1:SetPoint("TOPRIGHT", PlayerFrame, "BOTTOMRIGHT", 0, 13)
-            elseif ( playerClass == "SHAMAN" ) then
-                DebuffButton1:SetPoint("TOPRIGHT", TotemFrame, "BOTTOMRIGHT", 0, 0)
-            elseif ( playerClass == "HUNTER" or playerClass == "WARLOCK") then
-                DebuffButton1:SetPoint("TOPRIGHT", PetFrame, "BOTTOMRIGHT", 9, -7)
-            elseif ( playerClass == "MONK" ) then
-                DebuffButton1:SetPoint("TOPRIGHT", PlayerFrame, "BOTTOMRIGHT", 0, 0)
-            else
-                DebuffButton1:SetPoint("TOPRIGHT", PlayerFrame, "BOTTOMRIGHT", 0, 25)
+            --
+            -- Class color in HP bars
+            --
+            local function color(statusbar, unit)
+                local _, class, c
+                if UnitIsPlayer(unit) and UnitIsConnected(unit) and unit == statusbar.unit and UnitClass(unit) then
+                    _, class = UnitClass(unit)
+                    c = CUSTOM_CLASS_COLORS and CUSTOM_CLASS_COLORS[class] or RAID_CLASS_COLORS[class]
+                    statusbar:SetStatusBarColor(c.r, c.g, c.b)
+                    --PlayerFrameHealthBar:SetStatusBarColor(0,1,0)
+                end
             end
-            DebuffButton1.SetPoint = function() end
-            DebuffButton1.SetParent = function() end
-        end);   
 
-        --
-        -- Darken stuff
-        --
-        if (addon == "Blizzard_TimeManager") then
+            hooksecurefunc("UnitFrameHealthBar_Update", color)
+            hooksecurefunc("HealthBar_OnValueChanged", function(self)
+                color(self, self.unit)
+            end)
+
+            --
+            -- Move debuffs
+            --
+            hooksecurefunc("CreateFrame", function(frameType, name, frame, ...)
+                local _, playerClass = UnitClass("player")
+                if (name ~= "DebuffButton1") then return end
+
+                DebuffButton1:ClearAllPoints()
+                if( playerClass == "PALADIN") then
+                    DebuffButton1:SetPoint("TOPRIGHT", PaladinPowerBar, "BOTTOMRIGHT", 0, 0)
+                elseif ( playerClass == "DEATHKNIGHT" ) then
+                    DebuffButton1:SetPoint("TOPRIGHT", RuneFrame, "BOTTOMRIGHT", 0, -10)
+                -- elseif ( playerClass == "WARLOCK" ) then
+                --     DebuffButton1:SetPoint("TOPRIGHT", PlayerFrame, "BOTTOMRIGHT", 0, 10)
+                elseif ( playerClass == "PRIEST" ) then
+                    DebuffButton1:SetPoint("TOPRIGHT", PlayerFrame, "BOTTOMRIGHT", 0, 13)
+                elseif ( playerClass == "SHAMAN" ) then
+                    DebuffButton1:SetPoint("TOPRIGHT", TotemFrame, "BOTTOMRIGHT", 0, 0)
+                elseif ( playerClass == "HUNTER" or playerClass == "WARLOCK") then
+                    DebuffButton1:SetPoint("TOPRIGHT", PetFrame, "BOTTOMRIGHT", 9, -7)
+                elseif ( playerClass == "MONK" ) then
+                    DebuffButton1:SetPoint("TOPRIGHT", PlayerFrame, "BOTTOMRIGHT", 0, 0)
+                else
+                    DebuffButton1:SetPoint("TOPRIGHT", PlayerFrame, "BOTTOMRIGHT", 0, 25)
+                end
+                DebuffButton1.SetPoint = function() end
+                DebuffButton1.SetParent = function() end
+            end);   
+
+            --
+            -- Darken stuff
+            --
             for i, v in pairs({PlayerFrameTexture, TargetFrameTextureFrameTexture, PetFrameTexture, PartyMemberFrame1Texture, PartyMemberFrame2Texture, PartyMemberFrame3Texture, PartyMemberFrame4Texture,
                 PartyMemberFrame1PetFrameTexture, PartyMemberFrame2PetFrameTexture, PartyMemberFrame3PetFrameTexture, PartyMemberFrame4PetFrameTexture, FocusFrameTextureFrameTexture,
                 TargetFrameToTTextureFrameTexture, FocusFrameToTTextureFrameTexture, BonusActionBarFrameTexture0, BonusActionBarFrameTexture1, BonusActionBarFrameTexture2, BonusActionBarFrameTexture3,
                 BonusActionBarFrameTexture4, MainMenuBarTexture0, MainMenuBarTexture1, MainMenuBarTexture2, MainMenuBarTexture3, MainMenuMaxLevelBar0, MainMenuMaxLevelBar1, MainMenuMaxLevelBar2,
                 MainMenuMaxLevelBar3, MinimapBorder, CastingBarFrameBorder, FocusFrameSpellBarBorder, TargetFrameSpellBarBorder, MiniMapTrackingButtonBorder, MiniMapLFGFrameBorder, MiniMapBattlefieldBorder,
                 MiniMapMailBorder, MinimapBorderTop,
-                select(1, TimeManagerClockButton:GetRegions())
                 }) do
-                v:SetVertexColor(0, .4, .4)
+                v:SetVertexColor(0.5, 0.5, 0.5)
             end
 
-            for i,v in pairs({ select(2, TimeManagerClockButton:GetRegions()) }) do
-                v:SetVertexColor(1, 1, 1)
-            end
         end
-
 
         --
         -- Setup cast bars --
         --
         CastingBarFrame:ClearAllPoints()
-        CastingBarFrame:SetPoint("CENTER", UIParent, "CENTER", 0, -330)
+        CastingBarFrame:SetPoint("CENTER", UIParent, "CENTER", 0, -240)
         CastingBarFrame:SetHeight(12)
         CastingBarFrame.SetPoint = function() end
 
@@ -404,7 +314,6 @@ frame:SetScript("OnEvent",function(self,event,id)
         MiniMapTracking:ClearAllPoints()
         MiniMapTracking:SetPoint("TOPRIGHT", -26, 7)
 
-
         --
         -- Create button to toggle blizzard UI
         --
@@ -461,6 +370,7 @@ frame:SetScript("OnEvent",function(self,event,id)
         event == "PLAYER_TARGET_CHANGED" or
         event == "PLAYER_FOCUS_CHANGED" or
         event == "UNIT_FACTION") then
+        -- Change color of player name bar
         if UnitIsPlayer("target") then
             c = RAID_CLASS_COLORS[select(2, UnitClass("target"))]
             TargetFrameNameBackground:SetVertexColor(c.r, c.g, c.b)
