@@ -10,7 +10,9 @@ local auras_to_track = {
     ["PRIEST"] = { 
     },
     ["WARLOCK"] = {  },
-    ["DRUID"] = {  },
+    ["DRUID"] = { 
+        { "Savage Roar" } 
+    },
     ["MONK"] = {
         { "Mana Tea", "Tigereye Brew", "Shuffle" },
         { "Tiger Power" },
@@ -30,6 +32,11 @@ local auras_to_track = {
     },
     ["DEATHKNIGHT"] = {  },
     ["PALADIN"] = {
+        { "Sacred Shield", },
+        { "Divine Protection", "Supplication" },
+        { "Ardent Defender", },
+        { "Guardian of the Ancient Kings", },
+        { "Divine Shield", },
     },
     ["WARRIOR"] = {
         { "Shield Block" },

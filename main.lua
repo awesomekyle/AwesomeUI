@@ -247,7 +247,7 @@ frame:SetScript("OnEvent",function(self,event,id)
                 MainMenuMaxLevelBar3, MinimapBorder, CastingBarFrameBorder, FocusFrameSpellBarBorder, TargetFrameSpellBarBorder, MiniMapTrackingButtonBorder, MiniMapLFGFrameBorder, MiniMapBattlefieldBorder,
                 MiniMapMailBorder, MinimapBorderTop,
                 }) do
-                v:SetVertexColor(0.5, 0.5, 0.5)
+                -- v:SetVertexColor(0.5, 0.5, 0.5)
             end
 
         end
@@ -270,10 +270,10 @@ frame:SetScript("OnEvent",function(self,event,id)
         CastingBarFrameText:ClearAllPoints()
         CastingBarFrameText:SetPoint("CENTER",0,1)
 
-        TargetFrameSpellBar:ClearAllPoints()
-        TargetFrameSpellBar:SetPoint("CENTER", UIParent, "CENTER", 0, 140)
-        TargetFrameSpellBar.SetPoint = function() end
-        TargetFrameSpellBar:SetScale( 1.5 )
+        -- TargetFrameSpellBar:ClearAllPoints()
+        -- TargetFrameSpellBar:SetPoint("CENTER", UIParent, "CENTER", 0, 140)
+        -- TargetFrameSpellBar.SetPoint = function() end
+        -- TargetFrameSpellBar:SetScale( 1.5 )
 
         --
         -- Casting bar timer
