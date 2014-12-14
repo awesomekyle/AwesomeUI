@@ -39,8 +39,12 @@ local auras_to_track = {
         { "Divine Shield", },
     },
     ["WARRIOR"] = {
-        { "Shield Block" },
+        { "Shield Block", "Shield Charge" },
         { "Shield Barrier" },
+        { "Demoralizing Shout" },
+        { "Shield Wall" },
+        { "Last Stand" },
+        { "Enraged Regeneration" },
     }
 }
 local aura_size = 32
