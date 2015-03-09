@@ -1,6 +1,6 @@
-## Interface: 60000
+## Interface: 60100
 ## Title: AwesomeUI
-## Version: 0.0.1
+## Version: 0.0.2
 ## Notes: Very basic UI addon
 ## Author: Kyle Weicht
 AwesomeUI.xml

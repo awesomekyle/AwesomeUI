@@ -1,4 +1,3 @@
-
 --
 -- Auras to track
 --
@@ -91,7 +90,6 @@ frame:SetScript("OnEvent",function(self,event,...)
         end
     elseif( event == "ADDON_LOADED" and ... == "AwesomeUI" ) then
         print("Aura Tracker loaded")
-
         --
         -- Create each aura button
         --
