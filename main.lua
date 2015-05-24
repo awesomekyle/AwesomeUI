@@ -1,3 +1,98 @@
+local function update_actionbars()
+    local kActionBarSpacing = 4
+
+    --MultiBarBottomRight:SetParent(UIParent)
+    MultiBarBottomRight:ClearAllPoints()
+    MultiBarBottomRight:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, kActionBarSpacing/2)
+    --MultiBarBottomLeft:SetParent(UIParent)
+    MultiBarBottomLeft:ClearAllPoints()
+    MultiBarBottomLeft:SetPoint("BOTTOM", MultiBarBottomRight, "TOP", 0, kActionBarSpacing)
+    MultiBarBottomLeft.SetPoint = function() end
+    MainMenuExpBar:ClearAllPoints()
+    MainMenuExpBar:SetPoint("BOTTOM", MultiBarBottomLeft, "TOP", 0, 4)
+
+    ActionButton1:ClearAllPoints()
+    ActionButton1:SetPoint("LEFT", UIParent, "CENTER", -123, -160)
+    ActionButton7:ClearAllPoints()
+    ActionButton7:SetPoint("TOP", ActionButton1, "BOTTOM", 0, -kActionBarSpacing)
+
+    for i=1, 12 do
+        _G["ActionButton"..i]:SetAlpha(.8) -- main bar
+    end
+
+    PetActionBarFrame:ClearAllPoints()
+    PetActionBarFrame:SetPoint("BOTTOMRIGHT", MultiBarBottomLeft, "TOPRIGHT", 31, kActionBarSpacing)
+    PetActionBarFrame:SetScale(0.9)
+
+    StanceButton1:ClearAllPoints()
+    StanceButton1:SetPoint("BOTTOMLEFT", MultiBarBottomLeft, "TOPLEFT", 10, kActionBarSpacing+2)
+    StanceButton1:SetScale(0.75)
+
+    for i=2, 8 do
+        -- _G["StanceButton"..i]:ClearAllPoints()
+        -- _G["StanceButton"..i]:SetPoint("BOTTOM", _G["StanceButton"..i-1], "TOP", 0, kActionBarSpacing)
+        _G["StanceButton"..i]:SetScale(0.75)
+    end
+end
+
+local BlizzHide = false
+local function toggle_blizz()
+    if BlizzHide == false then
+        CharacterMicroButton:Hide()
+        SpellbookMicroButton:Hide()
+        TalentMicroButton:Hide()
+        AchievementMicroButton:SetAlpha(0)
+        QuestLogMicroButton:Hide()
+        GuildMicroButton:Hide()
+        LFDMicroButton:Hide()
+        CollectionsMicroButton:Hide()
+        EJMicroButton:Hide()
+        StoreMicroButton:Hide()
+        StoreMicroButton:SetAlpha(0)
+        MainMenuMicroButton:Hide()
+        if(PVPMicroButton) then
+            PVPMicroButton:Hide()
+        end
+        
+        MainMenuBarBackpackButton:Hide()
+        CharacterBag0Slot:Hide()
+        CharacterBag1Slot:Hide()
+        CharacterBag2Slot:Hide()
+        CharacterBag3Slot:Hide()
+        MainMenuExpBar:Hide()
+        MainMenuExpBar:SetAlpha(0)
+        ReputationWatchBar:Hide()
+        BlizzHide = true
+    elseif BlizzHide == true then
+        MainMenuBarBackpackButton:SetPoint("BOTTOMRIGHT", MainMenuMicroButton, "TOPRIGHT", 0, -20)
+        CharacterMicroButton:Show()
+        SpellbookMicroButton:Show()
+        TalentMicroButton:Show()
+        AchievementMicroButton:SetAlpha(1)
+        QuestLogMicroButton:Show()
+        GuildMicroButton:Show()
+        LFDMicroButton:Show()
+        CollectionsMicroButton:Show()
+        EJMicroButton:Show()
+        StoreMicroButton:Show()
+        StoreMicroButton:SetAlpha(1)
+        MainMenuMicroButton:Show()
+        if(PVPMicroButton) then
+            PVPMicroButton:Show()
+        end
+        
+        MainMenuBarBackpackButton:Show()
+        CharacterBag0Slot:Show()
+        CharacterBag1Slot:Show()
+        CharacterBag2Slot:Show()
+        CharacterBag3Slot:Show()
+        MainMenuExpBar:Show()
+        MainMenuExpBar:SetAlpha(1)
+        ReputationWatchBar:Show()
+        BlizzHide = false
+    end
+end
+
 -- Set up frame to run on login
 local frame = CreateFrame("Frame");
 frame:RegisterEvent("PLAYER_LOGIN")
@@ -11,6 +106,54 @@ frame:RegisterEvent("UNIT_FACTION")
 
 frame:SetScript("OnEvent",function(self,event,id)
     if(event == "PLAYER_LOGIN") then
+        --
+        -- Disable Dragon end caps
+        --
+        MainMenuBarLeftEndCap:Hide()
+        MainMenuBarRightEndCap:Hide()
+
+        --
+        -- Hide Blizzard stuff
+        --
+        CharacterMicroButton:ClearAllPoints()
+        CharacterMicroButton:SetPoint("RIGHT",145,0)-- Rep bar
+        local width, height = ReputationWatchBar:GetSize()
+        ReputationWatchBar:SetSize(width / 2, height)
+        ReputationWatchStatusBar:SetSize(width / 2, height)
+        ReputationWatchBarTexture2:Hide()
+        ReputationWatchBarTexture3:Hide()
+        ReputationXPBarTexture2:Hide()
+        ReputationXPBarTexture3:Hide()
+
+        MainMenuBarTexture0:Hide()
+        MainMenuBarTexture1:Hide()
+        MainMenuBarTexture2:Hide()
+        MainMenuBarTexture3:Hide()
+        MainMenuBarOverlayFrame:Hide()
+        MainMenuBarMaxLevelBar:Hide()
+        MainMenuBarMaxLevelBar.Show = function() end
+        --MainMenuBarArtFrame:Hide()
+
+        ActionBarUpButton:Hide()
+        ActionBarDownButton:Hide()
+        MainMenuBarPageNumber:SetAlpha(0)
+
+        toggle_blizz()
+        update_actionbars()
+
+        -- Exp bar
+        local width, height = MainMenuExpBar:GetSize()
+        MainMenuExpBar:SetSize(width/2, height)
+        MainMenuExpBar.SetSize = function() end
+        ReputationWatchStatusBar:Hide()
+        -- Hide XP bar ticks
+        for i=19,10,-1 do
+            local texture = _G["MainMenuXPBarDiv"..i];
+            if texture then
+                texture:Hide()
+            end
+        end
+
         --
         -- Class icons instead of portraits
         --
@@ -132,6 +275,59 @@ frame:SetScript("OnEvent",function(self,event,id)
             end)
         MiniMapTracking:ClearAllPoints()
         MiniMapTracking:SetPoint("TOPRIGHT", -26, 7)
+        
+        --
+        -- Create button to toggle blizzard UI
+        --
+        local f = CreateFrame("Button",nil,UIParent)
+        f:SetSize(30,30)
+        f.t=f:CreateTexture(nil,"BORDER")
+        f.t:SetTexture("Interface\\CHATFRAME\\UI-ChatIcon-Maximize-Up.blp")
+        f.t:SetAllPoints(f)
+        f:SetPoint("BOTTOMRIGHT", UIParent,"BOTTOMRIGHT",0,0)
+        f:Show()
+        f.hide = true
+
+        f:SetScript("OnMouseDown", function(self, button)
+                if f.hide  == false then
+                        if button == "LeftButton" then
+                                f.t:SetTexture("Interface\\CHATFRAME\\UI-ChatIcon-Minimize-Down.blp")
+                        end
+                elseif f.hide == true then
+                        if button == "LeftButton" then
+                                f.t:SetTexture("Interface\\CHATFRAME\\UI-ChatIcon-Maximize-Down.blp")
+                        end
+                end
+        end)
+
+        f:SetScript("OnMouseUp", function(self, button)
+                if f.hide  == false then
+                        if button == "LeftButton" then
+                                f.t:SetTexture("Interface\\CHATFRAME\\UI-ChatIcon-Minimize-Up.blp")
+                        end
+                elseif f.hide == true then
+                        if button == "LeftButton" then
+                                f.t:SetTexture("Interface\\CHATFRAME\\UI-ChatIcon-Maximize-Up.blp")
+                        end
+                end
+        end)
+
+        f:SetScript("OnClick", function(self, button)
+            toggle_blizz()
+            if f.hide == false then
+                f.t:SetTexture("Interface\\CHATFRAME\\UI-ChatIcon-Maximize-Up.blp")
+                f.hide = true
+            elseif f.hide == true then
+                f.t:SetTexture("Interface\\CHATFRAME\\UI-ChatIcon-Minimize-Up.blp")
+                CharacterMicroButton:ClearAllPoints()
+                CharacterMicroButton:SetPoint("BOTTOMRIGHT", f, "BOTTOMLEFT", -275, 15)
+                MainMenuExpBar:ClearAllPoints()
+                MainMenuExpBar:SetPoint("BOTTOMRIGHT", f, "BOTTOMLEFT", -10, 0)
+                ReputationWatchBar:ClearAllPoints()
+                ReputationWatchBar:SetPoint("BOTTOMRIGHT", f, "BOTTOMLEFT", -10, 5)
+                f.hide = false
+            end
+        end)
 
     elseif( event == "GROUP_ROSTER_UPDATE" or
         event == "PLAYER_TARGET_CHANGED" or
