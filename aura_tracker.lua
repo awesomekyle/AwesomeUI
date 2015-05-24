@@ -10,7 +10,7 @@ local auras_to_track = {
     },
     ["WARLOCK"] = {  },
     ["DRUID"] = { 
-        { "Savage Roar" } 
+        { "Savage Roar", "Savage Defense" } 
     },
     ["MONK"] = {
         { "Mana Tea", "Tigereye Brew", "Shuffle" },
