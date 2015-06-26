@@ -22,6 +22,7 @@ local auras_to_track = {
     },
     ["HUNTER"] = {
         { "Lock and Load", "Sniper Training", "Sniper Training: Recently Moved" },
+        { "Thrill of the Hunt", },
         { "Steady Focus", },
         { "Misdirection" }
     },

@@ -154,6 +154,16 @@ frame:SetScript("OnEvent",function(self,event,id)
             end
         end
 
+        
+        --
+        -- Reposition tooltip --
+        --
+        hooksecurefunc("GameTooltip_SetDefaultAnchor", function(tooltip, parent)
+            tooltip:SetOwner(parent, "ANCHOR_CURSOR")
+            tooltip:SetPoint("BOTTOMLEFT", "UIParent", "CENTER", 300,-50)
+            tooltip.default = 1
+        end);
+
         --
         -- Class icons instead of portraits
         --
