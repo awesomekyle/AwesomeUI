@@ -18,7 +18,10 @@ local auras_to_track = {
         { "Elusive Brew", "Vital Mists", "Storm, Earth, and Fire" },
         { "Serpent's Zeal", "Touch of Karma" },
     },
-    ["ROGUE"] = { 
+    ["ROGUE"] = {
+        { "Slice and Dice", },
+        { "Recuperate", },
+        { "Revealing Strike", },
     },
     ["HUNTER"] = {
         { "Lock and Load", "Sniper Training", "Sniper Training: Recently Moved" },
