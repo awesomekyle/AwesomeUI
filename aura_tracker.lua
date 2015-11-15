@@ -11,12 +11,11 @@ local kAurasToTrack = {
     ["WARLOCK"] = {  },
     ["DRUID"] = { 
         ["player"] = {
-            { "Rejuvenation", "Savage Roar", "Savage Defense" },
+            { "Savage Roar", "Savage Defense" },
             { "Mark of the Wild", },
             { "Cat Form", },
         },
         ["target"] = {
-            { "Rejuvenation", "Savage Roar", "Savage Defense" },
             { "Rake", },
             { "Rip", },
         },
@@ -88,7 +87,10 @@ local function CreateAuraTracker(parent_frame, auras_to_track, target, direction
                 for ii=1, #self.auras do
                     local aura = self.auras[ii]
                     for jj=1, #aura.spells do
-                        local exists,_,icon,count,_,_,expires = UnitAura(target,aura.spells[jj])
+                        local exists,_,icon,count,_,_,expires = UnitAura(target, aura.spells[jj], nil, "HELPFUL")
+                        if(exists == nil) then
+                            exists,_,icon,count,_,_,expires = UnitAura(target, aura.spells[jj], nil, "HARMFUL")
+                        end
                         if(exists ~= nil) then
                             self.auras[ii].texture:SetTexture(icon)
                             self.auras[ii]:Show()
