@@ -21,41 +21,53 @@ local kAurasToTrack = {
         },
     },
     ["MONK"] = {
-        { "Mana Tea", "Tigereye Brew", "Shuffle" },
-        { "Tiger Power" },
-        { "Elusive Brew", "Vital Mists", "Storm, Earth, and Fire" },
-        { "Serpent's Zeal", "Touch of Karma" },
+        ["player"] = {
+            { "Mana Tea", "Tigereye Brew", "Shuffle" },
+            { "Tiger Power" },
+            { "Elusive Brew", "Vital Mists", "Storm, Earth, and Fire" },
+            { "Serpent's Zeal", "Touch of Karma" },
+        },
     },
     ["ROGUE"] = {
-        { "Slice and Dice", },
-        { "Recuperate", },
-        { "Revealing Strike", },
+        ["player"] = {
+            { "Slice and Dice", },
+            { "Recuperate", },
+            { "Revealing Strike", },
+        },
     },
     ["HUNTER"] = {
-        { "Lock and Load", "Sniper Training", "Sniper Training: Recently Moved" },
-        { "Thrill of the Hunt", },
-        { "Steady Focus", },
-        { "Misdirection" }
+        ["player"] = {
+            { "Lock and Load", "Sniper Training", "Sniper Training: Recently Moved" },
+            { "Thrill of the Hunt", },
+            { "Steady Focus", },
+            { "Misdirection" }
+        },
     },
     ["SHAMAN"] = { 
-        { "Tidal Waves" },
-        { "Lightning Shield", "Water Shield" }
+        ["player"] = {
+            { "Tidal Waves" },
+            { "Lightning Shield", "Water Shield" }
+        },
     },
     ["DEATHKNIGHT"] = {  },
     ["PALADIN"] = {
-        { "Sacred Shield", },
-        { "Divine Protection", "Supplication" },
-        { "Ardent Defender", },
-        { "Guardian of the Ancient Kings", },
-        { "Divine Shield", },
+        ["player"] = {
+            { "Sacred Shield", },
+            { "Divine Protection", "Supplication" },
+            { "Ardent Defender", },
+            { "Guardian of the Ancient Kings", },
+            { "Divine Shield", },
+        },
     },
     ["WARRIOR"] = {
-        { "Shield Block", "Shield Charge" },
-        { "Shield Barrier" },
-        { "Demoralizing Shout" },
-        { "Shield Wall" },
-        { "Last Stand" },
-        { "Enraged Regeneration" },
+        ["player"] = {
+            { "Shield Block", "Shield Charge" },
+            { "Shield Barrier" },
+            { "Demoralizing Shout" },
+            { "Shield Wall" },
+            { "Last Stand" },
+            { "Enraged Regeneration" },
+        },
     }
 }
 local kAuraSize = 32
