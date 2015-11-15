@@ -207,7 +207,10 @@ local function CreateAuraTracker(parent_frame, auras_to_track, target, direction
         for ii=1, #self.auras do
             if(self.auras[ii].expires ~= 0) then
                 local remaining = self.auras[ii].expires - GetTime()
+                self.auras[ii].text:Show()
                 self.auras[ii].text:SetFormattedText(format_time(remaining))
+            else
+                self.auras[ii].text:Hide()
             end
         end
     end)
@@ -215,8 +218,12 @@ local function CreateAuraTracker(parent_frame, auras_to_track, target, direction
 end
 
 print("Aura Tracker loaded")
-local player_frame = CreateAuraTracker(PlayerFrame, kAurasToTrack[kPlayerClass]["player"], "player", "RIGHT")
-local target_frame = CreateAuraTracker(TargetFrame, kAurasToTrack[kPlayerClass]["target"], "target", "LEFT")
+if(kAurasToTrack[kPlayerClass]["player"]) then
+    local player_frame = CreateAuraTracker(PlayerFrame, kAurasToTrack[kPlayerClass]["player"], "player", "RIGHT")
+end
+if(kAurasToTrack[kPlayerClass]["target"]) then
+    local target_frame = CreateAuraTracker(TargetFrame, kAurasToTrack[kPlayerClass]["target"], "target", "LEFT")
+end
 
 --
 -- Slash commands
