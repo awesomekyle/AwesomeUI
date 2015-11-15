@@ -10,9 +10,16 @@ local kAurasToTrack = {
     },
     ["WARLOCK"] = {  },
     ["DRUID"] = { 
-        { "Rejuvenation", "Savage Roar", "Savage Defense" },
-        { "Mark of the Wild", },
-        { "Cat Form", },
+        ["player"] = {
+            { "Rejuvenation", "Savage Roar", "Savage Defense" },
+            { "Mark of the Wild", },
+            { "Cat Form", },
+        },
+        ["target"] = {
+            { "Rejuvenation", "Savage Roar", "Savage Defense" },
+            { "Rake", },
+            { "Rip", },
+        },
     },
     ["MONK"] = {
         { "Mana Tea", "Tigereye Brew", "Shuffle" },
@@ -63,23 +70,25 @@ local function format_time(time)
     return format("%.1f", time)
 end
 
-local function CreateAuraTracker(parent_frame, auras_to_track)
+local function CreateAuraTracker(parent_frame, auras_to_track, target, direction)
     -- Set up frame to run on login
     local frame = CreateFrame("Frame", "Aura Tracker", UIParent)
     frame:RegisterEvent("ADDON_LOADED")
     frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
     frame:RegisterEvent("UNIT_PET")
+    frame:RegisterEvent("PLAYER_TARGET_CHANGED")
 
     frame.auras_to_track = auras_to_track
+    frame.target = target
 
     frame:SetScript("OnEvent",function(self,event,...)
         if( event == "COMBAT_LOG_EVENT_UNFILTERED" or event == "UNIT_PET") then
             local timestamp, type, hideCaster, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags = ...
-            if( destGUID == kPlayerGuid or sourceGUID == kPlayerGuid or true ) then
+            if( destGUID == kPlayerGuid or sourceGUID == kPlayerGuid) then
                 for ii=1, #self.auras do
                     local aura = self.auras[ii]
                     for jj=1, #aura.spells do
-                        local exists,_,icon,count,_,_,expires = UnitAura("player",aura.spells[jj])
+                        local exists,_,icon,count,_,_,expires = UnitAura(target,aura.spells[jj])
                         if(exists ~= nil) then
                             self.auras[ii].texture:SetTexture(icon)
                             self.auras[ii]:Show()
@@ -98,8 +107,29 @@ local function CreateAuraTracker(parent_frame, auras_to_track)
                     end
                 end
             end
+        elseif( event == "PLAYER_TARGET_CHANGED") then
+            for ii=1, #self.auras do
+                local aura = self.auras[ii]
+                for jj=1, #aura.spells do
+                    local exists,_,icon,count,_,_,expires = UnitAura(target,aura.spells[jj])
+                    if(exists ~= nil) then
+                        self.auras[ii].texture:SetTexture(icon)
+                        self.auras[ii]:Show()
+                        self.auras[ii].expires = expires
+                        if( count == 0 ) then
+                            self.auras[ii].stack_text:Hide()
+                        else
+                            self.auras[ii].stack_text:SetText(count)
+                            self.auras[ii].stack_text:Show()
+                        end
+                        break
+                    else
+                        self.auras[ii]:Hide()
+                        self.auras[ii].expires = 0
+                    end
+                end
+            end
         elseif( event == "ADDON_LOADED" and ... == "AwesomeUI" ) then
-            print("Aura Tracker loaded")
             --
             -- Create each aura button
             --
@@ -127,26 +157,30 @@ local function CreateAuraTracker(parent_frame, auras_to_track)
                 stack_text:SetText("1")
                 stack_text:SetParent(aura)
                 stack_text:Show()
-                stack_text:SetPoint("TOPRIGHT",aura,"TOPRIGHT",0,-3)
+                stack_text:SetPoint("TOP"..direction,aura,"TOP"..direction,0,-3)
                 aura.stack_text = stack_text
 
                 aura.expires = 0
                 aura.name = aura_name
                 aura.spells = self.auras_to_track[ii]
 
-                aura:SetPoint("BOTTOMRIGHT",self,"BOTTOMRIGHT", xoffset, yoffset)
+                aura:SetPoint("BOTTOM"..direction,self,"BOTTOM"..direction, xoffset, yoffset)
                 aura:SetSize(kAuraSize,kAuraSize)
                 aura:Hide()
 
                 self.auras[ii] = aura
-                xoffset = xoffset - (kAuraSize + 2)
+                if(direction == "RIGHT") then
+                    xoffset = xoffset - (kAuraSize + 2)
+                else
+                    xoffset = xoffset + (kAuraSize + 2)
+                end
                 if( i == kNumAurasAcross) then
                     yoffset = yoffset + kAuraSize + 16
                     xoffset = 0
                 end
             end
 
-            self:SetPoint("BOTTOMRIGHT",parent_frame,"TOPRIGHT",0,0)
+            self:SetPoint("BOTTOM"..direction,parent_frame,"TOP"..direction,0,0)
             self:SetSize(100,100)
             self:Show()
 
@@ -166,7 +200,9 @@ local function CreateAuraTracker(parent_frame, auras_to_track)
     return frame
 end
 
-local player_frame = CreateAuraTracker(PlayerFrame, kAurasToTrack[kPlayerClass])
+print("Aura Tracker loaded")
+local player_frame = CreateAuraTracker(PlayerFrame, kAurasToTrack[kPlayerClass]["player"], "player", "RIGHT")
+local target_frame = CreateAuraTracker(TargetFrame, kAurasToTrack[kPlayerClass]["target"], "target", "LEFT")
 
 --
 -- Slash commands
