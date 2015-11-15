@@ -10,7 +10,7 @@ local kAurasToTrack = {
     },
     ["WARLOCK"] = {  },
     ["DRUID"] = { 
-        { "Savage Roar", "Savage Defense" },
+        { "Rejuvenation", "Savage Roar", "Savage Defense" },
         { "Mark of the Wild", },
         { "Cat Form", },
     },
@@ -76,23 +76,24 @@ local function CreateAuraTracker(parent_frame, auras_to_track)
         if( event == "COMBAT_LOG_EVENT_UNFILTERED" or event == "UNIT_PET") then
             local timestamp, type, hideCaster, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags = ...
             if( destGUID == kPlayerGuid or sourceGUID == kPlayerGuid or true ) then
-                for i=1, #self.auras do
-                    for j=1, #kAurasToTrack[kPlayerClass][i] do
-                        local exists,_,icon,count,_,_,expires = UnitAura("player",kAurasToTrack[kPlayerClass][i][j])
+                for ii=1, #self.auras do
+                    local aura = self.auras[ii]
+                    for jj=1, #aura.spells do
+                        local exists,_,icon,count,_,_,expires = UnitAura("player",aura.spells[jj])
                         if(exists ~= nil) then
-                            self.auras[i].texture:SetTexture(icon)
-                            self.auras[i]:Show()
-                            self.auras[i].expires = expires
+                            self.auras[ii].texture:SetTexture(icon)
+                            self.auras[ii]:Show()
+                            self.auras[ii].expires = expires
                             if( count == 0 ) then
-                                self.auras[i].stack_text:Hide()
+                                self.auras[ii].stack_text:Hide()
                             else
-                                self.auras[i].stack_text:SetText(count)
-                                self.auras[i].stack_text:Show()
+                                self.auras[ii].stack_text:SetText(count)
+                                self.auras[ii].stack_text:Show()
                             end
                             break
                         else
-                            self.auras[i]:Hide()
-                            self.auras[i].expires = 0
+                            self.auras[ii]:Hide()
+                            self.auras[ii].expires = 0
                         end
                     end
                 end
@@ -105,8 +106,8 @@ local function CreateAuraTracker(parent_frame, auras_to_track)
             self.auras = {}
             local xoffset = 0
             local yoffset = 5
-            for i=1, #kAurasToTrack[kPlayerClass] do
-                local aura_name = kAurasToTrack[kPlayerClass][i][1]
+            for ii=1, #self.auras_to_track do
+                local aura_name = self.auras_to_track[ii][1]
                 local aura = CreateFrame("Frame", aura_name, self)
                 local _,_,icon = GetSpellInfo(aura_name)
 
@@ -131,12 +132,13 @@ local function CreateAuraTracker(parent_frame, auras_to_track)
 
                 aura.expires = 0
                 aura.name = aura_name
+                aura.spells = self.auras_to_track[ii]
 
                 aura:SetPoint("BOTTOMRIGHT",self,"BOTTOMRIGHT", xoffset, yoffset)
                 aura:SetSize(kAuraSize,kAuraSize)
                 aura:Hide()
 
-                self.auras[i] = aura
+                self.auras[ii] = aura
                 xoffset = xoffset - (kAuraSize + 2)
                 if( i == kNumAurasAcross) then
                     yoffset = yoffset + kAuraSize + 16
@@ -154,10 +156,10 @@ local function CreateAuraTracker(parent_frame, auras_to_track)
     end)
 
     frame:SetScript("OnUpdate",function(self,event,...)
-        for i=1, #self.auras do
-            if(self.auras[i].expires ~= 0) then
-                local remaining = self.auras[i].expires - GetTime()
-                self.auras[i].text:SetFormattedText(format_time(remaining))
+        for ii=1, #self.auras do
+            if(self.auras[ii].expires ~= 0) then
+                local remaining = self.auras[ii].expires - GetTime()
+                self.auras[ii].text:SetFormattedText(format_time(remaining))
             end
         end
     end)
