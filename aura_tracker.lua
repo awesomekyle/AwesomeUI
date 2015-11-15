@@ -2,9 +2,9 @@
 -- Auras to track
 --
 local d = 0
-local _, player_class = UnitClass("player")
-local player_guid = UnitGUID("player")
-local auras_to_track = {
+local _, kPlayerClass = UnitClass("player")
+local kPlayerGuid = UnitGUID("player")
+local kAurasToTrack = {
     ["MAGE"] = {  },
     ["PRIEST"] = { 
     },
@@ -52,8 +52,8 @@ local auras_to_track = {
         { "Enraged Regeneration" },
     }
 }
-local aura_size = 32
-local num_auras_across = 4
+local kAuraSize = 32
+local kNumAurasAcross = 4
 
 
 local function format_time(time)
@@ -63,20 +63,22 @@ local function format_time(time)
     return format("%.1f", time)
 end
 
-local function CreateAuraTracker(parent_frame)
+local function CreateAuraTracker(parent_frame, auras_to_track)
     -- Set up frame to run on login
     local frame = CreateFrame("Frame", "Aura Tracker", UIParent)
     frame:RegisterEvent("ADDON_LOADED")
     frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
     frame:RegisterEvent("UNIT_PET")
 
+    frame.auras_to_track = auras_to_track
+
     frame:SetScript("OnEvent",function(self,event,...)
         if( event == "COMBAT_LOG_EVENT_UNFILTERED" or event == "UNIT_PET") then
             local timestamp, type, hideCaster, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags = ...
-            if( destGUID == player_guid or sourceGUID == player_guid or true ) then
+            if( destGUID == kPlayerGuid or sourceGUID == kPlayerGuid or true ) then
                 for i=1, #self.auras do
-                    for j=1, #auras_to_track[player_class][i] do
-                        local exists,_,icon,count,_,_,expires = UnitAura("player",auras_to_track[player_class][i][j])
+                    for j=1, #kAurasToTrack[kPlayerClass][i] do
+                        local exists,_,icon,count,_,_,expires = UnitAura("player",kAurasToTrack[kPlayerClass][i][j])
                         if(exists ~= nil) then
                             self.auras[i].texture:SetTexture(icon)
                             self.auras[i]:Show()
@@ -103,8 +105,8 @@ local function CreateAuraTracker(parent_frame)
             self.auras = {}
             local xoffset = 0
             local yoffset = 5
-            for i=1, #auras_to_track[player_class] do
-                local aura_name = auras_to_track[player_class][i][1]
+            for i=1, #kAurasToTrack[kPlayerClass] do
+                local aura_name = kAurasToTrack[kPlayerClass][i][1]
                 local aura = CreateFrame("Frame", aura_name, self)
                 local _,_,icon = GetSpellInfo(aura_name)
 
@@ -131,13 +133,13 @@ local function CreateAuraTracker(parent_frame)
                 aura.name = aura_name
 
                 aura:SetPoint("BOTTOMRIGHT",self,"BOTTOMRIGHT", xoffset, yoffset)
-                aura:SetSize(aura_size,aura_size)
+                aura:SetSize(kAuraSize,kAuraSize)
                 aura:Hide()
 
                 self.auras[i] = aura
-                xoffset = xoffset - (aura_size + 2)
-                if( i == num_auras_across) then
-                    yoffset = yoffset + aura_size + 16
+                xoffset = xoffset - (kAuraSize + 2)
+                if( i == kNumAurasAcross) then
+                    yoffset = yoffset + kAuraSize + 16
                     xoffset = 0
                 end
             end
@@ -162,7 +164,7 @@ local function CreateAuraTracker(parent_frame)
     return frame
 end
 
-local player_frame = CreateAuraTracker(PlayerFrame)
+local player_frame = CreateAuraTracker(PlayerFrame, kAurasToTrack[kPlayerClass])
 
 --
 -- Slash commands
