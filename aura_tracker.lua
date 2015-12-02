@@ -12,8 +12,7 @@ local kAurasToTrack = {
     ["DRUID"] = { 
         ["player"] = {
             { "Savage Roar", "Savage Defense" },
-            { "Mark of the Wild", },
-            { "Cat Form", },
+            { "Rejuvenation", },
         },
         ["target"] = {
             { "Rake", },
@@ -39,7 +38,7 @@ local kAurasToTrack = {
         ["player"] = {
             { "Lock and Load", "Sniper Training", "Sniper Training: Recently Moved" },
             { "Thrill of the Hunt", },
-            { "Steady Focus", },
+            { "Beastial Wrath", "Rapid Fire", },
             { "Misdirection" }
         },
     },
@@ -48,14 +47,17 @@ local kAurasToTrack = {
             { "Tidal Waves" },
             { "Lightning Shield", "Water Shield" }
         },
+        ["target"] = {
+            { "Flame Shock" },
+        },
     },
     ["DEATHKNIGHT"] = {  },
     ["PALADIN"] = {
         ["player"] = {
             { "Sacred Shield", },
             { "Divine Protection", "Supplication" },
-            { "Ardent Defender", },
-            { "Guardian of the Ancient Kings", },
+            { "Ardent Defender", "Final Verdict" },
+            { "Guardian of Ancient Kings", "Empowered Divine Storm" },
             { "Divine Shield", },
         },
     },
@@ -67,6 +69,9 @@ local kAurasToTrack = {
             { "Shield Wall" },
             { "Last Stand" },
             { "Enraged Regeneration" },
+        },
+        ["target"] = {
+            { "Shockwave", },
         },
     }
 }
@@ -95,7 +100,7 @@ local function CreateAuraTracker(parent_frame, auras_to_track, target, direction
     frame:SetScript("OnEvent",function(self,event,...)
         if( event == "COMBAT_LOG_EVENT_UNFILTERED" or event == "UNIT_PET") then
             local timestamp, type, hideCaster, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags = ...
-            if( destGUID == kPlayerGuid or sourceGUID == kPlayerGuid) then
+            if( destGUID == kPlayerGuid or sourceGUID == kPlayerGuid or true) then
                 for ii=1, #self.auras do
                     local aura = self.auras[ii]
                     for jj=1, #aura.spells do

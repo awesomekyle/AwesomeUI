@@ -233,7 +233,7 @@ frame:SetScript("OnEvent",function(self,event,id)
         -- Setup cast bars --
         --
         CastingBarFrame:ClearAllPoints()
-        CastingBarFrame:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, 220)
+        CastingBarFrame:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, 355)
         CastingBarFrame:SetHeight(12)
         CastingBarFrame.SetPoint = function() end
 
