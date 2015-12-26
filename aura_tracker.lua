@@ -6,12 +6,12 @@ local _, kPlayerClass = UnitClass("player")
 local kPlayerGuid = UnitGUID("player")
 local kAurasToTrack = {
     ["MAGE"] = {  },
-    ["PRIEST"] = { 
+    ["PRIEST"] = {
     },
     ["WARLOCK"] = {  },
-    ["DRUID"] = { 
+    ["DRUID"] = {
         ["player"] = {
-            { "Savage Roar", "Savage Defense" },
+            { "Lunar Empowerment", "Solar Empowerment", "Savage Roar", "Savage Defense" },
             { "Rejuvenation", },
         },
         ["target"] = {
@@ -32,7 +32,16 @@ local kAurasToTrack = {
             { "Slice and Dice", },
             { "Recuperate", },
             { "Revealing Strike", },
+            { "Burst of Speed", },
+            { "Feint", },
         },
+        ["target"] = {
+            { "Cheap Shot", "Kidney Shot", },
+            { "Blind", "Gouge", },
+            { "Garrote", },
+            { "Rupture", },
+            { "Hemorrhage", },
+        }
     },
     ["HUNTER"] = {
         ["player"] = {
@@ -42,7 +51,7 @@ local kAurasToTrack = {
             { "Misdirection" }
         },
     },
-    ["SHAMAN"] = { 
+    ["SHAMAN"] = {
         ["player"] = {
             { "Tidal Waves" },
             { "Lightning Shield", "Water Shield" }
@@ -65,7 +74,7 @@ local kAurasToTrack = {
         ["player"] = {
             { "Shield Block", "Shield Charge" },
             { "Shield Barrier" },
-            { "Demoralizing Shout" },
+            { "Demoralizing Shout" }, { "Enrage", },
             { "Shield Wall" },
             { "Last Stand" },
             { "Enraged Regeneration" },
