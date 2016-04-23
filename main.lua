@@ -53,7 +53,7 @@ local function toggle_blizz()
         if(PVPMicroButton) then
             PVPMicroButton:Hide()
         end
-        
+
         MainMenuBarBackpackButton:Hide()
         CharacterBag0Slot:Hide()
         CharacterBag1Slot:Hide()
@@ -80,7 +80,7 @@ local function toggle_blizz()
         if(PVPMicroButton) then
             PVPMicroButton:Show()
         end
-        
+
         MainMenuBarBackpackButton:Show()
         CharacterBag0Slot:Show()
         CharacterBag1Slot:Show()
@@ -154,7 +154,7 @@ frame:SetScript("OnEvent",function(self,event,id)
             end
         end
 
-        
+
         --
         -- Reposition tooltip --
         --
@@ -169,7 +169,7 @@ frame:SetScript("OnEvent",function(self,event,id)
         --
         hooksecurefunc("UnitFramePortrait_Update",function(self)
             if self.portrait then
-                if UnitIsPlayer(self.unit) then                         
+                if UnitIsPlayer(self.unit) then
                     local t = CLASS_ICON_TCOORDS[select(2, UnitClass(self.unit))]
                     if t then
                         self.portrait:SetTexture("Interface\\TargetingFrame\\UI-Classes-Circles")
@@ -223,11 +223,11 @@ frame:SetScript("OnEvent",function(self,event,id)
             elseif ( playerClass == "DRUID" ) then
                 DebuffButton1:SetPoint("TOPRIGHT", PlayerFrame, "BOTTOMRIGHT", 0, 0)
             else
-                DebuffButton1:SetPoint("TOPRIGHT", PlayerFrame, "BOTTOMRIGHT", 0, 25)
+                DebuffButton1:SetPoint("TOPRIGHT", PlayerFrame, "BOTTOMRIGHT", 0, 20)
             end
             DebuffButton1.SetPoint = function() end
             DebuffButton1.SetParent = function() end
-        end);   
+        end);
 
         --
         -- Setup cast bars --
@@ -285,7 +285,7 @@ frame:SetScript("OnEvent",function(self,event,id)
             end)
         MiniMapTracking:ClearAllPoints()
         MiniMapTracking:SetPoint("TOPRIGHT", -26, 7)
-        
+
         --
         -- Create button to toggle blizzard UI
         --

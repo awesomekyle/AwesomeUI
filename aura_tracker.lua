@@ -13,6 +13,7 @@ local kAurasToTrack = {
         ["player"] = {
             { "Lunar Empowerment", "Solar Empowerment", "Savage Roar", "Savage Defense" },
             { "Rejuvenation", },
+            { "Clearcasting", },
         },
         ["target"] = {
             { "Rake", },
@@ -60,7 +61,15 @@ local kAurasToTrack = {
             { "Flame Shock" },
         },
     },
-    ["DEATHKNIGHT"] = {  },
+    ["DEATHKNIGHT"] = {
+        ["player"] = {
+            { "Blood Charge", },
+        },
+        ["target"] = {
+            { "Blood Plague", },
+            { "Frost Fever", },
+        },
+    },
     ["PALADIN"] = {
         ["player"] = {
             { "Sacred Shield", },
@@ -78,6 +87,7 @@ local kAurasToTrack = {
             { "Shield Wall" },
             { "Last Stand" },
             { "Enraged Regeneration" },
+            { "Unyielding Strikes", },
         },
         ["target"] = {
             { "Shockwave", },
@@ -115,7 +125,7 @@ local function CreateAuraTracker(parent_frame, auras_to_track, target, direction
                     for jj=1, #aura.spells do
                         local exists,_,icon,count,_,_,expires = UnitAura(target, aura.spells[jj], nil, "HELPFUL")
                         if(exists == nil) then
-                            exists,_,icon,count,_,_,expires = UnitAura(target, aura.spells[jj], nil, "HARMFUL")
+                            exists,_,icon,count,_,_,expires = UnitAura(target, aura.spells[jj], nil, "HARMFUL|PLAYER")
                         end
                         if(exists ~= nil) then
                             self.auras[ii].texture:SetTexture(icon)
@@ -202,7 +212,7 @@ local function CreateAuraTracker(parent_frame, auras_to_track, target, direction
                 else
                     xoffset = xoffset + (kAuraSize + 2)
                 end
-                if( i == kNumAurasAcross) then
+                if( ii == kNumAurasAcross) then
                     yoffset = yoffset + kAuraSize + 16
                     xoffset = 0
                 end
