@@ -53,14 +53,11 @@ local function toggle_blizz()
         if(PVPMicroButton) then
             PVPMicroButton:Hide()
         end
-
         MainMenuBarBackpackButton:Hide()
         CharacterBag0Slot:Hide()
         CharacterBag1Slot:Hide()
         CharacterBag2Slot:Hide()
         CharacterBag3Slot:Hide()
-        MainMenuExpBar:Hide()
-        MainMenuExpBar:SetAlpha(0)
         ReputationWatchBar:Hide()
         BlizzHide = true
     elseif BlizzHide == true then
@@ -86,8 +83,6 @@ local function toggle_blizz()
         CharacterBag1Slot:Show()
         CharacterBag2Slot:Show()
         CharacterBag3Slot:Show()
-        MainMenuExpBar:Show()
-        MainMenuExpBar:SetAlpha(1)
         ReputationWatchBar:Show()
         BlizzHide = false
     end
@@ -115,15 +110,22 @@ frame:SetScript("OnEvent",function(self,event,id)
         --
         -- Hide Blizzard stuff
         --
+        HelpMicroButton:Hide()
+        HelpMicroButton.Show = function() end
         CharacterMicroButton:ClearAllPoints()
-        CharacterMicroButton:SetPoint("RIGHT",145,0)-- Rep bar
+        CharacterMicroButton:SetPoint("RIGHT",145,0)
+        -- Rep bar
         local width, height = ReputationWatchBar:GetSize()
         ReputationWatchBar:SetSize(width / 2, height)
-        ReputationWatchStatusBar:SetSize(width / 2, height)
-        ReputationWatchBarTexture2:Hide()
-        ReputationWatchBarTexture3:Hide()
-        ReputationXPBarTexture2:Hide()
-        ReputationXPBarTexture3:Hide()
+        ReputationWatchBar:SetSize(width / 2, height)
+        ReputationWatchBar.StatusBar.WatchBarTexture2:Hide()
+        ReputationWatchBar.StatusBar.WatchBarTexture3:Hide()
+
+        ReputationWatchBar:SetSize(width/2, height)
+        ReputationWatchBar:SetPoint("BOTTOM", MainMenuExpBar, "TOP")
+        ReputationWatchBar.SetPoint = function() end
+        ReputationWatchBar:Hide()
+        ReputationWatchBar.Show = function() end
 
         MainMenuBarTexture0:Hide()
         MainMenuBarTexture1:Hide()
@@ -132,7 +134,6 @@ frame:SetScript("OnEvent",function(self,event,id)
         MainMenuBarOverlayFrame:Hide()
         MainMenuBarMaxLevelBar:Hide()
         MainMenuBarMaxLevelBar.Show = function() end
-        --MainMenuBarArtFrame:Hide()
 
         ActionBarUpButton:Hide()
         ActionBarDownButton:Hide()
@@ -145,7 +146,6 @@ frame:SetScript("OnEvent",function(self,event,id)
         local width, height = MainMenuExpBar:GetSize()
         MainMenuExpBar:SetSize(width/2, height)
         MainMenuExpBar.SetSize = function() end
-        ReputationWatchStatusBar:Hide()
         -- Hide XP bar ticks
         for i=19,10,-1 do
             local texture = _G["MainMenuXPBarDiv"..i];
@@ -191,7 +191,7 @@ frame:SetScript("OnEvent",function(self,event,id)
                 _, class = UnitClass(unit)
                 c = CUSTOM_CLASS_COLORS and CUSTOM_CLASS_COLORS[class] or RAID_CLASS_COLORS[class]
                 statusbar:SetStatusBarColor(c.r, c.g, c.b)
-                --PlayerFrameHealthBar:SetStatusBarColor(0,1,0)
+                PlayerFrameHealthBar:SetStatusBarColor(0,1,0)
             end
         end
 
@@ -209,7 +209,7 @@ frame:SetScript("OnEvent",function(self,event,id)
 
             DebuffButton1:ClearAllPoints()
             if( playerClass == "PALADIN") then
-                DebuffButton1:SetPoint("TOPRIGHT", PaladinPowerBar, "BOTTOMRIGHT", 0, 0)
+                DebuffButton1:SetPoint("TOPRIGHT", PaladinPowerBarFrame, "BOTTOMRIGHT", 0, 0)
             elseif ( playerClass == "DEATHKNIGHT" ) then
                 DebuffButton1:SetPoint("TOPRIGHT", RuneFrame, "BOTTOMRIGHT", 0, -10)
             elseif ( playerClass == "PRIEST" ) then
@@ -237,19 +237,19 @@ frame:SetScript("OnEvent",function(self,event,id)
         CastingBarFrame:SetHeight(12)
         CastingBarFrame.SetPoint = function() end
 
-        CastingBarFrameBorder:ClearAllPoints()
-        CastingBarFrameBorder:SetPoint("TOP", 0, 26)
+        CastingBarFrame.Border:ClearAllPoints()
+        CastingBarFrame.Border:SetPoint("TOP", 0, 26)
 
-        CastingBarFrameBorder:SetTexture("Interface\\CastingBar\\UI-CastingBar-Border-Small.blp")
-        CastingBarFrameFlash:SetTexture(nil)
-        CastingBarFrameSpark:SetTexture(nil)
+        CastingBarFrame.Border:SetTexture("Interface\\CastingBar\\UI-CastingBar-Border-Small.blp")
+        CastingBarFrame.Flash:SetTexture(nil)
+        CastingBarFrame.Spark:SetTexture(nil)
 
-        CastingBarFrameText:ClearAllPoints()
-        CastingBarFrameText:SetPoint("CENTER",0,1)
+        CastingBarFrame.Text:ClearAllPoints()
+        CastingBarFrame.Text:SetPoint("CENTER",0,1)
 
         --
         -- Casting bar timer
-        --
+        -- 
         CastingBarFrame.timer = CastingBarFrame:CreateFontString(nil)
         CastingBarFrame.timer:SetFont(STANDARD_TEXT_FONT,12,"OUTLINE")
         CastingBarFrame.timer:SetPoint("RIGHT", CastingBarFrame, "RIGHT", 2, -16)
@@ -282,7 +282,7 @@ frame:SetScript("OnEvent",function(self,event,id)
             else
                 Minimap_ZoomOut()
             end
-            end)
+        end)
         MiniMapTracking:ClearAllPoints()
         MiniMapTracking:SetPoint("TOPRIGHT", -26, 7)
 
@@ -299,27 +299,27 @@ frame:SetScript("OnEvent",function(self,event,id)
         f.hide = true
 
         f:SetScript("OnMouseDown", function(self, button)
-                if f.hide  == false then
-                        if button == "LeftButton" then
-                                f.t:SetTexture("Interface\\CHATFRAME\\UI-ChatIcon-Minimize-Down.blp")
-                        end
-                elseif f.hide == true then
-                        if button == "LeftButton" then
-                                f.t:SetTexture("Interface\\CHATFRAME\\UI-ChatIcon-Maximize-Down.blp")
-                        end
+            if f.hide  == false then
+                if button == "LeftButton" then
+                    f.t:SetTexture("Interface\\CHATFRAME\\UI-ChatIcon-Minimize-Down.blp")
                 end
+            elseif f.hide == true then
+                if button == "LeftButton" then
+                    f.t:SetTexture("Interface\\CHATFRAME\\UI-ChatIcon-Maximize-Down.blp")
+                end
+            end
         end)
 
         f:SetScript("OnMouseUp", function(self, button)
-                if f.hide  == false then
-                        if button == "LeftButton" then
-                                f.t:SetTexture("Interface\\CHATFRAME\\UI-ChatIcon-Minimize-Up.blp")
-                        end
-                elseif f.hide == true then
-                        if button == "LeftButton" then
-                                f.t:SetTexture("Interface\\CHATFRAME\\UI-ChatIcon-Maximize-Up.blp")
-                        end
+            if f.hide  == false then
+                if button == "LeftButton" then
+                    f.t:SetTexture("Interface\\CHATFRAME\\UI-ChatIcon-Minimize-Up.blp")
                 end
+            elseif f.hide == true then
+                if button == "LeftButton" then
+                    f.t:SetTexture("Interface\\CHATFRAME\\UI-ChatIcon-Maximize-Up.blp")
+                end
+            end
         end)
 
         f:SetScript("OnClick", function(self, button)
@@ -330,11 +330,11 @@ frame:SetScript("OnEvent",function(self,event,id)
             elseif f.hide == true then
                 f.t:SetTexture("Interface\\CHATFRAME\\UI-ChatIcon-Minimize-Up.blp")
                 CharacterMicroButton:ClearAllPoints()
-                CharacterMicroButton:SetPoint("BOTTOMRIGHT", f, "BOTTOMLEFT", -275, 15)
-                MainMenuExpBar:ClearAllPoints()
-                MainMenuExpBar:SetPoint("BOTTOMRIGHT", f, "BOTTOMLEFT", -10, 0)
-                ReputationWatchBar:ClearAllPoints()
-                ReputationWatchBar:SetPoint("BOTTOMRIGHT", f, "BOTTOMLEFT", -10, 5)
+                CharacterMicroButton:SetPoint("BOTTOMRIGHT", f, "BOTTOMLEFT", -265, 0)
+                -- MainMenuExpBar:ClearAllPoints()
+                -- MainMenuExpBar:SetPoint("BOTTOMRIGHT", f, "BOTTOMLEFT", -10, 0)
+                -- ReputationWatchBar:ClearAllPoints()
+                -- ReputationWatchBar:SetPoint("BOTTOMRIGHT", f, "BOTTOMLEFT", -10, 5)
                 f.hide = false
             end
         end)
