@@ -1,4 +1,4 @@
-## Interface: 60200
+## Interface: 70000
 ## Title: AwesomeUI
 ## Version: 0.0.2
 ## Notes: Very basic UI addon
