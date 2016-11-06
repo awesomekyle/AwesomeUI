@@ -104,8 +104,8 @@ frame:SetScript("OnEvent",function(self,event,id)
         --
         -- Disable Dragon end caps
         --
-        -- MainMenuBarLeftEndCap:Hide()
-        -- MainMenuBarRightEndCap:Hide()
+        MainMenuBarLeftEndCap:Hide()
+        MainMenuBarRightEndCap:Hide()
 
         -- --
         -- -- Hide Blizzard stuff
@@ -249,7 +249,7 @@ frame:SetScript("OnEvent",function(self,event,id)
 
         --
         -- Casting bar timer
-        -- 
+        --
         CastingBarFrame.timer = CastingBarFrame:CreateFontString(nil)
         CastingBarFrame.timer:SetFont(STANDARD_TEXT_FONT,12,"OUTLINE")
         CastingBarFrame.timer:SetPoint("RIGHT", CastingBarFrame, "RIGHT", 2, -16)
