@@ -49,8 +49,8 @@ local kAurasToTrack = {
     ["HUNTER"] = {
         ["player"] = {
             { "Lock and Load", "Sniper Training", "Sniper Training: Recently Moved" },
-            { "Thrill of the Hunt", },
-            { "Beastial Wrath", "Rapid Fire", },
+            { "Steady Focus", "Thrill of the Hunt", },
+            { "Beastial Wrath", },
             { "Misdirection" }
         },
         ["target"] = {
@@ -68,7 +68,7 @@ local kAurasToTrack = {
     },
     ["DEATHKNIGHT"] = {
         ["player"] = {
-            { "Blood Charge", },
+            { "Bone Shield", "Icy Talons" },
         },
         ["target"] = {
             { "Blood Plague", },
@@ -77,7 +77,7 @@ local kAurasToTrack = {
     },
     ["PALADIN"] = {
         ["player"] = {
-            { "Sacred Shield", },
+            { "Shield of the Righteous", "Zeal", },
             { "Divine Protection", "Supplication" },
             { "Ardent Defender", "Final Verdict" },
             { "Guardian of Ancient Kings", "Empowered Divine Storm" },
@@ -86,7 +86,7 @@ local kAurasToTrack = {
     },
     ["WARRIOR"] = {
         ["player"] = {
-            { "Shield Block", "Shield Charge" },
+            { "Colossus Smash", "Shield Block", "Shield Charge" },
             { "Shield Barrier" },
             { "Demoralizing Shout" }, { "Enrage", },
             { "Shield Wall" },
@@ -98,7 +98,12 @@ local kAurasToTrack = {
             { "Shockwave", },
         },
     },
-    ["DEMONHUNTER"] = {}
+    ["DEMONHUNTER"] = {
+        ["player"] = {
+            { "Demon Spikes", },
+            { "Metamorphosis", },
+        }
+    }
 }
 local kAuraSize = 32
 local kNumAurasAcross = 4
