@@ -9,7 +9,13 @@ local kAurasToTrack = {
     ["MAGE"] = {  },
     ["PRIEST"] = {
     },
-    ["WARLOCK"] = {  },
+    ["WARLOCK"] = {
+        ["target"] = {
+            { "Corruption" },
+            { "Agony" },
+            { "Unstable Affliction" },
+        },
+     },
     ["DRUID"] = {
         ["player"] = {
             { "Lunar Empowerment", "Solar Empowerment", "Savage Roar", "Savage Defense" },
@@ -254,10 +260,10 @@ end
 
 print("Aura Tracker loaded")
 if(kAurasToTrack[kPlayerClass]["player"]) then
-    local player_frame = CreateAuraTracker(PlayerFrame, kAurasToTrack[kPlayerClass]["player"], "player", "RIGHT")
+    -- local player_frame = CreateAuraTracker(PlayerFrame, kAurasToTrack[kPlayerClass]["player"], "player", "RIGHT")
 end
 if(kAurasToTrack[kPlayerClass]["target"]) then
-    local target_frame = CreateAuraTracker(TargetFrame, kAurasToTrack[kPlayerClass]["target"], "target", "LEFT")
+    -- local target_frame = CreateAuraTracker(TargetFrame, kAurasToTrack[kPlayerClass]["target"], "target", "LEFT")
 end
 
 --

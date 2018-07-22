@@ -101,59 +101,7 @@ frame:RegisterEvent("UNIT_FACTION")
 
 frame:SetScript("OnEvent",function(self,event,id)
     if(event == "PLAYER_LOGIN") then
-        --
-        -- Disable Dragon end caps
-        --
-        MainMenuBarLeftEndCap:Hide()
-        MainMenuBarRightEndCap:Hide()
-
-        -- --
-        -- -- Hide Blizzard stuff
-        -- --
-        -- HelpMicroButton:Hide()
-        -- HelpMicroButton.Show = function() end
-        -- CharacterMicroButton:ClearAllPoints()
-        -- CharacterMicroButton:SetPoint("RIGHT",145,0)
-        -- -- Rep bar
-        -- local width, height = ReputationWatchBar:GetSize()
-        -- ReputationWatchBar:SetSize(width / 2, height)
-        -- ReputationWatchBar:SetSize(width / 2, height)
-        -- ReputationWatchBar.StatusBar.WatchBarTexture2:Hide()
-        -- ReputationWatchBar.StatusBar.WatchBarTexture3:Hide()
-
-        -- ReputationWatchBar:SetSize(width/2, height)
-        -- ReputationWatchBar:SetPoint("BOTTOM", MainMenuExpBar, "TOP")
-        -- ReputationWatchBar.SetPoint = function() end
-        -- ReputationWatchBar:Hide()
-        -- ReputationWatchBar.Show = function() end
-
-        -- MainMenuBarTexture0:Hide()
-        -- MainMenuBarTexture1:Hide()
-        -- MainMenuBarTexture2:Hide()
-        -- MainMenuBarTexture3:Hide()
-        -- MainMenuBarOverlayFrame:Hide()
-        -- MainMenuBarMaxLevelBar:Hide()
-        -- MainMenuBarMaxLevelBar.Show = function() end
-
-        -- ActionBarUpButton:Hide()
-        -- ActionBarDownButton:Hide()
-        -- MainMenuBarPageNumber:SetAlpha(0)
-
-        -- toggle_blizz()
         -- update_actionbars()
-
-        -- -- Exp bar
-        -- local width, height = MainMenuExpBar:GetSize()
-        -- MainMenuExpBar:SetSize(width/2, height)
-        -- MainMenuExpBar.SetSize = function() end
-        -- -- Hide XP bar ticks
-        -- for i=19,10,-1 do
-        --     local texture = _G["MainMenuXPBarDiv"..i];
-        --     if texture then
-        --         texture:Hide()
-        --     end
-        -- end
-
 
         --
         -- Reposition tooltip --
@@ -286,59 +234,6 @@ frame:SetScript("OnEvent",function(self,event,id)
         MiniMapTracking:ClearAllPoints()
         MiniMapTracking:SetPoint("TOPRIGHT", -26, 7)
 
-        --
-        -- Create button to toggle blizzard UI
-        --
-        -- local f = CreateFrame("Button",nil,UIParent)
-        -- f:SetSize(30,30)
-        -- f.t=f:CreateTexture(nil,"BORDER")
-        -- f.t:SetTexture("Interface\\CHATFRAME\\UI-ChatIcon-Maximize-Up.blp")
-        -- f.t:SetAllPoints(f)
-        -- f:SetPoint("BOTTOMRIGHT", UIParent,"BOTTOMRIGHT",0,0)
-        -- f:Show()
-        -- f.hide = true
-
-        -- f:SetScript("OnMouseDown", function(self, button)
-        --     if f.hide  == false then
-        --         if button == "LeftButton" then
-        --             f.t:SetTexture("Interface\\CHATFRAME\\UI-ChatIcon-Minimize-Down.blp")
-        --         end
-        --     elseif f.hide == true then
-        --         if button == "LeftButton" then
-        --             f.t:SetTexture("Interface\\CHATFRAME\\UI-ChatIcon-Maximize-Down.blp")
-        --         end
-        --     end
-        -- end)
-
-        -- f:SetScript("OnMouseUp", function(self, button)
-        --     if f.hide  == false then
-        --         if button == "LeftButton" then
-        --             f.t:SetTexture("Interface\\CHATFRAME\\UI-ChatIcon-Minimize-Up.blp")
-        --         end
-        --     elseif f.hide == true then
-        --         if button == "LeftButton" then
-        --             f.t:SetTexture("Interface\\CHATFRAME\\UI-ChatIcon-Maximize-Up.blp")
-        --         end
-        --     end
-        -- end)
-
-        -- f:SetScript("OnClick", function(self, button)
-        --     toggle_blizz()
-        --     if f.hide == false then
-        --         f.t:SetTexture("Interface\\CHATFRAME\\UI-ChatIcon-Maximize-Up.blp")
-        --         f.hide = true
-        --     elseif f.hide == true then
-        --         f.t:SetTexture("Interface\\CHATFRAME\\UI-ChatIcon-Minimize-Up.blp")
-        --         CharacterMicroButton:ClearAllPoints()
-        --         CharacterMicroButton:SetPoint("BOTTOMRIGHT", f, "BOTTOMLEFT", -265, 0)
-        --         -- MainMenuExpBar:ClearAllPoints()
-        --         -- MainMenuExpBar:SetPoint("BOTTOMRIGHT", f, "BOTTOMLEFT", -10, 0)
-        --         -- ReputationWatchBar:ClearAllPoints()
-        --         -- ReputationWatchBar:SetPoint("BOTTOMRIGHT", f, "BOTTOMLEFT", -10, 5)
-        --         f.hide = false
-        --     end
-        -- end)
-
     elseif( event == "GROUP_ROSTER_UPDATE" or
         event == "PLAYER_TARGET_CHANGED" or
         event == "PLAYER_FOCUS_CHANGED" or
@@ -375,7 +270,7 @@ local function Install()
     SetCVar( "miniWorldMap", 1 );
 
     -- Set up chat
-    FCF_ResetChatWindows();
+    -- FCF_ResetChatWindows();
 
     -- Set up tabs
     FCF_SetLocked(ChatFrame1, 1);
@@ -384,10 +279,10 @@ local function Install()
     FCF_OpenNewWindow("Group");
     FCF_OpenNewWindow("Misc");
 
-    -- Move and resize Chat window
-    ChatFrame1:ClearAllPoints();
-    ChatFrame1:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", 0, 165 );
-    ChatFrame1:SetSize( 450, 150 );
+    -- -- Move and resize Chat window
+    -- ChatFrame1:ClearAllPoints();
+    -- ChatFrame1:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", 0, 165 );
+    -- ChatFrame1:SetSize( 450, 150 );
 
     FCF_SavePositionAndDimensions( ChatFrame1 );
     FCF_SetChatWindowFontSize( nil, ChatFrame1, 12 );
@@ -433,30 +328,6 @@ local function Install()
     ChatFrame_AddMessageGroup( ChatFrame6, "LOOT" );
     ChatFrame_AddMessageGroup( ChatFrame6, "MONEY" );
     ChatFrame_AddMessageGroup( ChatFrame6, "TARGETICONS" );
-
-    -- Enable class color for every channel
-    ToggleChatColorNamesByClassGroup(true, "SAY")
-    ToggleChatColorNamesByClassGroup(true, "EMOTE")
-    ToggleChatColorNamesByClassGroup(true, "YELL")
-    ToggleChatColorNamesByClassGroup(true, "GUILD")
-    ToggleChatColorNamesByClassGroup(true, "OFFICER")
-    ToggleChatColorNamesByClassGroup(true, "GUILD_ACHIEVEMENT")
-    ToggleChatColorNamesByClassGroup(true, "ACHIEVEMENT")
-    ToggleChatColorNamesByClassGroup(true, "WHISPER")
-    ToggleChatColorNamesByClassGroup(true, "PARTY")
-    ToggleChatColorNamesByClassGroup(true, "PARTY_LEADER")
-    ToggleChatColorNamesByClassGroup(true, "INSTANCE_CHAT")
-    ToggleChatColorNamesByClassGroup(true, "INSTANCE_CHAT_LEADER")
-    ToggleChatColorNamesByClassGroup(true, "RAID")
-    ToggleChatColorNamesByClassGroup(true, "RAID_LEADER")
-    ToggleChatColorNamesByClassGroup(true, "RAID_WARNING")
-    ToggleChatColorNamesByClassGroup(true, "BATTLEGROUND")
-    ToggleChatColorNamesByClassGroup(true, "BATTLEGROUND_LEADER")
-    ToggleChatColorNamesByClassGroup(true, "CHANNEL1")
-    ToggleChatColorNamesByClassGroup(true, "CHANNEL2")
-    ToggleChatColorNamesByClassGroup(true, "CHANNEL3")
-    ToggleChatColorNamesByClassGroup(true, "CHANNEL4")
-    ToggleChatColorNamesByClassGroup(true, "CHANNEL5")
 
     Installed = true;
 end -- Install
