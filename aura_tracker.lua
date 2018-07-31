@@ -122,6 +122,10 @@ local function format_time(time)
     return format("%.1f", time)
 end
 
+local function UpdateAuras(frame)
+
+end
+
 local function CreateAuraTracker(parent_frame, auras_to_track, target, direction)
     -- Set up frame to run on login
     local frame = CreateFrame("Frame", "Aura Tracker", UIParent)
@@ -135,16 +139,27 @@ local function CreateAuraTracker(parent_frame, auras_to_track, target, direction
 
     frame:SetScript("OnEvent",function(self,event,...)
         if( event == "COMBAT_LOG_EVENT_UNFILTERED" or event == "UNIT_PET") then
-            local timestamp, type, hideCaster, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags = ...
+            local timestamp, type, hideCaster, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags = CombatLogGetCurrentEventInfo()
             if( destGUID == kPlayerGuid or sourceGUID == kPlayerGuid or true) then
                 for ii=1, #self.auras do
                     local aura = self.auras[ii]
                     for jj=1, #aura.spells do
-                        local exists,_,icon,count,_,_,expires = UnitAura(target, aura.spells[jj], nil, "HELPFUL")
-                        if(exists == nil) then
-                            exists,_,icon,count,_,_,expires = UnitAura(target, aura.spells[jj], nil, "HARMFUL|PLAYER")
+                        local check_name = nil
+                        local aura_name =  aura.spells[jj]
+                        local expires = 0
+                        local icon = nil
+                        local count = 0
+                        local exists = nil
+                        for kk=1, 40 do
+                            check_name,icon,count,_,_,expires = UnitAura(target, kk, "HELPFUL")
+                            if(check_name ~= aura_name) then
+                                check_name,icon,count,_,_,expires = UnitAura(target, kk, "HARMFUL|PLAYER")
+                            end
+                            if(check_name == aura_name) then
+                                break
+                            end
                         end
-                        if(exists ~= nil) then
+                        if(check_name == aura_name) then
                             self.auras[ii].texture:SetTexture(icon)
                             self.auras[ii]:Show()
                             self.auras[ii].expires = expires
@@ -260,10 +275,10 @@ end
 
 print("Aura Tracker loaded")
 if(kAurasToTrack[kPlayerClass]["player"]) then
-    -- local player_frame = CreateAuraTracker(PlayerFrame, kAurasToTrack[kPlayerClass]["player"], "player", "RIGHT")
+    local player_frame = CreateAuraTracker(PlayerFrame, kAurasToTrack[kPlayerClass]["player"], "player", "RIGHT")
 end
 if(kAurasToTrack[kPlayerClass]["target"]) then
-    -- local target_frame = CreateAuraTracker(TargetFrame, kAurasToTrack[kPlayerClass]["target"], "target", "LEFT")
+    local target_frame = CreateAuraTracker(TargetFrame, kAurasToTrack[kPlayerClass]["target"], "target", "LEFT")
 end
 
 --
