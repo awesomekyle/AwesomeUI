@@ -107,7 +107,13 @@ local kAurasToTrack = {
     ["DEMONHUNTER"] = {
         ["player"] = {
             { "Demon Spikes", },
+            { "Soul Fragments", },
+            { "Immolation Aura", },
             { "Metamorphosis", },
+        },
+        ["target"] = {
+            { "Imprison", },
+            { "Hammer of Justice", "Chaos Nova", },
         }
     }
 }
@@ -122,8 +128,42 @@ local function format_time(time)
     return format("%.1f", time)
 end
 
-local function UpdateAuras(frame)
-
+local function UpdateAuras(frame, target)
+    for ii=1, #frame.auras do
+        local aura = frame.auras[ii]
+        for jj=1, #aura.spells do
+            local check_name = nil
+            local aura_name =  aura.spells[jj]
+            local expires = 0
+            local icon = nil
+            local count = 0
+            local exists = nil
+            for kk=1, 40 do
+                check_name,icon,count,_,_,expires = UnitAura(target, kk, "HELPFUL")
+                if(check_name ~= aura_name) then
+                    check_name,icon,count,_,_,expires = UnitAura(target, kk, "HARMFUL|PLAYER")
+                end
+                if(check_name == aura_name) then
+                    break
+                end
+            end
+            if(check_name == aura_name) then
+                frame.auras[ii].texture:SetTexture(icon)
+                frame.auras[ii]:Show()
+                frame.auras[ii].expires = expires
+                if( count == 0 ) then
+                    frame.auras[ii].stack_text:Hide()
+                else
+                    frame.auras[ii].stack_text:SetText(count)
+                    frame.auras[ii].stack_text:Show()
+                end
+                break
+            else
+                frame.auras[ii]:Hide()
+                frame.auras[ii].expires = 0
+            end
+        end
+    end
 end
 
 local function CreateAuraTracker(parent_frame, auras_to_track, target, direction)
@@ -141,64 +181,10 @@ local function CreateAuraTracker(parent_frame, auras_to_track, target, direction
         if( event == "COMBAT_LOG_EVENT_UNFILTERED" or event == "UNIT_PET") then
             local timestamp, type, hideCaster, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags = CombatLogGetCurrentEventInfo()
             if( destGUID == kPlayerGuid or sourceGUID == kPlayerGuid or true) then
-                for ii=1, #self.auras do
-                    local aura = self.auras[ii]
-                    for jj=1, #aura.spells do
-                        local check_name = nil
-                        local aura_name =  aura.spells[jj]
-                        local expires = 0
-                        local icon = nil
-                        local count = 0
-                        local exists = nil
-                        for kk=1, 40 do
-                            check_name,icon,count,_,_,expires = UnitAura(target, kk, "HELPFUL")
-                            if(check_name ~= aura_name) then
-                                check_name,icon,count,_,_,expires = UnitAura(target, kk, "HARMFUL|PLAYER")
-                            end
-                            if(check_name == aura_name) then
-                                break
-                            end
-                        end
-                        if(check_name == aura_name) then
-                            self.auras[ii].texture:SetTexture(icon)
-                            self.auras[ii]:Show()
-                            self.auras[ii].expires = expires
-                            if( count == 0 ) then
-                                self.auras[ii].stack_text:Hide()
-                            else
-                                self.auras[ii].stack_text:SetText(count)
-                                self.auras[ii].stack_text:Show()
-                            end
-                            break
-                        else
-                            self.auras[ii]:Hide()
-                            self.auras[ii].expires = 0
-                        end
-                    end
-                end
+                UpdateAuras(self, target)
             end
         elseif( event == "PLAYER_TARGET_CHANGED") then
-            for ii=1, #self.auras do
-                local aura = self.auras[ii]
-                for jj=1, #aura.spells do
-                    local exists,_,icon,count,_,_,expires = UnitAura(target,aura.spells[jj])
-                    if(exists ~= nil) then
-                        self.auras[ii].texture:SetTexture(icon)
-                        self.auras[ii]:Show()
-                        self.auras[ii].expires = expires
-                        if( count == 0 ) then
-                            self.auras[ii].stack_text:Hide()
-                        else
-                            self.auras[ii].stack_text:SetText(count)
-                            self.auras[ii].stack_text:Show()
-                        end
-                        break
-                    else
-                        self.auras[ii]:Hide()
-                        self.auras[ii].expires = 0
-                    end
-                end
-            end
+            UpdateAuras(self, target)
         elseif( event == "ADDON_LOADED" and ... == "AwesomeUI" ) then
             --
             -- Create each aura button
