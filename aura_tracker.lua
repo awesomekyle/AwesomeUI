@@ -4,7 +4,7 @@
 --
 local d = 0
 local _, kPlayerClass = UnitClass("player")
-local kPlayerGuid = UnitGUID("player")
+local kPlayerGuid = nil
 local kAurasToTrack = {
     ["MAGE"] = {  },
     ["PRIEST"] = {
@@ -38,14 +38,16 @@ local kAurasToTrack = {
     },
     ["ROGUE"] = {
         ["player"] = {
-            { "Slice and Dice", },
-            { "Recuperate", },
-            { "Revealing Strike", },
-            { "Burst of Speed", },
+            { "Slice and Dice", "Ruthless Precision", },
+            { "Recuperate", "Grand Melee", },
+            { "Revealing Strike", "Broadside", },
+            { "Burst of Speed", "Skull and Crossbones" },
             { "Feint", },
+            { "Buried Treasure", },
+            { "True Bearing", },
         },
         ["target"] = {
-            { "Cheap Shot", "Kidney Shot", },
+            { "Cheap Shot", "Kidney Shot", "Between the Eyes", "Hammer of Justice", },
             { "Blind", "Gouge", },
             { "Garrote", },
             { "Rupture", },
@@ -77,8 +79,8 @@ local kAurasToTrack = {
             { "Bone Shield", "Icy Talons" },
         },
         ["target"] = {
-            { "Blood Plague", },
-            { "Frost Fever", },
+            { "Virulent Plague", "Blood Plague", },
+            { "Festering Wound", "Frost Fever", },
         },
     },
     ["PALADIN"] = {
@@ -93,7 +95,7 @@ local kAurasToTrack = {
     ["WARRIOR"] = {
         ["player"] = {
             { "Colossus Smash", "Shield Block", "Shield Charge" },
-            { "Shield Barrier" },
+            { "Shield Barrier", "Overpower", },
             { "Demoralizing Shout" }, { "Enrage", },
             { "Shield Wall" },
             { "Last Stand" },
@@ -119,7 +121,7 @@ local kAurasToTrack = {
 }
 local kAuraSize = 32
 local kNumAurasAcross = 4
-
+local targetGUID = nil
 
 local function format_time(time)
     if(time > 3599) then return ceil(time/3600).."h" end
@@ -173,17 +175,21 @@ local function CreateAuraTracker(parent_frame, auras_to_track, target, direction
     frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
     frame:RegisterEvent("UNIT_PET")
     frame:RegisterEvent("PLAYER_TARGET_CHANGED")
+    frame:RegisterEvent("PLAYER_LOGIN")
 
     frame.auras_to_track = auras_to_track
     frame.target = target
 
     frame:SetScript("OnEvent",function(self,event,...)
-        if( event == "COMBAT_LOG_EVENT_UNFILTERED" or event == "UNIT_PET") then
-            local timestamp, type, hideCaster, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags = CombatLogGetCurrentEventInfo()
-            if( destGUID == kPlayerGuid or sourceGUID == kPlayerGuid or true) then
+        if(event == "PLAYER_LOGIN") then
+            kPlayerGuid = UnitGUID("player")
+        elseif( event == "COMBAT_LOG_EVENT_UNFILTERED" or event == "UNIT_PET") then
+            local _, _, _, _, _, _, _, destGUID = CombatLogGetCurrentEventInfo()
+            if (destGUID == kPlayerGuid or destGUID == targetGUID) then
                 UpdateAuras(self, target)
             end
         elseif( event == "PLAYER_TARGET_CHANGED") then
+            targetGUID = UnitGUID("target")
             UpdateAuras(self, target)
         elseif( event == "ADDON_LOADED" and ... == "AwesomeUI" ) then
             --
