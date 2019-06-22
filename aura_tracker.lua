@@ -18,20 +18,22 @@ local kAurasToTrack = {
      },
     ["DRUID"] = {
         ["player"] = {
-            { "Lunar Empowerment", "Solar Empowerment", "Savage Roar", "Savage Defense" },
-            { "Bloodtalons", "Rejuvenation", },
+            { "Lunar Empowerment", "Savage Roar", "Savage Defense" },
+            { "Ironfur", "Solar Empowerment", "Bloodtalons", "Rejuvenation", },
             { "Clearcasting", },
+            { "Tiger's Fury", },
         },
         ["target"] = {
-            { "Rake", },
+            { "Rake", "Sunfire" },
             { "Rip", },
-            { "Moonfire" }
+            { "Moonfire" },
+            { "Thrash", },
         },
     },
     ["MONK"] = {
         ["player"] = {
             { "Mana Tea", "Tigereye Brew", "Shuffle" },
-            { "Tiger Power" },
+            { "Tiger Power", "Ironskin Brew", },
             { "Elusive Brew", "Vital Mists", "Storm, Earth, and Fire" },
             { "Serpent's Zeal", "Touch of Karma" },
         },
@@ -49,20 +51,22 @@ local kAurasToTrack = {
         ["target"] = {
             { "Cheap Shot", "Kidney Shot", "Between the Eyes", "Hammer of Justice", },
             { "Blind", "Gouge", },
-            { "Garrote", },
+            { "Garrote", "Nightblade", },
             { "Rupture", },
             { "Hemorrhage", },
         }
     },
     ["HUNTER"] = {
         ["player"] = {
-            { "Lock and Load", "Sniper Training", "Sniper Training: Recently Moved" },
-            { "Steady Focus", "Thrill of the Hunt", },
-            { "Beastial Wrath", },
+            { "Mongoose Fury", "Lock and Load", "Frenzy", },
+            { "Steady Focus", "Thrill of the Hunt", "Trueshot", },
+            { "Beastial Wrath", "Trick Shots", },
             { "Misdirection" }
         },
         ["target"] = {
-            { "Vulnerable" }
+            { "Serpent Sting", },
+            { "Wildfire Bomb", },
+            { "Concussive Shot", },
         }
     },
     ["SHAMAN"] = {
@@ -79,13 +83,13 @@ local kAurasToTrack = {
             { "Bone Shield", "Icy Talons" },
         },
         ["target"] = {
-            { "Virulent Plague", "Blood Plague", },
-            { "Festering Wound", "Frost Fever", },
+            { "Virulent Plague", "Blood Plague", "Frost Fever", },
+            { "Festering Wound", "Pillar of Frost", },
         },
     },
     ["PALADIN"] = {
         ["player"] = {
-            { "Shield of the Righteous", "Zeal", },
+            { "Shield of the Righteous",  },
             { "Divine Protection", "Supplication" },
             { "Ardent Defender", "Final Verdict" },
             { "Guardian of Ancient Kings", "Empowered Divine Storm" },
