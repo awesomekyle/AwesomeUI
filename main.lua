@@ -27,7 +27,7 @@ local function update_actionbars()
     ActionButton7:SetPoint("TOP", ActionButton1, "BOTTOM", 0, -buttonSpacing)
 
     for i=1, 12 do
-        _G["ActionButton"..i]:SetAlpha(.8) -- main bar
+        _G["ActionButton"..i]:SetAlpha(.7) -- main bar
     end
 
     MainMenuBarArtFrame.LeftEndCap:Hide()
@@ -35,60 +35,9 @@ local function update_actionbars()
     MainMenuBarArtFrameBackground:ClearAllPoints()
     MainMenuBarArtFrameBackground:Hide()
     MainMenuBarArtFrameBackground.Show = function() end
+
+    StatusTrackingBarManager:SetWidth((buttonSize + buttonSpacing) * 12)
 end
-
--- local BlizzHide = false
--- local function toggle_blizz()
---     if BlizzHide == false then
---         CharacterMicroButton:Hide()
---         SpellbookMicroButton:Hide()
---         TalentMicroButton:Hide()
---         AchievementMicroButton:SetAlpha(0)
---         QuestLogMicroButton:Hide()
---         GuildMicroButton:Hide()
---         LFDMicroButton:Hide()
---         CollectionsMicroButton:Hide()
---         EJMicroButton:Hide()
---         StoreMicroButton:Hide()
---         StoreMicroButton:SetAlpha(0)
---         MainMenuMicroButton:Hide()
---         if(PVPMicroButton) then
---             PVPMicroButton:Hide()
---         end
---         MainMenuBarBackpackButton:Hide()
---         CharacterBag0Slot:Hide()
---         CharacterBag1Slot:Hide()
---         CharacterBag2Slot:Hide()
---         CharacterBag3Slot:Hide()
---         ReputationWatchBar:Hide()
---         BlizzHide = true
---     elseif BlizzHide == true then
---         MainMenuBarBackpackButton:SetPoint("BOTTOMRIGHT", MainMenuMicroButton, "TOPRIGHT", 0, -20)
---         CharacterMicroButton:Show()
---         SpellbookMicroButton:Show()
---         TalentMicroButton:Show()
---         AchievementMicroButton:SetAlpha(1)
---         QuestLogMicroButton:Show()
---         GuildMicroButton:Show()
---         LFDMicroButton:Show()
---         CollectionsMicroButton:Show()
---         EJMicroButton:Show()
---         StoreMicroButton:Show()
---         StoreMicroButton:SetAlpha(1)
---         MainMenuMicroButton:Show()
---         if(PVPMicroButton) then
---             PVPMicroButton:Show()
---         end
-
---         MainMenuBarBackpackButton:Show()
---         CharacterBag0Slot:Show()
---         CharacterBag1Slot:Show()
---         CharacterBag2Slot:Show()
---         CharacterBag3Slot:Show()
---         ReputationWatchBar:Show()
---         BlizzHide = false
---     end
--- end
 
 -- Set up frame to run on login
 local frame = CreateFrame("Frame");
@@ -130,7 +79,6 @@ frame:SetScript("OnEvent",function(self,event,id)
                 end
             end
         end)
-
 
         --
         -- Class color in HP bars
@@ -185,12 +133,14 @@ frame:SetScript("OnEvent",function(self,event,id)
         CastingBarFrame:ClearAllPoints()
         CastingBarFrame:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, 355)
         CastingBarFrame:SetHeight(12)
+        CastingBarFrame:SetWidth(CastingBarFrame:GetWidth() * 1.2)
         CastingBarFrame.SetPoint = function() end
 
         CastingBarFrame.Border:ClearAllPoints()
         CastingBarFrame.Border:SetPoint("TOP", 0, 26)
-
+        CastingBarFrame.Border:SetWidth(CastingBarFrame.Border:GetWidth() * 1.22)
         CastingBarFrame.Border:SetTexture("Interface\\CastingBar\\UI-CastingBar-Border-Small.blp")
+
         CastingBarFrame.Flash:SetTexture(nil)
         CastingBarFrame.Spark:SetTexture(nil)
 
@@ -202,10 +152,12 @@ frame:SetScript("OnEvent",function(self,event,id)
         --
         CastingBarFrame.timer = CastingBarFrame:CreateFontString(nil)
         CastingBarFrame.timer:SetFont(STANDARD_TEXT_FONT,12,"OUTLINE")
-        CastingBarFrame.timer:SetPoint("RIGHT", CastingBarFrame, "RIGHT", 2, -16)
+        CastingBarFrame.timer:SetPoint("RIGHT", CastingBarFrame, "RIGHT", 0, 0)
         CastingBarFrame.update = .1
-        hooksecurefunc("CastingBarFrame_OnUpdate", function(self, elapsed)
-            if not self.timer then return end
+        CastingBarFrame:HookScript("OnUpdate", function(self, elapsed)
+            if not self.timer then
+                return
+            end
             if self.update and self.update < elapsed then
                 if self.casting then
                     self.timer:SetText(format("%2.1f/%1.1f", max(self.maxValue - self.value, 0), self.maxValue))
