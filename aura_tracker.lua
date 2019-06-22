@@ -99,7 +99,7 @@ local kAurasToTrack = {
     ["WARRIOR"] = {
         ["player"] = {
             { "Colossus Smash", "Shield Block", "Shield Charge", "Whirlwind" },
-            { "Shield Barrier", "Overpower", },
+            { "Shield Barrier", "Overpower", "Ignore Pain", },
             { "Demoralizing Shout" }, { "Enrage", },
             { "Shield Wall" },
             { "Last Stand" },

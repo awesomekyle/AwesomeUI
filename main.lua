@@ -3,12 +3,7 @@ local function width_of_buttons(buttonCount, buttonSize, spacing)
 end
 
 local function update_actionbars()
-    print("AwesomeUI!")
-
     local buttonSize = MultiBarBottomRightButton1:GetWidth()
-
-    print("Button size"..buttonSize)
-
     local buttonSpacing = 6
 
     MultiBarBottomRightButton1:ClearAllPoints()
