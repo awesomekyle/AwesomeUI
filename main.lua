@@ -1,39 +1,41 @@
--- local function update_actionbars()
---     local kActionBarSpacing = 4
+local function width_of_buttons(buttonCount, buttonSize, spacing)
+    return buttonSize * buttonCount + spacing * buttonCount-1
+end
 
---     --MultiBarBottomRight:SetParent(UIParent)
---     MultiBarBottomRight:ClearAllPoints()
---     MultiBarBottomRight:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, kActionBarSpacing/2)
---     --MultiBarBottomLeft:SetParent(UIParent)
---     MultiBarBottomLeft:ClearAllPoints()
---     MultiBarBottomLeft:SetPoint("BOTTOM", MultiBarBottomRight, "TOP", 0, kActionBarSpacing)
---     MultiBarBottomLeft.SetPoint = function() end
---     MainMenuExpBar:ClearAllPoints()
---     MainMenuExpBar:SetPoint("BOTTOM", MultiBarBottomLeft, "TOP", 0, 4)
+local function update_actionbars()
+    print("AwesomeUI!")
 
---     ActionButton1:ClearAllPoints()
---     ActionButton1:SetPoint("LEFT", UIParent, "CENTER", -123, -160)
---     ActionButton7:ClearAllPoints()
---     ActionButton7:SetPoint("TOP", ActionButton1, "BOTTOM", 0, -kActionBarSpacing)
+    local buttonSize = MultiBarBottomRightButton1:GetWidth()
 
---     for i=1, 12 do
---         _G["ActionButton"..i]:SetAlpha(.8) -- main bar
---     end
+    print("Button size"..buttonSize)
 
---     PetActionBarFrame:ClearAllPoints()
---     PetActionBarFrame:SetPoint("BOTTOMRIGHT", MultiBarBottomLeft, "TOPRIGHT", 31, kActionBarSpacing)
---     PetActionBarFrame:SetScale(0.9)
+    local buttonSpacing = 6
 
---     StanceButton1:ClearAllPoints()
---     StanceButton1:SetPoint("BOTTOMLEFT", MultiBarBottomLeft, "TOPLEFT", 10, kActionBarSpacing+2)
---     StanceButton1:SetScale(0.75)
+    MultiBarBottomRightButton1:ClearAllPoints()
+    MultiBarBottomRightButton1:SetPoint("BOTTOMLEFT", StatusTrackingBarManager, "BOTTOM",-width_of_buttons(6,buttonSize,buttonSpacing) + 0.5 * buttonSpacing, 4)
+    MultiBarBottomRightButton7:ClearAllPoints()
+    MultiBarBottomRightButton7:SetPoint("LEFT", MultiBarBottomRightButton6, "RIGHT", 6, 0)
 
---     for i=2, 8 do
---         -- _G["StanceButton"..i]:ClearAllPoints()
---         -- _G["StanceButton"..i]:SetPoint("BOTTOM", _G["StanceButton"..i-1], "TOP", 0, kActionBarSpacing)
---         _G["StanceButton"..i]:SetScale(0.75)
---     end
--- end
+    MultiBarBottomLeftButton1:ClearAllPoints()
+    MultiBarBottomLeftButton1:SetPoint("BOTTOM", MultiBarBottomRightButton1, "TOP", 0, 6)
+    MultiBarBottomLeftButton7:ClearAllPoints()
+    MultiBarBottomLeftButton7:SetPoint("LEFT", MultiBarBottomLeftButton6, "RIGHT", 6, 0)
+
+    ActionButton1:ClearAllPoints()
+    ActionButton1:SetPoint("LEFT", UIParent, "CENTER", -123, -160)
+    ActionButton7:ClearAllPoints()
+    ActionButton7:SetPoint("TOP", ActionButton1, "BOTTOM", 0, -buttonSpacing)
+
+    for i=1, 12 do
+        _G["ActionButton"..i]:SetAlpha(.8) -- main bar
+    end
+
+    MainMenuBarArtFrame.LeftEndCap:Hide()
+    MainMenuBarArtFrame.RightEndCap:Hide()
+    MainMenuBarArtFrameBackground:ClearAllPoints()
+    MainMenuBarArtFrameBackground:Hide()
+    MainMenuBarArtFrameBackground.Show = function() end
+end
 
 -- local BlizzHide = false
 -- local function toggle_blizz()
@@ -101,7 +103,7 @@ frame:RegisterEvent("UNIT_FACTION")
 
 frame:SetScript("OnEvent",function(self,event,id)
     if(event == "PLAYER_LOGIN") then
-        -- update_actionbars()
+        update_actionbars()
 
         --
         -- Reposition tooltip --
