@@ -61,6 +61,8 @@ local kAurasToTrack = {
             { "Mongoose Fury", "Lock and Load", "Frenzy", },
             { "Steady Focus", "Thrill of the Hunt", "Trueshot", },
             { "Beastial Wrath", "Trick Shots", },
+            { "PET Frenzy", },
+            { "Beast Cleave", },
             { "Misdirection" }
         },
         ["target"] = {
@@ -126,6 +128,7 @@ local kAurasToTrack = {
 local kAuraSize = 32
 local kNumAurasAcross = 4
 local targetGUID = nil
+local petGUID = nil
 
 local function format_time(time)
     if(time > 3599) then return ceil(time/3600).."h" end
@@ -134,20 +137,28 @@ local function format_time(time)
     return format("%.1f", time)
 end
 
+local function starts_with(str, start)
+    return str:sub(1, #start) == start
+end
+
 local function UpdateAuras(frame, target)
     for ii=1, #frame.auras do
         local aura = frame.auras[ii]
         for jj=1, #aura.spells do
             local check_name = nil
-            local aura_name =  aura.spells[jj]
+            local aura_name, isPet = string.gsub(aura.spells[jj], "PET ","")
+            local currTarget = target
+            if(isPet == 1) then
+                currTarget = "pet"
+            end
             local expires = 0
             local icon = nil
             local count = 0
             local exists = nil
             for kk=1, 40 do
-                check_name,icon,count,_,_,expires = UnitAura(target, kk, "HELPFUL")
+                check_name,icon,count,_,_,expires = UnitAura(currTarget, kk, "HELPFUL")
                 if(check_name ~= aura_name) then
-                    check_name,icon,count,_,_,expires = UnitAura(target, kk, "HARMFUL|PLAYER")
+                    check_name,icon,count,_,_,expires = UnitAura(currTarget, kk, "HARMFUL|PLAYER")
                 end
                 if(check_name == aura_name) then
                     break
@@ -189,9 +200,12 @@ local function CreateAuraTracker(parent_frame, auras_to_track, target, direction
             kPlayerGuid = UnitGUID("player")
         elseif( event == "COMBAT_LOG_EVENT_UNFILTERED" or event == "UNIT_PET") then
             local _, _, _, _, _, _, _, destGUID = CombatLogGetCurrentEventInfo()
-            if (destGUID == kPlayerGuid or destGUID == targetGUID) then
+            if (destGUID == kPlayerGuid or destGUID == targetGUID or destGUID == petGUID) then
                 UpdateAuras(self, target)
             end
+        elseif( event == "PET_BAR_UPDATE" ) then
+            petGUID = UnitGUID("pet")
+            UpdateAuras(self, target)
         elseif( event == "PLAYER_TARGET_CHANGED") then
             targetGUID = UnitGUID("target")
             UpdateAuras(self, target)
