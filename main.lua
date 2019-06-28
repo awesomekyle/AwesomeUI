@@ -47,7 +47,19 @@ frame:RegisterEvent("UNIT_FACTION")
 
 frame:SetScript("OnEvent",function(self,event,id)
     if(event == "PLAYER_LOGIN") then
-        update_actionbars()
+        if AccountSettings == nil then
+            AccountSettings = {
+                ["showMacroText"] = true,
+                ["repositionActionBars"] = true,
+            }
+        end
+        if CharacterSettings == nil then
+            CharacterSettings = {}
+        end
+
+        if AccountSettings.repositionActionBars == true then
+            update_actionbars()
+        end
 
         --
         -- Reposition tooltip --
@@ -283,6 +295,45 @@ local function Install()
 end -- Install
 -------------------------------------------------------------
 
+local function toggle_keybinds()
+    show_keybinds = not show_keybinds
+    if(show_keybinds == true) then
+        for i=1, 12 do
+            _G["ActionButton"..i.."HotKey"]:SetAlpha(1) -- main bar
+            _G["MultiBarBottomRightButton"..i.."HotKey"]:SetAlpha(1) -- bottom right bar
+            _G["MultiBarBottomLeftButton"..i.."HotKey"]:SetAlpha(1) -- bottom left bar
+            _G["MultiBarRightButton"..i.."HotKey"]:SetAlpha(1) -- right bar
+            _G["MultiBarLeftButton"..i.."HotKey"]:SetAlpha(1) -- left bar
+        end
+    else
+        for i=1, 12 do
+            _G["ActionButton"..i.."HotKey"]:SetAlpha(0) -- main bar
+            _G["MultiBarBottomRightButton"..i.."HotKey"]:SetAlpha(0) -- bottom right bar
+            _G["MultiBarBottomLeftButton"..i.."HotKey"]:SetAlpha(0) -- bottom left bar
+            _G["MultiBarRightButton"..i.."HotKey"]:SetAlpha(0) -- right bar
+            _G["MultiBarLeftButton"..i.."HotKey"]:SetAlpha(0) -- left bar
+        end
+    end
+end
+
+local function set_macro_text(enabled)
+    local alpha = 1
+    if enabled == false then
+        alpha = 0
+    end
+    for i=1, 12 do
+        _G["ActionButton"..i.."Name"]:SetAlpha(alpha) -- main bar
+        _G["MultiBarBottomRightButton"..i.."Name"]:SetAlpha(alpha) -- bottom right bar
+        _G["MultiBarBottomLeftButton"..i.."Name"]:SetAlpha(alpha) -- bottom left bar
+        _G["MultiBarRightButton"..i.."Name"]:SetAlpha(alpha) -- right bar
+        _G["MultiBarLeftButton"..i.."Name"]:SetAlpha(alpha) -- left bar
+    end
+end
+local function toggle_macros()
+    AccountSettings["showMacroText"] = not AccountSettings["showMacroText"]
+    set_macro_text(AccountSettings["showMacroText"])
+end
+
 --
 -- Slash commands
 --
@@ -309,3 +360,30 @@ SLASH_READYCHECK1 = '/rc'
 
 SlashCmdList["CHECKROLE"] = function() InitiateRolePoll() end
 SLASH_CHECKROLE1 = '/cr'
+
+--
+-- Interface options
+--
+-- awesomeUI = {}
+-- awesomeUI.frame = CreateFrame("Frame", "AwesomeUIPanel", UIParent)
+-- awesomeUI.frame.name = "AwesomeUI"
+
+-- local macroTextCheckbox = CreateFrame("CheckButton", "AwesomeUI_ShowMacroTextCheckButton", awesomeUI.frame, "InterfaceOptionsCheckButtonTemplate")
+-- AwesomeUI_ShowMacroTextCheckButtonText:SetText("Show macro text in action bars")
+-- macroTextCheckbox:SetScript("OnClick",
+--     function(self)
+--         AccountSettings["showMacroText"] = self:GetChecked()
+--         set_macro_text(AccountSettings["showMacroText"])
+--     end
+-- )
+-- -- macroTextCheckbox.label = _G[macroTextCheckbox:GetName().."Text"]
+-- -- macroTextCheckbox.label:SetText()
+
+-- awesomeUI.frame.showMacroText = macroTextCheckbox
+-- awesomeUI.frame.showMacroText:SetPoint("TOPLEFT", 16, -16)
+-- InterfaceOptions_AddCategory(awesomeUI.frame)
+
+-- function AwesomeUI_LoadOptionsPanel(panel)
+--     panel.name = "AwesomeUI"
+--     InterfaceOptions_AddCategory(panel)
+-- end

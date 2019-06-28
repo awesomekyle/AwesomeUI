@@ -56,21 +56,6 @@ local kAurasToTrack = {
             { "Hemorrhage", },
         }
     },
-    ["HUNTER"] = {
-        ["player"] = {
-            { "Mongoose Fury", "Lock and Load", "Frenzy", },
-            { "Steady Focus", "Thrill of the Hunt", "Trueshot", },
-            { "Beastial Wrath", "Trick Shots", },
-            { "PET Frenzy", },
-            { "Beast Cleave", },
-            { "Misdirection" }
-        },
-        ["target"] = {
-            { "Serpent Sting", },
-            { "Wildfire Bomb", },
-            { "Concussive Shot", },
-        }
-    },
     ["SHAMAN"] = {
         ["player"] = {
             { "Tidal Waves" },
@@ -283,12 +268,14 @@ local function CreateAuraTracker(parent_frame, auras_to_track, target, direction
     return frame
 end
 
-print("Aura Tracker loaded")
-if(kAurasToTrack[kPlayerClass]["player"]) then
-    local player_frame = CreateAuraTracker(PlayerFrame, kAurasToTrack[kPlayerClass]["player"], "player", "RIGHT")
-end
-if(kAurasToTrack[kPlayerClass]["target"]) then
-    local target_frame = CreateAuraTracker(TargetFrame, kAurasToTrack[kPlayerClass]["target"], "target", "LEFT")
+if(kAurasToTrack[kPlayerClass] ~= nil) then
+    print("Aura Tracker loaded")
+    if(kAurasToTrack[kPlayerClass]["player"]) then
+        local player_frame = CreateAuraTracker(PlayerFrame, kAurasToTrack[kPlayerClass]["player"], "player", "RIGHT")
+    end
+    if(kAurasToTrack[kPlayerClass]["target"]) then
+        local target_frame = CreateAuraTracker(TargetFrame, kAurasToTrack[kPlayerClass]["target"], "target", "LEFT")
+    end
 end
 
 --
