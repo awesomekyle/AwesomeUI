@@ -59,6 +59,33 @@ local AurasToTrack = {
                 "Wing Clip",
             },
         }
+    },
+    ["WARRIOR"] = {
+        ["player"] = {
+            ["Fury"] = {
+                "Enrage",
+                "Whirlwind",
+                "Enraged Regeneration",
+            },
+            ["Protection"] = {
+                "Shield Block",
+                "Ignore Pain",
+                "Shield Wall",
+                "Last Stand",
+            },
+            ["all"] = {
+                "Berserker Rage",
+            },
+        },
+        ["target"] = {
+            ["Fury"] = {
+                "Piercing Howl",
+            },
+            ["Protection"] = {
+                "Demoralizing Shout",
+                "Shockwave",
+            },
+        }
     }
 }
 
@@ -140,7 +167,7 @@ local function CreateAuraIcon(parent, name)
     aura.text = timer_text
 
     local stack_text = aura:CreateFontString(nil)
-    stack_text:SetFont("Fonts\\FRIZQT__.TTF", 14, "OUTLINE")
+    stack_text:SetFont("Fonts\\FRIZQT__.TTF", 16, "OUTLINE")
     stack_text:SetText("1")
     stack_text:SetParent(aura)
     stack_text:Show()
@@ -218,7 +245,15 @@ local function CreateAuraTracker(parentFrame)
                 if auraTarget == "target" then
                     filter = "HARMFUL|PLAYER"
                 end
-                local name, icon, count, _, _, expirationTime = AuraUtil.FindAuraByName(auraName, auraTarget, filter)
+                local name, icon, count, _, _, expirationTime,_,_,_,_,_,_,_,_,_,ignorePainRemaining = AuraUtil.FindAuraByName(auraName, auraTarget, filter)
+                -- Ignore Pain caps at 1.3x it's maximum cast. If < 30% remains, we
+                -- hide the icon because it's safe to recast
+                if name == "Ignore Pain" then
+                    local currMaxIgnorePain = AwesomeUI.ignorePainReader:GetValue()
+                    if ignorePainRemaining < (currMaxIgnorePain * 0.3) then
+                        name = nil
+                    end
+                end
                 if name == nil then
                     aura:Hide()
                 else
@@ -330,6 +365,19 @@ AwesomeUI.frame:SetScript("OnEvent", function(self,event,...)
         -- setup aura tracker
         AwesomeUI.friendlyAuras = CreateAuraTracker(PlayerFrame)
         AwesomeUI.targetAuras = CreateAuraTracker(TargetFrame)
+
+        -- setup Ignore Pain reader for warrior
+        if select(2, UnitClass("player")) == "WARRIOR" then
+            AwesomeUI.ignorePainReader = CreateFrame("GameTooltip", "AwesomeUIIgnorePainTooltip", UIParent, "GameTooltipTemplate")
+            AwesomeUI.ignorePainReader:SetOwner(UIParent,"ANCHOR_NONE")
+            AwesomeUI.ignorePainReader:SetSpellByID(190456) -- Ignore Pain Spell ID
+            AwesomeUI.ignorePainReader.GetValue = function(self)
+                local ignorePainMatch = AwesomeUIIgnorePainTooltipTextLeft4:GetText():match("Fight through the pain, ignoring 50%% of damage taken, up to (.-) total damage prevented.")
+                local ignorePainMatch = string.gsub(ignorePainMatch, ",", "")
+                local nextIgnorePainValue = tonumber(ignorePainMatch)
+                return nextIgnorePainValue
+            end
+        end
 
     elseif event == "PLAYER_LOGIN"  then
         if AccountSettings == nil then

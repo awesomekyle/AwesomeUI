@@ -83,20 +83,20 @@ local kAurasToTrack = {
             { "Divine Shield", },
         },
     },
-    ["WARRIOR"] = {
-        ["player"] = {
-            { "Colossus Smash", "Shield Block", "Shield Charge", "Whirlwind" },
-            { "Shield Barrier", "Overpower", "Ignore Pain", },
-            { "Demoralizing Shout" }, { "Enrage", },
-            { "Shield Wall" },
-            { "Last Stand" },
-            { "Enraged Regeneration" },
-            { "Unyielding Strikes", },
-        },
-        ["target"] = {
-            { "Shockwave", },
-        },
-    },
+    -- ["WARRIOR"] = {
+    --     ["player"] = {
+    --         { "Colossus Smash", "Shield Block", "Shield Charge", "Whirlwind" },
+    --         { "Shield Barrier", "Overpower", "Ignore Pain", },
+    --         { "Demoralizing Shout" }, { "Enrage", },
+    --         { "Shield Wall" },
+    --         { "Last Stand" },
+    --         { "Enraged Regeneration" },
+    --         { "Unyielding Strikes", },
+    --     },
+    --     ["target"] = {
+    --         { "Shockwave", },
+    --     },
+    -- },
     ["DEMONHUNTER"] = {
         ["player"] = {
             { "Demon Spikes", },
