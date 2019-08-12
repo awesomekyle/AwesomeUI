@@ -213,6 +213,9 @@ AwesomeUI.Install = function(self)
     SetCVar("nameplateShowEnemies", 1)
     SetCVar("nameplateShowEnemyTotems", 0)
     SetCVar("ShowClassColorInNameplate", 1)
+    SetCVar("xpBarText", 1)
+    SetCVar("chatClassColorOverride", 0)
+    SetCVar("ffxglow", 0)
 
     if wowVersion ~= "Classic" then
         SetCVar("miniWorldMap", 1)
