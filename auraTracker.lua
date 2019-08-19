@@ -56,6 +56,10 @@ local AurasToTrack = {
                 "Shield Wall",
                 "Last Stand",
             },
+            ["Arms"] = {
+                "Deep Wounds",
+                "Overpower",
+            },
             ["all"] = {
                 "Berserker Rage",
             },
@@ -225,6 +229,7 @@ function CreateAuraTracker()
 
     tracker.frame:RegisterEvent("PLAYER_LOGIN")
     tracker.frame:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED")
+    tracker.frame:RegisterEvent("ZONE_CHANGED")
     tracker.frame:SetScript("OnEvent", function(self, event, ...)
         tracker:UpdateSpec()
     end)
