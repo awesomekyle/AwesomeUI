@@ -3,6 +3,7 @@
 -- auras
 --
 local AuraSize = 32
+local AurasAcross = 4
 local AurasToTrack = {
     ["HUNTER"] = {
         ["player"] = {
@@ -49,6 +50,7 @@ local AurasToTrack = {
                 "Enrage",
                 "Whirlwind",
                 "Enraged Regeneration",
+                "Battle Trance",
             },
             ["Protection"] = {
                 "Shield Block",
@@ -108,7 +110,7 @@ local function FormatTime(time)
     return format("%.1f", time)
 end
 
-local function CreateTargetAuraTracker(parentFrame)
+local function CreateTargetAuraTracker(parentFrame, owner)
     local parentName = parentFrame:GetName()
     local tracker = CreateFrame("Frame", "AwesomeUI"..parentName.."AuraTracker", parentFrame)
     tracker.auras = {}
@@ -117,22 +119,10 @@ local function CreateTargetAuraTracker(parentFrame)
     elseif parentName == "TargetFrame" then
         tracker.direction = "LEFT"
     end
+    tracker.owner = owner
     tracker:SetPoint("BOTTOM"..tracker.direction, parentFrame, "TOP"..tracker.direction, 0, 0)
     tracker:SetSize(100,100)
     tracker:Show()
-
-    -- setup Ignore Pain reader for warrior
-    if select(2, UnitClass("player")) == "WARRIOR" then
-        tracker.ignorePainReader = CreateFrame("GameTooltip", "AwesomeUIIgnorePainTooltipReader", UIParent, "GameTooltipTemplate")
-        tracker.ignorePainReader:SetOwner(UIParent,"ANCHOR_NONE")
-        tracker.ignorePainReader:SetSpellByID(190456) -- Ignore Pain Spell ID
-        tracker.ignorePainReader.GetValue = function(self)
-            local ignorePainMatch = AwesomeUIIgnorePainTooltipReaderTextLeft4:GetText():match("Fight through the pain, ignoring 50%% of damage taken, up to (.-) total damage prevented.")
-            local ignorePainMatch = string.gsub(ignorePainMatch, ",", "")
-            local nextIgnorePainValue = tonumber(ignorePainMatch)
-            return nextIgnorePainValue
-        end
-    end
 
     tracker.AddAuras = function(self, auras)
         -- create any required auras
@@ -145,6 +135,7 @@ local function CreateTargetAuraTracker(parentFrame)
             end
         end
 
+        -- clear all auras
         for _, aura in ipairs(self.auras) do
             aura.auraInfo = {}
         end
@@ -160,12 +151,12 @@ local function CreateTargetAuraTracker(parentFrame)
             aura:SetSize(AuraSize, AuraSize)
             aura:Hide()
 
-            if(self.direction == "RIGHT") then
+            if self.direction == "RIGHT" then
                 xoffset = xoffset - (AuraSize + 2)
             else
                 xoffset = xoffset + (AuraSize + 2)
             end
-            if( ii == kNumAurasAcross) then
+            if ii == AurasAcross then
                 yoffset = yoffset + AuraSize + 16
                 xoffset = 0
             end
@@ -185,7 +176,7 @@ local function CreateTargetAuraTracker(parentFrame)
                 -- Ignore Pain caps at 1.3x it's maximum cast. If < 30% remains, we
                 -- hide the icon because it's safe to recast
                 if name == "Ignore Pain" then
-                    local currMaxIgnorePain = self.ignorePainReader:GetValue()
+                    local currMaxIgnorePain = self.owner.ignorePainReader:GetValue()
                     if ignorePainRemaining < (currMaxIgnorePain * 0.3) then
                         name = nil
                     end
@@ -222,14 +213,15 @@ function CreateAuraTracker()
     tracker.frame = CreateFrame("Frame", "AwesomeUIFrame", UIParent)
     tracker.frame.name = "AwesomeUI"
     tracker.auras = {}
+    tracker.ignorePainReader = nil
 
     -- setup aura tracker
-    tracker.friendlyAuras = CreateTargetAuraTracker(PlayerFrame)
-    tracker.targetAuras = CreateTargetAuraTracker(TargetFrame)
+    tracker.friendlyAuras = CreateTargetAuraTracker(PlayerFrame, tracker)
+    tracker.targetAuras = CreateTargetAuraTracker(TargetFrame, tracker)
 
     tracker.frame:RegisterEvent("PLAYER_LOGIN")
     tracker.frame:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED")
-    tracker.frame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
+    tracker.frame:RegisterEvent("PLAYER_ENTERING_WORLD")
     tracker.frame:SetScript("OnEvent", function(self, event, ...)
         tracker:UpdateSpec()
     end)
@@ -237,6 +229,19 @@ function CreateAuraTracker()
     tracker.UpdateSpec = function(self)
         local _, playerClass = UnitClass("player")
         local currentSpecIndex, currentSpecName = GetSpecializationInfo(GetSpecialization())
+
+        -- setup Ignore Pain reader for warrior
+        if select(2, UnitClass("player")) == "WARRIOR" and currentSpecName == "Protection" and self.ignorePainReader == nil then
+            self.ignorePainReader = CreateFrame("GameTooltip", "AwesomeUIIgnorePainTooltipReader", UIParent, "GameTooltipTemplate")
+            self.ignorePainReader:SetOwner(UIParent,"ANCHOR_NONE")
+            self.ignorePainReader:SetSpellByID(190456) -- Ignore Pain Spell ID
+            self.ignorePainReader.GetValue = function(self)
+                local ignorePainMatch = AwesomeUIIgnorePainTooltipReaderTextLeft4:GetText():match("Fight through the pain, ignoring 50%% of damage taken, up to (.-) total damage prevented.")
+                local ignorePainMatch = string.gsub(ignorePainMatch, ",", "")
+                local nextIgnorePainValue = tonumber(ignorePainMatch)
+                return nextIgnorePainValue
+            end
+        end
 
         -- if not a class with auras, just return
         if AurasToTrack[playerClass] == nil then
