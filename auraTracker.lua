@@ -44,6 +44,14 @@ local AurasToTrack = {
             },
         }
     },
+    ["SHAMAN"] = {
+        ["player"] = {
+            ["Enhancement"] = {
+                "Flametongue",
+                "Frostbrand",
+            },
+        }
+    },
     ["WARRIOR"] = {
         ["player"] = {
             ["Fury"] = {
@@ -75,7 +83,7 @@ local AurasToTrack = {
                 "Shockwave",
             },
         }
-    }
+    },
 }
 
 local function CreateAuraIcon(parent, name)

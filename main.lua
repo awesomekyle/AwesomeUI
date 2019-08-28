@@ -157,7 +157,7 @@ AwesomeUI.UpdateActionbars = function(self, moveEnabled)
         PetActionBarFrame:SetScale(0.9)
 
         StanceButton1:ClearAllPoints()
-        StanceButton1:SetPoint("BOTTOMLEFT", MultiBarBottomLeft, "TOPLEFT", 10, buttonSpacing+2)
+        StanceButton1:SetPoint("BOTTOMLEFT", MultiBarBottomLeftButton1, "TOPLEFT", 10, buttonSpacing+2)
 
         for i=1, 8 do
             _G["StanceButton"..i]:SetScale(0.9)
@@ -180,15 +180,25 @@ AwesomeUI.UpdateActionbars = function(self, moveEnabled)
         MainMenuBarPageNumber:SetAlpha(0)
 
         -- move bars
-        MainMenuExpBar:ClearAllPoints()
-        MainMenuExpBar:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, 0)
-        ReputationWatchBar:ClearAllPoints()
-        ReputationWatchBar:SetPoint("BOTTOM", MainMenuExpBar, "TOP", 0, -2)
         local width = CharacterMicroButton:GetWidth()
         CharacterMicroButton:ClearAllPoints()
         CharacterMicroButton:SetPoint("BOTTOMLEFT", UIPARENT, "BOTTOMRIGHT", -width * 7.5, 0)
 
         MainMenuBarBackpackButton:SetPoint("BOTTOMRIGHT", MainMenuMicroButton, "TOPRIGHT", 40, -20)
+
+        MainMenuExpBar:ClearAllPoints()
+        MainMenuExpBar:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, -3)
+        for i=0, 3 do
+            local height = _G["MainMenuXPBarTexture"..i]:GetHeight()
+            _G["MainMenuXPBarTexture"..i]:SetHeight(height + 4)
+        end
+        MainMenuBarExpText:ClearAllPoints()
+        MainMenuBarExpText:SetParent(MainMenuExpBar)
+        MainMenuBarExpText:SetPoint("CENTER", MainMenuExpBar, "CENTER", 0, 3)
+        MainMenuBarExpText:SetDrawLayer("OVERLAY")
+        MainMenuBarExpText:Show()
+        ReputationWatchBar:ClearAllPoints()
+        ReputationWatchBar:SetPoint("BOTTOM", MainMenuExpBar, "TOP", 0, -2)
     else
         StatusTrackingBarManager:SetWidth((buttonSize + buttonSpacing) * 12)
 
