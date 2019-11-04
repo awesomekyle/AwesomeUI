@@ -400,17 +400,19 @@ AwesomeUI.OnPlayerLogin = function(self)
         if playerClass == "PALADIN" then
             DebuffButton1:SetPoint("TOPRIGHT", PaladinPowerBarFrame, "BOTTOMRIGHT", 0, 0)
         elseif  playerClass == "DEATHKNIGHT" then
-            DebuffButton1:SetPoint("TOPRIGHT", RuneFrame, "BOTTOMRIGHT", 0, -10)
+            DebuffButton1:SetPoint("TOPRIGHT", RuneFrame, "BOTTOMRIGHT", 0, -13)
         elseif  playerClass == "PRIEST" then
             DebuffButton1:SetPoint("TOPRIGHT", PlayerFrame, "BOTTOMRIGHT", 0, 13)
         elseif  playerClass == "SHAMAN" then
             DebuffButton1:SetPoint("TOPRIGHT", TotemFrame, "BOTTOMRIGHT", 0, 0)
-        elseif  playerClass == "HUNTER" or playerClass == "WARLOCK" then
+        elseif  playerClass == "HUNTER" or playerClass == "WARLOCK"then
             DebuffButton1:SetPoint("TOPRIGHT", PetFrame, "BOTTOMRIGHT", 9, -7)
         elseif  playerClass == "MONK" then
             DebuffButton1:SetPoint("TOPRIGHT", PlayerFrame, "BOTTOMRIGHT", 0, 0)
         elseif  playerClass == "DRUID" then
             DebuffButton1:SetPoint("TOPRIGHT", PlayerFrame, "BOTTOMRIGHT", 0, 0)
+        elseif  playerClass == "MAGE" then
+            DebuffButton1:SetPoint("TOPRIGHT", PlayerFrame, "BOTTOMRIGHT", 0,-8)
         else
             DebuffButton1:SetPoint("TOPRIGHT", PlayerFrame, "BOTTOMRIGHT", 0, 20)
         end

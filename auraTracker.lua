@@ -5,6 +5,31 @@
 local AuraSize = 32
 local AurasAcross = 4
 local AurasToTrack = {
+    ["DEATHKNIGHT"] = {
+        ["player"] = {
+            ["all"] = {
+                "Death's Advance",
+            },
+            ["Blood"] = {
+            },
+            ["Frost"] = {
+            },
+            ["Unholy"] = {
+            },
+        },
+        ["target"] = {
+            ["all"] = {
+            },
+            ["Blood"] = {
+            },
+            ["Frost"] = {
+            },
+            ["Unholy"] = {
+                "Festering Wound",
+                "Virulent Plague",
+            },
+        },
+    },
     ["HUNTER"] = {
         ["player"] = {
             ["all"] = {
@@ -43,6 +68,39 @@ local AurasToTrack = {
                 "Wing Clip",
             },
         }
+    },
+    ["MAGE"] = {
+        ["player"] = {
+            ["all"] = {
+            },
+            ["Arcane"] = {
+                "Clearcasting",
+                "Prismatic Barrier",
+
+            },
+            ["Frost"] = {
+                "Brain Freeze",
+                "Fingers of Frost",
+                "Icy Veins",
+            },
+            ["Fire"] = {
+                "Hot Streak!",
+                "Blazing Barrier",
+                "Combustion",
+            },
+        },
+        ["target"] = {
+            ["all"] = {
+            },
+            ["Arcane"] = {
+            },
+            ["Frost"] = {
+                "Winter's Chill",
+            },
+            ["Fire"] = {
+                "Dragon's Breath",
+            },
+        },
     },
     ["SHAMAN"] = {
         ["player"] = {
