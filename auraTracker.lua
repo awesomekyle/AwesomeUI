@@ -1,4 +1,3 @@
-
 --
 -- auras
 --
@@ -252,7 +251,7 @@ local function CreateTargetAuraTracker(parentFrame, owner)
                 else
                     aura.texture:SetTexture(icon)
                     aura:Show()
-                    if( count == 0 ) then
+                    if count == 0 then
                         aura.stack_text:Hide()
                     else
                         aura.stack_text:SetText(count)

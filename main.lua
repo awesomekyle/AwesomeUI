@@ -226,6 +226,7 @@ AwesomeUI.Install = function(self)
     SetCVar("xpBarText", 1)
     SetCVar("chatClassColorOverride", 0)
     SetCVar("ffxglow", 0)
+    SetCVar("worldPreloadNonCritical", 0)
 
     if wowVersion ~= "Classic" then
         SetCVar("miniWorldMap", 1)
