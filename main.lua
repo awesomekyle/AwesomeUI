@@ -9,6 +9,8 @@ else
     wowVersion = "BFA"
 end
 
+ACTION_BAR_OFFSET_Y = -160
+
 AwesomeUI = {}
 
 --
@@ -119,7 +121,7 @@ AwesomeUI.UpdateActionbars = function(self, moveEnabled)
 
     -- main action buttons
     ActionButton1:ClearAllPoints()
-    ActionButton1:SetPoint("LEFT", UIParent, "CENTER", -123, -160)
+    ActionButton1:SetPoint("LEFT", UIParent, "CENTER", -123, ACTION_BAR_OFFSET_Y)
     ActionButton7:ClearAllPoints()
     ActionButton7:SetPoint("TOP", ActionButton1, "BOTTOM", 0, -buttonSpacing)
 
@@ -432,10 +434,10 @@ AwesomeUI.OnPlayerLogin = function(self)
     end)
 
     --
-    -- Setup cast bars --
+    -- Setup cast bars
     --
     CastingBarFrame:ClearAllPoints()
-    CastingBarFrame:SetPoint("BOTTOM", UIParent, "CENTER", 0, -245)
+    CastingBarFrame:SetPoint("BOTTOM", UIParent, "CENTER", 0, ACTION_BAR_OFFSET_Y - 85)
     CastingBarFrame:SetHeight(12)
     CastingBarFrame:SetWidth(CastingBarFrame:GetWidth() * 1.2)
     CastingBarFrame.SetPoint = function() end
