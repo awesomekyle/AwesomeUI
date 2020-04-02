@@ -248,12 +248,12 @@ AwesomeUI.Install = function(self)
     ChatFrame1:SetSize(450, 150)
     FCF_SavePositionAndDimensions(ChatFrame1)
 
-    FCF_SetChatWindowFontSize(nil, ChatFrame1, 12)
-    FCF_SetChatWindowFontSize(nil, ChatFrame2, 12)
-    FCF_SetChatWindowFontSize(nil, ChatFrame3, 12)
-    FCF_SetChatWindowFontSize(nil, ChatFrame4, 12)
-    FCF_SetChatWindowFontSize(nil, ChatFrame5, 12)
-    FCF_SetChatWindowFontSize(nil, ChatFrame6, 12)
+    FCF_SetChatWindowFontSize(nil, ChatFrame1, 14)
+    FCF_SetChatWindowFontSize(nil, ChatFrame2, 14)
+    FCF_SetChatWindowFontSize(nil, ChatFrame3, 14)
+    FCF_SetChatWindowFontSize(nil, ChatFrame4, 14)
+    FCF_SetChatWindowFontSize(nil, ChatFrame5, 14)
+    FCF_SetChatWindowFontSize(nil, ChatFrame6, 14)
 
     -- Set up the general tab
 
@@ -360,7 +360,7 @@ AwesomeUI.OnPlayerLogin = function(self)
     --
     hooksecurefunc("UnitFramePortrait_Update",function(self)
         if self.portrait then
-            if UnitIsPlayer(self.unit) then
+            if UnitIsPlayer(self.unit) and self.unit ~= "player" then
                 local t = CLASS_ICON_TCOORDS[select(2, UnitClass(self.unit))]
                 if t then
                     self.portrait:SetTexture("Interface\\TargetingFrame\\UI-Classes-Circles")
@@ -381,7 +381,17 @@ AwesomeUI.OnPlayerLogin = function(self)
             _, class = UnitClass(unit)
             c = CUSTOM_CLASS_COLORS and CUSTOM_CLASS_COLORS[class] or RAID_CLASS_COLORS[class]
             statusbar:SetStatusBarColor(c.r, c.g, c.b)
-            PlayerFrameHealthBar:SetStatusBarColor(0,1,0)
+            if unit == "player" then
+                local health_percentage = UnitHealth("player") / UnitHealthMax("player")
+                local r, g = 0, 1
+                if health_percentage > 0.5 then
+                    r = Lerp(1, 0, (health_percentage - 0.5) * 2)
+                else
+                    r = 1
+                    g = Lerp(0, 1, health_percentage * 2)
+                end
+                PlayerFrameHealthBar:SetStatusBarColor(r,g,0)
+            end
         end
     end
 
