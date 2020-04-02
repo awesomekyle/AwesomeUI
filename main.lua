@@ -425,7 +425,7 @@ AwesomeUI.OnPlayerLogin = function(self)
     -- Setup cast bars --
     --
     CastingBarFrame:ClearAllPoints()
-    CastingBarFrame:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, 350)
+    CastingBarFrame:SetPoint("BOTTOM", UIParent, "CENTER", 0, -245)
     CastingBarFrame:SetHeight(12)
     CastingBarFrame:SetWidth(CastingBarFrame:GetWidth() * 1.2)
     CastingBarFrame.SetPoint = function() end
