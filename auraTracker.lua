@@ -101,6 +101,31 @@ local AurasToTrack = {
             },
         },
     },
+    ["PALADIN"] = {
+        ["player"] = {
+            ["all"] = {
+                "Divine Shield",
+                "Blessing of Freedom",
+                "Blessing of Protection",
+                "Blessing of Sacrifice",
+                "Avenging Wrath",
+            },
+            ["Protection"] = {
+                "Shield of the Righteous",
+                "Ardent Defender",
+                "Consecration",
+
+            },
+            ["Holy"] = {
+                "Divine Protection",
+                "Aura Mastery",
+                
+            },
+            ["Retribution"] = {
+                "Shield of Vengeance",
+            },
+        },
+    },
     ["SHAMAN"] = {
         ["player"] = {
             ["Enhancement"] = {
@@ -129,6 +154,7 @@ local AurasToTrack = {
             },
             ["all"] = {
                 "Berserker Rage",
+                "Victorious",
             },
         },
         ["target"] = {
