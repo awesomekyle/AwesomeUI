@@ -29,6 +29,39 @@ local AurasToTrack = {
             },
         },
     },
+    ["DRUID"] = {
+        ["player"] = {
+            ["all"] = {
+                "Clearcasting",
+            },
+            ["Balance"] = {
+            },
+            ["Feral"] = {
+            },
+            ["Guardian"] = {
+                "Ironfur",
+            },
+            ["Restoration"] = {
+            },
+        },
+        ["target"] = {
+            ["all"] = {
+                "Moonfire",
+            },
+            ["Balance"] = {
+            },
+            ["Feral"] = {
+                "Rake",
+                "Rip",
+                "Thrash",
+            },
+            ["Guardian"] = {
+                "Thrash",
+            },
+            ["Restoration"] = {
+            },
+        },
+    },
     ["HUNTER"] = {
         ["player"] = {
             ["all"] = {
@@ -125,6 +158,25 @@ local AurasToTrack = {
                 "Shield of Vengeance",
             },
         },
+    },
+    ["PRIEST"] = {        
+        ["player"] = { 
+            ["Discipline"] = {
+                "Atonement",
+            },
+            ["all"] = {
+                "Power Word: Shield",
+            },
+        },
+        ["target"] = {
+            ["Shadow"] = {
+                "Vampiric Touch",
+                "Voidform",
+            },
+            ["all"] = {
+                "Shadow Word: Pain",
+            },
+        }
     },
     ["SHAMAN"] = {
         ["player"] = {
