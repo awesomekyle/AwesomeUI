@@ -147,20 +147,18 @@ local AurasToTrack = {
                 "Shield of the Righteous",
                 "Ardent Defender",
                 "Consecration",
-
             },
             ["Holy"] = {
                 "Divine Protection",
                 "Aura Mastery",
-                
             },
             ["Retribution"] = {
                 "Shield of Vengeance",
             },
         },
     },
-    ["PRIEST"] = {        
-        ["player"] = { 
+    ["PRIEST"] = {
+        ["player"] = {
             ["Discipline"] = {
                 "Atonement",
             },
