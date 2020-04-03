@@ -305,6 +305,7 @@ local function CreateTargetAuraTracker(parentFrame, owner)
     end
 
     tracker:SetScript("OnUpdate", function(self,event,...)
+        local curr_time = GetTime()
         for ii, aura in ipairs(self.auras) do
             local auraTarget = aura.auraInfo["target"]
             if auraTarget ~= nil then
@@ -335,7 +336,7 @@ local function CreateTargetAuraTracker(parentFrame, owner)
                     end
 
                     if expirationTime ~= 0 then
-                        local remaining = expirationTime - GetTime()
+                        local remaining = expirationTime - curr_time
                         aura.text:SetFormattedText(FormatTime(remaining))
                         aura.text:Show()
                     else
