@@ -33,13 +33,19 @@ local AurasToTrack = {
         ["player"] = {
             ["all"] = {
                 "Clearcasting",
+                "Survival Instincts",
             },
             ["Balance"] = {
+                "Lunar Empowerment",
+                "Solar Empowerment",
             },
             ["Feral"] = {
+                "Tiger's Fury",
+                "Berserk",
             },
             ["Guardian"] = {
                 "Ironfur",
+                "Pulverize",
             },
             ["Restoration"] = {
             },
@@ -49,11 +55,13 @@ local AurasToTrack = {
                 "Moonfire",
             },
             ["Balance"] = {
+                "Sunfire",
             },
             ["Feral"] = {
                 "Rake",
                 "Rip",
                 "Thrash",
+                "Maim",
             },
             ["Guardian"] = {
                 "Thrash",
@@ -197,6 +205,7 @@ local AurasToTrack = {
                 "Ignore Pain",
                 "Shield Wall",
                 "Last Stand",
+                "Avatar",
             },
             ["Arms"] = {
                 "Deep Wounds",
