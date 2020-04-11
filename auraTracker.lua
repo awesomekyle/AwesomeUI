@@ -199,6 +199,7 @@ local AurasToTrack = {
                 "Whirlwind",
                 "Enraged Regeneration",
                 "Battle Trance",
+                "Recklessness",
             },
             ["Protection"] = {
                 "Shield Block",
@@ -210,6 +211,7 @@ local AurasToTrack = {
             ["Arms"] = {
                 "Deep Wounds",
                 "Overpower",
+                "Sweeping Strikes",
             },
             ["all"] = {
                 "Berserker Rage",
@@ -219,6 +221,9 @@ local AurasToTrack = {
         ["target"] = {
             ["Fury"] = {
                 "Piercing Howl",
+            },
+            ["Arms"] = {
+                "Colossus Smash",
             },
             ["Protection"] = {
                 "Demoralizing Shout",
