@@ -82,7 +82,7 @@ local AurasToTrack = {
                 "Trueshot",
             },
             ["Beast Mastery"] = {
-                "Beastial Wrath",
+                "Bestial Wrath",
                 "Beast Cleave",
             }
         },
@@ -212,6 +212,7 @@ local AurasToTrack = {
                 "Deep Wounds",
                 "Overpower",
                 "Sweeping Strikes",
+                "Test of Might",
             },
             ["all"] = {
                 "Berserker Rage",
@@ -387,7 +388,7 @@ function CreateAuraTracker()
         local currentSpecIndex, currentSpecName = GetSpecializationInfo(GetSpecialization())
 
         -- setup Ignore Pain reader for warrior
-        if select(2, UnitClass("player")) == "WARRIOR" and currentSpecName == "Protection" and self.ignorePainReader == nil then
+        if select(2, UnitClass("player")) == "WARRIOR" then
             self.ignorePainReader = CreateFrame("GameTooltip", "AwesomeUIIgnorePainTooltipReader", UIParent, "GameTooltipTemplate")
             self.ignorePainReader:SetOwner(UIParent,"ANCHOR_NONE")
             self.ignorePainReader:SetSpellByID(190456) -- Ignore Pain Spell ID
