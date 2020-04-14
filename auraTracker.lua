@@ -190,7 +190,15 @@ local AurasToTrack = {
                 "Flametongue",
                 "Frostbrand",
             },
-        }
+        },
+        ["target"] = {
+            ["Elemental"] = {
+                "Flame Shock",
+            },
+            ["Restoration"] = {
+                "Flame Shock",
+            },
+        },
     },
     ["WARRIOR"] = {
         ["player"] = {
