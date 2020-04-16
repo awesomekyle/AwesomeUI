@@ -8,10 +8,15 @@ local AurasToTrack = {
         ["player"] = {
             ["all"] = {
                 "Death's Advance",
+                "Dark Succor",
+                "Anti-Magic Shell",
+                "Icebound Fortitude",
             },
             ["Blood"] = {
+                "Bone Shield",
             },
             ["Frost"] = {
+                "Cold Heart",
             },
             ["Unholy"] = {
             },
@@ -20,8 +25,10 @@ local AurasToTrack = {
             ["all"] = {
             },
             ["Blood"] = {
+                "Blood Plague",
             },
             ["Frost"] = {
+                "Frost Fever",
             },
             ["Unholy"] = {
                 "Festering Wound",
@@ -181,6 +188,47 @@ local AurasToTrack = {
             },
             ["all"] = {
                 "Shadow Word: Pain",
+            },
+        }
+    },
+    ["ROGUE"] = {
+        ["player"] = {
+            ["Assassination"] = {
+            },
+            ["Outlaw"] = {
+                "Ruthless Precision",
+                "Grand Melee",
+                "Broadside",
+                "Skull and Crossbones",
+                "Buried Treasure",
+                "True Bearing",
+                "Slice and Dice",
+            },
+            ["Subtlety"] = {
+                "Shadow Dance",
+                "Symbols of Death",
+            },
+            ["all"] = {
+                "Feint",
+                "Sprint",
+            },
+        },
+        ["target"] = {
+            ["Assassination"] = {
+                "Garrote",
+                "Rupture",
+                "Kidney Shot",
+            },
+            ["Outlaw"] = {
+                "Between the Eyes",
+            },
+            ["Subtlety"] = {
+                "Nightblade",
+                "Kidney Shot",
+            },
+            ["all"] = {
+                "Cheap Shot",
+                "Blind",
             },
         }
     },
