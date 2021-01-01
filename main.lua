@@ -228,7 +228,7 @@ AwesomeUI.Install = function(self)
     SetCVar("xpBarText", 1)
     SetCVar("chatClassColorOverride", 0)
     SetCVar("ffxglow", 0)
-    SetCVar("worldPreloadNonCritical", 0)
+    -- SetCVar("worldPreloadNonCritical", 0)
 
     if wowVersion ~= "Classic" then
         SetCVar("miniWorldMap", 1)
@@ -411,7 +411,7 @@ AwesomeUI.OnPlayerLogin = function(self)
 
         DebuffButton1:ClearAllPoints()
         if playerClass == "PALADIN" then
-            DebuffButton1:SetPoint("TOPRIGHT", PaladinPowerBarFrame, "BOTTOMRIGHT", 0, 0)
+            DebuffButton1:SetPoint("TOPRIGHT", PaladinPowerBarFrame, "BOTTOMRIGHT", 0, -7)
         elseif  playerClass == "DEATHKNIGHT" then
             DebuffButton1:SetPoint("TOPRIGHT", RuneFrame, "BOTTOMRIGHT", 0, -13)
         elseif  playerClass == "PRIEST" then

@@ -49,6 +49,7 @@ local AurasToTrack = {
             ["Feral"] = {
                 "Tiger's Fury",
                 "Berserk",
+                "Predatory Swiftness",
             },
             ["Guardian"] = {
                 "Ironfur",
@@ -151,13 +152,6 @@ local AurasToTrack = {
     },
     ["PALADIN"] = {
         ["player"] = {
-            ["all"] = {
-                "Divine Shield",
-                "Blessing of Freedom",
-                "Blessing of Protection",
-                "Blessing of Sacrifice",
-                "Avenging Wrath",
-            },
             ["Protection"] = {
                 "Shield of the Righteous",
                 "Ardent Defender",
@@ -170,7 +164,19 @@ local AurasToTrack = {
             ["Retribution"] = {
                 "Shield of Vengeance",
             },
+            ["all"] = {
+                "Divine Shield",
+                "Blessing of Freedom",
+                "Blessing of Protection",
+                "Blessing of Sacrifice",
+                "Avenging Wrath",
+            },
         },
+        ["target"] = {
+            ["all"] = {
+                "Hammer of Justice",
+            },
+        }
     },
     ["PRIEST"] = {
         ["player"] = {
@@ -196,21 +202,22 @@ local AurasToTrack = {
             ["Assassination"] = {
             },
             ["Outlaw"] = {
-                "Ruthless Precision",
-                "Grand Melee",
-                "Broadside",
-                "Skull and Crossbones",
-                "Buried Treasure",
-                "True Bearing",
-                "Slice and Dice",
+                -- "Ruthless Precision",
+                -- "Grand Melee",
+                -- "Broadside",
+                -- "Skull and Crossbones",
+                -- "Buried Treasure",
+                -- "True Bearing",
             },
             ["Subtlety"] = {
                 "Shadow Dance",
                 "Symbols of Death",
+                "Shadow Blades",
             },
             ["all"] = {
                 "Feint",
                 "Sprint",
+                "Slice and Dice",
             },
         },
         ["target"] = {
