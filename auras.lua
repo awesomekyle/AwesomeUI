@@ -300,7 +300,6 @@ local BCAuras = {
     ["HUNTER"] = {
         ["player"] = {
             ["all"] = {
-                "Misdirection",
                 "Aspect of the Hawk",
             },
         },
