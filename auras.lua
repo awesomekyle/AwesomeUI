@@ -312,6 +312,8 @@ local BCAuras = {
         ["target"] = {
             ["all"] = {
                 "Serpent Sting",
+                "Concussive Shot",
+                "Wing Clip",
             },
         }
     },
