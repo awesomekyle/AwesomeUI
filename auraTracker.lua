@@ -187,7 +187,7 @@ function CreateAuraTracker()
         end
 
         -- setup Ignore Pain reader for warrior
-        if select(2, UnitClass("player")) == "WARRIOR" then
+        if select(2, UnitClass("player")) == "WARRIOR" and wowVersion == "Retail" then
             self.ignorePainReader = CreateFrame("GameTooltip", "AwesomeUIIgnorePainTooltipReader", UIParent, "GameTooltipTemplate")
             self.ignorePainReader:SetOwner(UIParent,"ANCHOR_NONE")
             self.ignorePainReader:SetSpellByID(190456) -- Ignore Pain Spell ID
