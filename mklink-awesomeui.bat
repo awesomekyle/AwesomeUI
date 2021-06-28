@@ -23,4 +23,4 @@ for %%v in (%VERSIONS%) do (
 @REM cmd /C mklink /D "%~dp0\_classic_ptr_\Interface\AddOns\AwesomeUI" "%~dp0\AwesomeUI"
 @REM cmd /C mklink /D "%~dp0\_retail_\Interface\AddOns\AwesomeUI" "%~dp0\AwesomeUI"
 @REM cmd /C mklink /D "%~dp0\_ptr_\Interface\AddOns\AwesomeUI" "%~dp0\AwesomeUI"
-@REM pause
+pause
