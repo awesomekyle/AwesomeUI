@@ -357,6 +357,5 @@ local AurasToTrack = {
 }
 
 function GetAurasForVersion(wowVersion)
-    print(wowVersion)
     return AurasToTrack[wowVersion]
 end
