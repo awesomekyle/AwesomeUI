@@ -1,5 +1,5 @@
 @echo off
-set FILES=auraTracker.lua AwesomeUI.xml main.lua
+set FILES=auraTracker.lua AwesomeUI.xml main.lua auras.lua
 set VERSIONS=_classic_ _classic_era_ _classic_ptr_ _retail_ _ptr_
 
 for %%v in (%VERSIONS%) do (
