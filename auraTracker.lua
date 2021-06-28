@@ -100,6 +100,16 @@ local function CreateTargetAuraTracker(parentFrame, owner)
                     filter = "HARMFUL|PLAYER"
                 end
                 local name, icon, count, _, _, expirationTime,_,_,_,_,_,_,_,_,_,ignorePainRemaining = AuraUtil.FindAuraByName(auraName, auraTarget, filter)
+                if type(auraName) == "string" then
+                    name, icon, count, _, _, expirationTime,_,_,_,_,_,_,_,_,_,ignorePainRemaining = AuraUtil.FindAuraByName(auraName, auraTarget, filter)
+                else
+                    for jj,auraName in ipairs(aura.auraInfo.aura) do
+                        name, icon, count, _, _, expirationTime,_,_,_,_,_,_,_,_,_,ignorePainRemaining = AuraUtil.FindAuraByName(auraName, auraTarget, filter)
+                        if name ~= nil then
+                            break
+                        end
+                    end
+                end
                 -- Ignore Pain caps at 1.3x it's maximum cast. If < 30% remains, we
                 -- hide the icon because it's safe to recast
                 if name == "Ignore Pain" then

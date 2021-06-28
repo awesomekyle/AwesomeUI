@@ -300,7 +300,8 @@ local BCAuras = {
     ["HUNTER"] = {
         ["player"] = {
             ["all"] = {
-                "Aspect of the Hawk",
+                { "Aspect of the Hawk", "Aspect of the Monkey" },
+                "Aspect of the Cheetah",
             },
         },
         ["pet"] = {
