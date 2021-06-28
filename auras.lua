@@ -315,6 +315,37 @@ local BCAuras = {
             },
         }
     },
+    ["PALADIN"] = {
+        ["player"] = {
+            ["all"] = {
+                {
+                    "Seal of Righteousness",
+                    "Seal of Wisdom",
+                    "Seal of Light",
+                    "Seal of the Crusader",
+                },
+                "Blessing of Freedom",
+                "Divine Protection",
+                "Divine Shield",
+                "Righteous Fury",
+                "Forbearance",
+            }
+        },
+        ["target"] = {
+            ["all"] = {
+            }
+        },
+    },
+    ["TEMPLATE"] = {
+        ["player"] = {
+            ["all"] = {
+            }
+        },
+        ["target"] = {
+            ["all"] = {
+            }
+        },
+    },
 }
 
 local AurasToTrack = {
@@ -323,5 +354,6 @@ local AurasToTrack = {
 }
 
 function GetAurasForVersion(wowVersion)
+    print(wowVersion)
     return AurasToTrack[wowVersion]
 end
