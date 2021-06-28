@@ -1,4 +1,4 @@
-local wowVersion = GetBuildInfo()
+wowVersion = GetBuildInfo()
 local function starts_with(str, start)
     return str:sub(1, #start) == start
 end
@@ -328,9 +328,9 @@ AwesomeUI.OnAddonLoaded = function(self)
     -- set up aura tracker
     -- TODO: create classic aura tracker that doesn't depend on Specializations
     if wowVersion == "Retail" then
-        self.auraTracker = CreateAuraTracker()
+        AwesomeUI.auraTracker = CreateAuraTracker()
     elseif wowVersion == "BC" then
-        -- self.auraTracker = CreateAuraTracker()
+        AwesomeUI.auraTracker = CreateAuraTracker()
     end
 end
 
@@ -531,6 +531,10 @@ AwesomeUI.frame:SetScript("OnEvent", function(self,event,...)
         event == "PLAYER_FOCUS_CHANGED" or
         event == "UNIT_FACTION") then
         AwesomeUI:OnTargetChange()
+    else
+        if event ~= "ADDON_LOADED" then
+            print("AwesomeUI unhandled event: "..event)
+        end
     end
 end)
 

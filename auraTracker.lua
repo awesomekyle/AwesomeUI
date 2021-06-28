@@ -82,6 +82,7 @@ local AurasToTrack = {
         ["player"] = {
             ["all"] = {
                 "Misdirection",
+                "Aspect of the Hawk",
             },
             ["Survival"] = {
                 "Mongoose Fury",
@@ -103,6 +104,9 @@ local AurasToTrack = {
             },
         },
         ["target"] = {
+            ["all"] = {
+                "Serpent Sting",
+            },
             ["Beast Mastery"] = {
                 "Concussive Shot",
             },
@@ -435,20 +439,43 @@ function CreateAuraTracker()
     tracker.auras = {}
     tracker.ignorePainReader = nil
 
+    local events = {
+        ["Retail"] = {
+            "ADDON_LOADED",
+            "PLAYER_LOGIN",
+            "PLAYER_SPECIALIZATION_CHANGED",
+            "PLAYER_ENTERING_WORLD",
+        },
+        ["BC"] = {
+            "ADDON_LOADED",
+            "PLAYER_LOGIN",
+            "PLAYER_ENTERING_WORLD",
+        }
+    }
+
     -- setup aura tracker
     tracker.friendlyAuras = CreateTargetAuraTracker(PlayerFrame, tracker)
     tracker.targetAuras = CreateTargetAuraTracker(TargetFrame, tracker)
 
-    tracker.frame:RegisterEvent("PLAYER_LOGIN")
-    tracker.frame:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED")
-    tracker.frame:RegisterEvent("PLAYER_ENTERING_WORLD")
+    function register_event(frame, event)
+        frame:RegisterEvent(event)
+    end
+
+    for i, event in ipairs(events[wowVersion]) do
+        register_event(tracker.frame, event)
+    end
     tracker.frame:SetScript("OnEvent", function(self, event, ...)
         tracker:UpdateSpec()
     end)
 
     tracker.UpdateSpec = function(self)
         local _, playerClass = UnitClass("player")
-        local currentSpecIndex, currentSpecName = GetSpecializationInfo(GetSpecialization())
+        local currentSpecIndex, currentSpecName
+        if wowVersion == "Retail" then
+            currentSpecIndex, currentSpecName = GetSpecializationInfo(GetSpecialization())
+        else
+            currentSpecName = "all"
+        end
 
         -- setup Ignore Pain reader for warrior
         if select(2, UnitClass("player")) == "WARRIOR" then
@@ -501,4 +528,5 @@ function CreateAuraTracker()
         self.friendlyAuras:AddAuras(friendlyAuras)
         self.targetAuras:AddAuras(targetAuras)
     end
+    return tracker
 end
