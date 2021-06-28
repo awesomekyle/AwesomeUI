@@ -321,7 +321,8 @@ AwesomeUI.OnAddonLoaded = function(self)
     InterfaceOptions_AddCategory(AwesomeUI.optionsFrame)
 
     -- set up aura tracker
-    if wowVersion ~= "Classic" and wowVersion ~= "BC" then
+    -- TODO: create classic aura tracker that doesn't depend on Specializations
+    if wowVersion == "Live" then
         self.auraTracker = CreateAuraTracker()
     end
 end
