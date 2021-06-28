@@ -8,7 +8,7 @@ if starts_with(wowVersion, "1.") then
 elseif starts_with(wowVersion, "2.") then
     wowVersion = "BC"
 else
-    wowVersion = "Live"
+    wowVersion = "Retail"
 end
 
 ACTION_BAR_OFFSET_Y = -160
@@ -327,8 +327,10 @@ AwesomeUI.OnAddonLoaded = function(self)
 
     -- set up aura tracker
     -- TODO: create classic aura tracker that doesn't depend on Specializations
-    if wowVersion == "Live" then
+    if wowVersion == "Retail" then
         self.auraTracker = CreateAuraTracker()
+    elseif wowVersion == "BC" then
+        -- self.auraTracker = CreateAuraTracker()
     end
 end
 
@@ -499,7 +501,7 @@ AwesomeUI.OnPlayerLogin = function(self)
             Minimap_ZoomOut()
         end
     end)
-    if wowVersion == "Live" then
+    if wowVersion == "Retail" then
         MiniMapTracking:ClearAllPoints()
         MiniMapTracking:SetPoint("TOPRIGHT", -26, 7)
     elseif wowVersion == "BC" then
