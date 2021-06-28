@@ -10,7 +10,7 @@ local function CreateAuraIcon(parent, name)
     local texture = aura:CreateTexture(nil)
     texture:SetAllPoints(aura)
     aura.texture = texture
-    aura.texture:SetAlpha(0.5)
+    aura.texture:SetAlpha(0.75)
 
     local timer_text = aura:CreateFontString(nil)
     timer_text:SetFont("Fonts\\FRIZQT__.TTF", 14, "OUTLINE")
@@ -220,33 +220,21 @@ function CreateAuraTracker()
         local targetAuras = {}
         local classAuras = aurasToTrack[playerClass]
 
-        -- get all "friendly" auras
+        -- collect all auras to track
         for target, targetSpells in pairs(classAuras) do
+            local currentTable
             if target ~= "target" then
-                for spec, specSpells in pairs(targetSpells) do
-                    if spec == "all" or spec == currentSpecName then
-                        for _, spell in ipairs(specSpells) do
-                            if type(spell) == "string" then
-                                spell = { spell }
-                            end
-                            table.insert(friendlyAuras, { ["target"] = target, ["aura"] = spell } )
-                        end
-                    end
-                end
+                currentTable = friendlyAuras
+            else
+                currentTable = targetAuras
             end
-        end
-
-        -- get all "target" auras
-        for target, targetSpells in pairs(classAuras) do
-            if target == "target" then
-                for spec, specSpells in pairs(targetSpells) do
-                    if spec == "all" or spec == currentSpecName then
-                        for _, spell in ipairs(specSpells) do
-                            if type(spell) == "string" then
-                                spell = { spell }
-                            end
-                            table.insert(targetAuras, { ["target"] = target, ["aura"] = spell })
+            for spec, specSpells in pairs(targetSpells) do
+                if spec == "all" or spec == currentSpecName then
+                    for _, spell in ipairs(specSpells) do
+                        if type(spell) == "string" then
+                            spell = { spell }
                         end
+                        table.insert(currentTable, { ["target"] = target, ["aura"] = spell } )
                     end
                 end
             end
