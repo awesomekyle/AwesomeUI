@@ -420,7 +420,7 @@ AwesomeUI.OnPlayerLogin = function(self)
         if (name ~= "DebuffButton1") then return end
 
         DebuffButton1:ClearAllPoints()
-        if playerClass == "PALADIN" then
+        if playerClass == "PALADIN" and wowVersion == "Retail" then
             DebuffButton1:SetPoint("TOPRIGHT", PaladinPowerBarFrame, "BOTTOMRIGHT", 0, -7)
         elseif  playerClass == "DEATHKNIGHT" then
             DebuffButton1:SetPoint("TOPRIGHT", RuneFrame, "BOTTOMRIGHT", 0, -13)

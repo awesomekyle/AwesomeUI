@@ -328,7 +328,6 @@ local BCAuras = {
                 "Divine Protection",
                 "Divine Shield",
                 "Righteous Fury",
-                "Forbearance",
             }
         },
         ["target"] = {
