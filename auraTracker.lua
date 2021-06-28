@@ -10,6 +10,7 @@ local function CreateAuraIcon(parent, name)
     local texture = aura:CreateTexture(nil)
     texture:SetAllPoints(aura)
     aura.texture = texture
+    aura.texture:SetAlpha(0.5)
 
     local timer_text = aura:CreateFontString(nil)
     timer_text:SetFont("Fonts\\FRIZQT__.TTF", 14, "OUTLINE")
@@ -128,8 +129,17 @@ local function CreateTargetAuraTracker(parentFrame, owner)
 
                     if expirationTime ~= 0 then
                         local remaining = expirationTime - curr_time
-                        aura.text:SetFormattedText(FormatTime(remaining))
-                        aura.text:Show()
+                        if remaining > 0.0 then
+                            if remaining <= 2.0 then
+                                aura.text:SetTextColor(1,0,0,1)
+                            else
+                                aura.text:SetTextColor(1,1,1,1)
+                            end
+                            aura.text:SetFormattedText(FormatTime(remaining))
+                            aura.text:Show()
+                        else
+                            aura.text:Hide()
+                        end
                     else
                         aura.text:Hide()
                     end
