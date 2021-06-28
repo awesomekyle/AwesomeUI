@@ -325,8 +325,7 @@ local BCAuras = {
                     "Seal of the Crusader",
                 },
                 "Blessing of Freedom",
-                "Divine Protection",
-                "Divine Shield",
+                { "Divine Protection", "Divine Shield" },
                 "Righteous Fury",
             }
         },
