@@ -91,23 +91,19 @@ local function CreateTargetAuraTracker(parentFrame, owner)
 
     tracker:SetScript("OnUpdate", function(self,event,...)
         local curr_time = GetTime()
-        for ii, aura in ipairs(self.auras) do
+        for _, aura in ipairs(self.auras) do
             local auraTarget = aura.auraInfo["target"]
             if auraTarget ~= nil then
-                local auraName = aura.auraInfo.aura
                 local filter = "HELPFUL"
                 if auraTarget == "target" then
                     filter = "HARMFUL|PLAYER"
                 end
-                local name, icon, count, _, _, expirationTime,_,_,_,_,_,_,_,_,_,ignorePainRemaining = AuraUtil.FindAuraByName(auraName, auraTarget, filter)
-                if type(auraName) == "string" then
+                local name, icon, count, expirationTime, ignorePainRemaining
+
+                for _, auraName in ipairs(aura.auraInfo.aura) do
                     name, icon, count, _, _, expirationTime,_,_,_,_,_,_,_,_,_,ignorePainRemaining = AuraUtil.FindAuraByName(auraName, auraTarget, filter)
-                else
-                    for jj,auraName in ipairs(aura.auraInfo.aura) do
-                        name, icon, count, _, _, expirationTime,_,_,_,_,_,_,_,_,_,ignorePainRemaining = AuraUtil.FindAuraByName(auraName, auraTarget, filter)
-                        if name ~= nil then
-                            break
-                        end
+                    if name ~= nil then
+                        break
                     end
                 end
                 -- Ignore Pain caps at 1.3x it's maximum cast. If < 30% remains, we
@@ -219,7 +215,10 @@ function CreateAuraTracker()
             if target ~= "target" then
                 for spec, specSpells in pairs(targetSpells) do
                     if spec == "all" or spec == currentSpecName then
-                        for i, spell in ipairs(specSpells) do
+                        for _, spell in ipairs(specSpells) do
+                            if type(spell) == "string" then
+                                spell = { spell }
+                            end
                             table.insert(friendlyAuras, { ["target"] = target, ["aura"] = spell } )
                         end
                     end
@@ -232,7 +231,10 @@ function CreateAuraTracker()
             if target == "target" then
                 for spec, specSpells in pairs(targetSpells) do
                     if spec == "all" or spec == currentSpecName then
-                        for i, spell in ipairs(specSpells) do
+                        for _, spell in ipairs(specSpells) do
+                            if type(spell) == "string" then
+                                spell = { spell }
+                            end
                             table.insert(targetAuras, { ["target"] = target, ["aura"] = spell })
                         end
                     end
