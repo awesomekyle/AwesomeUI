@@ -5,8 +5,10 @@ end
 
 if starts_with(wowVersion, "1.") then
     wowVersion = "Classic"
+elseif starts_with(wowVersion, "2.") then
+    wowVersion = "BC"
 else
-    wowVersion = "BFA"
+    wowVersion = "Live"
 end
 
 ACTION_BAR_OFFSET_Y = -160
@@ -135,7 +137,7 @@ AwesomeUI.UpdateActionbars = function(self, moveEnabled)
     local buttonSize = MultiBarBottomRightButton1:GetWidth()
 
     local bottomActionBarAnchor, anchorPosition = (function()
-        if wowVersion == "Classic" then
+        if wowVersion == "Classic" or wowVersion == "BC" then
             return ReputationWatchBar, "TOP"
         else
             return StatusTrackingBarManager, "BOTTOM"
@@ -153,7 +155,7 @@ AwesomeUI.UpdateActionbars = function(self, moveEnabled)
     MultiBarBottomLeftButton7:SetPoint("LEFT", MultiBarBottomLeftButton6, "RIGHT", 6, 0)
 
     -- other bars and art frame
-    if wowVersion == "Classic" then
+    if wowVersion == "Classic" or wowVersion == "BC" then
         PetActionBarFrame:ClearAllPoints()
         PetActionBarFrame:SetPoint("BOTTOMRIGHT", MultiBarBottomLeft, "TOPRIGHT", 31, buttonSpacing)
         PetActionBarFrame:SetScale(0.9)
@@ -186,7 +188,7 @@ AwesomeUI.UpdateActionbars = function(self, moveEnabled)
         CharacterMicroButton:ClearAllPoints()
         CharacterMicroButton:SetPoint("BOTTOMLEFT", UIPARENT, "BOTTOMRIGHT", -width * 7.5, 0)
 
-        MainMenuBarBackpackButton:SetPoint("BOTTOMRIGHT", MainMenuMicroButton, "TOPRIGHT", 40, -20)
+        MainMenuBarBackpackButton:SetPoint("BOTTOMRIGHT", MainMenuMicroButton, "TOPRIGHT", 24, -20)
 
         MainMenuExpBar:ClearAllPoints()
         MainMenuExpBar:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, -3)
@@ -230,7 +232,7 @@ AwesomeUI.Install = function(self)
     SetCVar("ffxglow", 0)
     -- SetCVar("worldPreloadNonCritical", 0)
 
-    if wowVersion ~= "Classic" then
+    if wowVersion ~= "Classic" and wowVersion ~= "BC" then
         SetCVar("miniWorldMap", 1)
     end
 
@@ -319,7 +321,7 @@ AwesomeUI.OnAddonLoaded = function(self)
     InterfaceOptions_AddCategory(AwesomeUI.optionsFrame)
 
     -- set up aura tracker
-    if wowVersion ~= "Classic" then
+    if wowVersion ~= "Classic" and wowVersion ~= "BC" then
         self.auraTracker = CreateAuraTracker()
     end
 end
@@ -491,9 +493,12 @@ AwesomeUI.OnPlayerLogin = function(self)
             Minimap_ZoomOut()
         end
     end)
-    if wowVersion ~= "Classic" then
+    if wowVersion == "Live" then
         MiniMapTracking:ClearAllPoints()
         MiniMapTracking:SetPoint("TOPRIGHT", -26, 7)
+    elseif wowVersion == "BC" then
+        MiniMapTracking:ClearAllPoints()
+        MiniMapTracking:SetPoint("TOPLEFT", 28, 0)
     end
 
     self:Refresh()
