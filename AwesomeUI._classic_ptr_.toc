@@ -1,0 +1,8 @@
+## Interface: 20501
+## Title: AwesomeUI
+## Version: 0.0.1
+## Notes: Very basic UI addon
+## Author: Kyle Weicht
+## SavedVariables: AccountSettings
+## SavedVariablesPerCharacter: CharacterSettings
+AwesomeUI.xml
