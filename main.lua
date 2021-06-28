@@ -236,6 +236,11 @@ AwesomeUI.Install = function(self)
         SetCVar("miniWorldMap", 1)
     end
 
+    -- BC-specific options
+    if wowVersion == "BC" then
+        SetCVar("nameplateMaxDistance", "41")
+    end
+
      -- Set up chat
     FCF_ResetChatWindows();
 
