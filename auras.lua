@@ -331,6 +331,11 @@ local BCAuras = {
         },
         ["target"] = {
             ["all"] = {
+                {
+                    "Judgement of the Crusader",
+                    "Judgement of Light",
+                    "Judgement of Wisdom",
+                }
             }
         },
     },
