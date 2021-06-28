@@ -1,0 +1,23 @@
+#!/bin/sh
+
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+FILES=(auraTracker.lua AwesomeUI.xml main.lua auras.lua)
+VERSIONS=(_classic_ _classic_era_ _classic_ptr_ _retail_ _ptr_)
+
+echo $SCRIPT_DIR
+for version in ${VERSIONS[*]}; do
+    VERSION_PATH="$SCRIPT_DIR/../$version"
+    ADDON_PATH="$VERSION_PATH/Interface/AddOns/AwesomeUI"
+    if [[ -d "$VERSION_PATH" ]]; then
+        if [[ ! -d "$ADDON_PATH" ]]; then
+            echo "Creating $ADDON_PATH..."
+            mkdir -p "$ADDON_PATH"
+        else
+            echo "$ADDON_PATH already exists"
+        fi
+        ln -s "$SCRIPT_DIR/Awesomeui.$version.toc" "$ADDON_PATH/AwesomeUI.toc"
+        for file in ${FILES[*]}; do
+            ln -s "$SCRIPT_DIR/$file" "$ADDON_PATH/$file"
+        done
+    fi
+done
