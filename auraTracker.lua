@@ -134,7 +134,7 @@ local function CreateTargetAuraTracker(parentFrame, owner)
                         if remaining > 0.0 then
                             if remaining <= 2.0 then
                                 aura.text:SetTextColor(1,0,0,1)
-                            elseif remaining < duration * 0.3 then
+                            elseif remaining < duration * 0.3 and wowVersion == "Retail" then
                                 aura.text:SetTextColor(0,1,0,1)
                             else
                                 aura.text:SetTextColor(1,1,1,1)
