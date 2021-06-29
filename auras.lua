@@ -38,8 +38,7 @@ local RetailAuras = {
                 "Survival Instincts",
             },
             ["Balance"] = {
-                "Lunar Empowerment",
-                "Solar Empowerment",
+                { "Eclipse (Lunar)", "Eclipse (Solar)", }
             },
             ["Feral"] = {
                 "Tiger's Fury",
