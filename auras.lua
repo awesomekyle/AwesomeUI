@@ -257,6 +257,16 @@ local RetailAuras = {
             },
         },
     },
+    ["WARLOCK"] = {
+        ["player"] = {
+            ["all"] = {
+            }
+        },
+        ["target"] = {
+            ["all"] = {
+            }
+        },
+    },
     ["WARRIOR"] = {
         ["player"] = {
             ["Fury"] = {

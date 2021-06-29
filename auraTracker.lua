@@ -193,9 +193,15 @@ function CreateAuraTracker()
 
     tracker.UpdateSpec = function(self)
         local _, playerClass = UnitClass("player")
-        local currentSpecIndex, currentSpecName
+        local currentSpecName
         if wowVersion == "Retail" then
-            currentSpecIndex, currentSpecName = GetSpecializationInfo(GetSpecialization())
+            local spec = GetSpecialization()
+            if spec == 5 then
+                --  This is a new character with no spec yet, only use the "all" spells
+                currentSpecName = "all"
+            else
+                _, currentSpecName = GetSpecializationInfo()
+            end
         else
             currentSpecName = "all"
         end
