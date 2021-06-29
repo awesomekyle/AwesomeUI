@@ -246,8 +246,12 @@ local RetailAuras = {
             },
         },
         ["target"] = {
-            ["Elemental"] = {
+            ["all"] = {
                 "Flame Shock",
+            },
+            ["Elemental"] = {
+            },
+            ["Enhancement"] = {
             },
             ["Restoration"] = {
                 "Flame Shock",
@@ -338,6 +342,17 @@ local BCAuras = {
                     "Judgement of Light",
                     "Judgement of Wisdom",
                 }
+            }
+        },
+    },
+    ["SHAMAN"] = {
+        ["player"] = {
+            ["all"] = {
+                { "Lightning Shield", "Water Shield", },
+            }
+        },
+        ["target"] = {
+            ["all"] = {
             }
         },
     },
