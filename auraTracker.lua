@@ -64,6 +64,7 @@ local function CreateTargetAuraTracker(parentFrame, owner)
 
         -- clear all auras
         for _, aura in ipairs(self.auras) do
+            aura:Hide()
             aura.auraInfo = {}
         end
 
@@ -102,7 +103,7 @@ local function CreateTargetAuraTracker(parentFrame, owner)
                 local name, icon, count, expirationTime, ignorePainRemaining
 
                 for _, auraName in ipairs(aura.auraInfo.aura) do
-                    name, icon, count, _, _, expirationTime,_,_,_,_,_,_,_,_,_,ignorePainRemaining = AuraUtil.FindAuraByName(auraName, auraTarget, filter)
+                    name, icon, count, _, duration, expirationTime,_,_,_,_,_,_,_,_,_,ignorePainRemaining = AuraUtil.FindAuraByName(auraName, auraTarget, filter)
                     if name ~= nil then
                         break
                     end
@@ -129,9 +130,12 @@ local function CreateTargetAuraTracker(parentFrame, owner)
 
                     if expirationTime ~= 0 then
                         local remaining = expirationTime - curr_time
+                        -- If the duration is less than 30%, hide the aur
                         if remaining > 0.0 then
                             if remaining <= 2.0 then
                                 aura.text:SetTextColor(1,0,0,1)
+                            elseif remaining < duration * 0.3 then
+                                aura.text:SetTextColor(0,1,0,1)
                             else
                                 aura.text:SetTextColor(1,1,1,1)
                             end
