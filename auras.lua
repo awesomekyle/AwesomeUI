@@ -127,6 +127,7 @@ local RetailAuras = {
             ["Frost"] = {
                 "Brain Freeze",
                 "Fingers of Frost",
+                "Icicles",
                 "Icy Veins",
             },
             ["Fire"] = {
@@ -260,11 +261,16 @@ local RetailAuras = {
     ["WARLOCK"] = {
         ["player"] = {
             ["all"] = {
-            }
+            },
         },
         ["target"] = {
             ["all"] = {
-            }
+            },
+            ["Affliction"] = {
+                "Corruption",
+                "Agony",
+                "Unstable Affliction",
+            },
         },
     },
     ["WARRIOR"] = {
@@ -368,11 +374,11 @@ local BCAuras = {
     ["TEMPLATE"] = {
         ["player"] = {
             ["all"] = {
-            }
+            },
         },
         ["target"] = {
             ["all"] = {
-            }
+            },
         },
     },
 }
