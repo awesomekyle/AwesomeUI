@@ -200,7 +200,7 @@ function CreateAuraTracker()
                 --  This is a new character with no spec yet, only use the "all" spells
                 currentSpecName = "all"
             else
-                _, currentSpecName = GetSpecializationInfo()
+                _, currentSpecName = GetSpecializationInfo(spec)
             end
         else
             currentSpecName = "all"
