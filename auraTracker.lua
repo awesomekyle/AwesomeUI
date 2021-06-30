@@ -196,7 +196,7 @@ function CreateAuraTracker()
         local currentSpecName
         if wowVersion == "Retail" then
             local spec = GetSpecialization()
-            if spec == 5 then
+            if spec == nil or spec == 5 then
                 --  This is a new character with no spec yet, only use the "all" spells
                 currentSpecName = "all"
             else
