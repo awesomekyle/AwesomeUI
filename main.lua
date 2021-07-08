@@ -230,6 +230,11 @@ AwesomeUI.Install = function(self)
     SetCVar("xpBarText", 1)
     SetCVar("chatClassColorOverride", 0)
     SetCVar("ffxglow", 0)
+    SetCVar("nameplateShowSelf", 0)
+    SetCVar("nameplateShowAll", 1)
+    SetCVar("NamePlateHorizontalScale", 1.4)
+    SetCVar("NamePlateVerticalScale", 2.7)
+    SetCVar("NamePlateClassificationScale", 1.25)
     -- SetCVar("worldPreloadNonCritical", 0)
 
     if wowVersion ~= "Classic" and wowVersion ~= "BC" then
@@ -297,6 +302,7 @@ AwesomeUI.Install = function(self)
     groupFrame:SetSize(450, 150)
     FCF_SetTabPosition(groupFrame, 0);
     FCF_SetWindowAlpha(groupFrame, 0.1, false)
+    FCF_SetExpandedUninteractable(groupFrame, false)
     FCF_SavePositionAndDimensions(groupFrame)
 
     -- Set up the Guild tab
@@ -310,6 +316,7 @@ AwesomeUI.Install = function(self)
     guildFrame:SetSize(450, 150)
     FCF_SetTabPosition(guildFrame, 0);
     FCF_SetWindowAlpha(guildFrame, 0.1, false)
+    FCF_SetExpandedUninteractable(guildFrame, false)
     FCF_SavePositionAndDimensions(guildFrame)
 
     -- Set up the whisper tab
@@ -322,6 +329,7 @@ AwesomeUI.Install = function(self)
     whisperFrame:SetSize(450, 150)
     FCF_SetTabPosition(whisperFrame, 0);
     FCF_SetWindowAlpha(whisperFrame, 0.1, false)
+    FCF_SetExpandedUninteractable(whisperFrame, false)
     FCF_SavePositionAndDimensions(whisperFrame)
 
     -- Set up the misc tab
@@ -342,6 +350,15 @@ AwesomeUI.Install = function(self)
     FCFDock_SelectWindow(GENERAL_CHAT_DOCK, ChatFrame1)
     -- FCF_SetLocked(ChatFrame1, 1);
     -- FCF_SetLocked(ChatFrame2, 2);
+
+    -- Move player/target frames
+    local x,y=140,120
+    PlayerFrame:ClearAllPoints()
+    PlayerFrame:SetPoint("RIGHT", UIParent, "CENTER",-x,-y)
+    TargetFrame:ClearAllPoints()
+    TargetFrame:SetPoint("LEFT", UIParent, "CENTER",x,-y)
+    PlayerFrame:SetUserPlaced(true) 
+    TargetFrame:SetUserPlaced(true) 
 end
 
 --
