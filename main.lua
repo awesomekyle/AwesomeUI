@@ -256,7 +256,6 @@ AwesomeUI.Install = function(self)
     ChatFrame1:SetSize(450, 150)
     FCF_SavePositionAndDimensions(ChatFrame1)
 
-
     FCF_SetChatWindowFontSize(nil, ChatFrame1, 14)
     FCF_SetChatWindowFontSize(nil, ChatFrame2, 14)
     FCF_SetChatWindowFontSize(nil, ChatFrame3, 14)
@@ -265,29 +264,20 @@ AwesomeUI.Install = function(self)
     FCF_SetChatWindowFontSize(nil, groupFrame, 14)
 
     -- Set up the general tab
-
-    -- Set up the whisper tab
-    ChatFrame_RemoveAllMessageGroups(whisperFrame)
-    ChatFrame_AddMessageGroup(whisperFrame, "WHISPER")
-    ChatFrame_AddMessageGroup(whisperFrame, "BN_WHISPER")
-    FCF_UnDockFrame(whisperFrame)
-    whisperFrame:ClearAllPoints()
-    whisperFrame:SetPoint("BOTTOMLEFT", guildFrame, "TOPLEFT", 0, 50)
-    whisperFrame:SetSize(450, 150)
-    FCF_SetTabPosition(whisperFrame, 0);
-    FCF_SavePositionAndDimensions(whisperFrame)
-
-    -- Set up the Guild tab
-    ChatFrame_RemoveAllMessageGroups(guildFrame)
-    ChatFrame_AddMessageGroup(guildFrame, "GUILD")
-    ChatFrame_AddMessageGroup(guildFrame, "OFFICER")
-    ChatFrame_AddMessageGroup(guildFrame, "GUILD_ACHIEVEMENT")
-    FCF_UnDockFrame(guildFrame)
-    guildFrame:ClearAllPoints()
-    guildFrame:SetPoint("BOTTOMLEFT", groupFrame, "TOPLEFT", 0, 50)
-    guildFrame:SetSize(450, 150)
-    FCF_SetTabPosition(guildFrame, 0);
-    FCF_SavePositionAndDimensions(guildFrame)
+    ChatFrame_RemoveMessageGroup(ChatFrame1, "PARTY")
+    ChatFrame_RemoveMessageGroup(ChatFrame1, "PARTY_LEADER")
+    ChatFrame_RemoveMessageGroup(ChatFrame1, "RAID")
+    ChatFrame_RemoveMessageGroup(ChatFrame1, "RAID_LEADER")
+    ChatFrame_RemoveMessageGroup(ChatFrame1, "RAID_WARNING")
+    ChatFrame_RemoveMessageGroup(ChatFrame1, "BATTLEGROUND")
+    ChatFrame_RemoveMessageGroup(ChatFrame1, "BATTLEGROUND_LEADER")
+    ChatFrame_RemoveMessageGroup(ChatFrame1, "INSTANCE_CHAT")
+    ChatFrame_RemoveMessageGroup(ChatFrame1, "INSTANCE_CHAT_LEADER")
+    ChatFrame_RemoveMessageGroup(ChatFrame1, "WHISPER")
+    ChatFrame_RemoveMessageGroup(ChatFrame1, "BN_WHISPER")
+    ChatFrame_RemoveMessageGroup(ChatFrame1, "GUILD")
+    ChatFrame_RemoveMessageGroup(ChatFrame1, "OFFICER")
+    ChatFrame_RemoveMessageGroup(ChatFrame1, "GUILD_ACHIEVEMENT")
 
     -- Set up the Group tab
     ChatFrame_RemoveAllMessageGroups(groupFrame)
@@ -306,7 +296,33 @@ AwesomeUI.Install = function(self)
     groupFrame:SetPoint("BOTTOMLEFT", ChatFrame1, "TOPLEFT", 0, 50)
     groupFrame:SetSize(450, 150)
     FCF_SetTabPosition(groupFrame, 0);
+    FCF_SetWindowAlpha(groupFrame, 0.1, false)
     FCF_SavePositionAndDimensions(groupFrame)
+
+    -- Set up the Guild tab
+    ChatFrame_RemoveAllMessageGroups(guildFrame)
+    ChatFrame_AddMessageGroup(guildFrame, "GUILD")
+    ChatFrame_AddMessageGroup(guildFrame, "OFFICER")
+    ChatFrame_AddMessageGroup(guildFrame, "GUILD_ACHIEVEMENT")
+    FCF_UnDockFrame(guildFrame)
+    guildFrame:ClearAllPoints()
+    guildFrame:SetPoint("BOTTOMLEFT", ChatFrame1, "TOPLEFT", 0, 250)
+    guildFrame:SetSize(450, 150)
+    FCF_SetTabPosition(guildFrame, 0);
+    FCF_SetWindowAlpha(guildFrame, 0.1, false)
+    FCF_SavePositionAndDimensions(guildFrame)
+
+    -- Set up the whisper tab
+    ChatFrame_RemoveAllMessageGroups(whisperFrame)
+    ChatFrame_AddMessageGroup(whisperFrame, "WHISPER")
+    ChatFrame_AddMessageGroup(whisperFrame, "BN_WHISPER")
+    FCF_UnDockFrame(whisperFrame)
+    whisperFrame:ClearAllPoints()
+    whisperFrame:SetPoint("BOTTOMLEFT", ChatFrame1, "TOPLEFT", 0, 450)
+    whisperFrame:SetSize(450, 150)
+    FCF_SetTabPosition(whisperFrame, 0);
+    FCF_SetWindowAlpha(whisperFrame, 0.1, false)
+    FCF_SavePositionAndDimensions(whisperFrame)
 
     -- Set up the misc tab
     ChatFrame_RemoveAllMessageGroups(miscFrame)
@@ -322,7 +338,8 @@ AwesomeUI.Install = function(self)
     ChatFrame_AddMessageGroup(miscFrame, "OPENING")
     ChatFrame_AddMessageGroup(miscFrame, "PET_INFO")
 
-    
+    -- Select General tab
+    FCFDock_SelectWindow(GENERAL_CHAT_DOCK, ChatFrame1)
     -- FCF_SetLocked(ChatFrame1, 1);
     -- FCF_SetLocked(ChatFrame2, 2);
 end
