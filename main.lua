@@ -245,11 +245,10 @@ AwesomeUI.Install = function(self)
     FCF_ResetChatWindows();
 
     -- Set up tabs
-    FCF_SetLocked(ChatFrame1, 1);
-    FCF_OpenNewWindow("Whispers");
-    FCF_OpenNewWindow("Guild");
-    FCF_OpenNewWindow("Group");
-    FCF_OpenNewWindow("Misc");
+    whisperFrame = FCF_OpenNewWindow("Whispers")
+    guildFrame = FCF_OpenNewWindow("Guild")
+    groupFrame = FCF_OpenNewWindow("Group")
+    miscFrame = FCF_OpenNewWindow("Misc")
 
     -- -- Move and resize Chat window
     ChatFrame1:ClearAllPoints();
@@ -257,49 +256,75 @@ AwesomeUI.Install = function(self)
     ChatFrame1:SetSize(450, 150)
     FCF_SavePositionAndDimensions(ChatFrame1)
 
+
     FCF_SetChatWindowFontSize(nil, ChatFrame1, 14)
     FCF_SetChatWindowFontSize(nil, ChatFrame2, 14)
     FCF_SetChatWindowFontSize(nil, ChatFrame3, 14)
-    FCF_SetChatWindowFontSize(nil, ChatFrame4, 14)
-    FCF_SetChatWindowFontSize(nil, ChatFrame5, 14)
-    FCF_SetChatWindowFontSize(nil, ChatFrame6, 14)
+    FCF_SetChatWindowFontSize(nil, whisperFrame, 14)
+    FCF_SetChatWindowFontSize(nil, guildFrame, 14)
+    FCF_SetChatWindowFontSize(nil, groupFrame, 14)
 
     -- Set up the general tab
 
     -- Set up the whisper tab
-    ChatFrame_RemoveAllMessageGroups(ChatFrame3)
-    ChatFrame_AddMessageGroup(ChatFrame3, "WHISPER")
-    ChatFrame_AddMessageGroup(ChatFrame3, "BN_WHISPER")
+    ChatFrame_RemoveAllMessageGroups(whisperFrame)
+    ChatFrame_AddMessageGroup(whisperFrame, "WHISPER")
+    ChatFrame_AddMessageGroup(whisperFrame, "BN_WHISPER")
+    FCF_UnDockFrame(whisperFrame)
+    whisperFrame:ClearAllPoints()
+    whisperFrame:SetPoint("BOTTOMLEFT", guildFrame, "TOPLEFT", 0, 50)
+    whisperFrame:SetSize(450, 150)
+    FCF_SetTabPosition(whisperFrame, 0);
+    FCF_SavePositionAndDimensions(whisperFrame)
 
     -- Set up the Guild tab
-    ChatFrame_RemoveAllMessageGroups(ChatFrame4)
-    ChatFrame_AddMessageGroup(ChatFrame4, "GUILD")
-    ChatFrame_AddMessageGroup(ChatFrame4, "OFFICER")
-    ChatFrame_AddMessageGroup(ChatFrame4, "GUILD_ACHIEVEMENT")
+    ChatFrame_RemoveAllMessageGroups(guildFrame)
+    ChatFrame_AddMessageGroup(guildFrame, "GUILD")
+    ChatFrame_AddMessageGroup(guildFrame, "OFFICER")
+    ChatFrame_AddMessageGroup(guildFrame, "GUILD_ACHIEVEMENT")
+    FCF_UnDockFrame(guildFrame)
+    guildFrame:ClearAllPoints()
+    guildFrame:SetPoint("BOTTOMLEFT", groupFrame, "TOPLEFT", 0, 50)
+    guildFrame:SetSize(450, 150)
+    FCF_SetTabPosition(guildFrame, 0);
+    FCF_SavePositionAndDimensions(guildFrame)
 
     -- Set up the Group tab
-    ChatFrame_RemoveAllMessageGroups(ChatFrame5)
-    ChatFrame_AddMessageGroup(ChatFrame5, "PARTY")
-    ChatFrame_AddMessageGroup(ChatFrame5, "PARTY_LEADER")
-    ChatFrame_AddMessageGroup(ChatFrame5, "RAID")
-    ChatFrame_AddMessageGroup(ChatFrame5, "RAID_LEADER")
-    ChatFrame_AddMessageGroup(ChatFrame5, "RAID_WARNING")
-    ChatFrame_AddMessageGroup(ChatFrame5, "BATTLEGROUND")
-    ChatFrame_AddMessageGroup(ChatFrame5, "BATTLEGROUND_LEADER")
-    ChatFrame_AddMessageGroup(ChatFrame5, "INSTANCE_CHAT")
-    ChatFrame_AddMessageGroup(ChatFrame5, "INSTANCE_CHAT_LEADER")
-    ChatFrame_AddMessageGroup(ChatFrame5, "EMOTE")
+    ChatFrame_RemoveAllMessageGroups(groupFrame)
+    ChatFrame_AddMessageGroup(groupFrame, "PARTY")
+    ChatFrame_AddMessageGroup(groupFrame, "PARTY_LEADER")
+    ChatFrame_AddMessageGroup(groupFrame, "RAID")
+    ChatFrame_AddMessageGroup(groupFrame, "RAID_LEADER")
+    ChatFrame_AddMessageGroup(groupFrame, "RAID_WARNING")
+    ChatFrame_AddMessageGroup(groupFrame, "BATTLEGROUND")
+    ChatFrame_AddMessageGroup(groupFrame, "BATTLEGROUND_LEADER")
+    ChatFrame_AddMessageGroup(groupFrame, "INSTANCE_CHAT")
+    ChatFrame_AddMessageGroup(groupFrame, "INSTANCE_CHAT_LEADER")
+    ChatFrame_AddMessageGroup(groupFrame, "EMOTE")
+    FCF_UnDockFrame(groupFrame)
+    groupFrame:ClearAllPoints()
+    groupFrame:SetPoint("BOTTOMLEFT", ChatFrame1, "TOPLEFT", 0, 50)
+    groupFrame:SetSize(450, 150)
+    FCF_SetTabPosition(groupFrame, 0);
+    FCF_SavePositionAndDimensions(groupFrame)
 
     -- Set up the misc tab
-    ChatFrame_RemoveAllMessageGroups(ChatFrame6)
-    ChatFrame_AddMessageGroup(ChatFrame6, "COMBAT_XP_GAIN")
-    ChatFrame_AddMessageGroup(ChatFrame6, "COMBAT_HONOR_GAIN")
-    ChatFrame_AddMessageGroup(ChatFrame6, "COMBAT_MISC_INFO")
-    ChatFrame_AddMessageGroup(ChatFrame6, "COMBAT_GUILD_XP_GAIN")
-    ChatFrame_AddMessageGroup(ChatFrame6, "SKILL")
-    ChatFrame_AddMessageGroup(ChatFrame6, "LOOT")
-    ChatFrame_AddMessageGroup(ChatFrame6, "MONEY")
-    ChatFrame_AddMessageGroup(ChatFrame6, "TARGETICONS")
+    ChatFrame_RemoveAllMessageGroups(miscFrame)
+    ChatFrame_AddMessageGroup(miscFrame, "COMBAT_XP_GAIN")
+    ChatFrame_AddMessageGroup(miscFrame, "COMBAT_HONOR_GAIN")
+    ChatFrame_AddMessageGroup(miscFrame, "COMBAT_MISC_INFO")
+    ChatFrame_AddMessageGroup(miscFrame, "COMBAT_GUILD_XP_GAIN")
+    ChatFrame_AddMessageGroup(miscFrame, "SKILL")
+    ChatFrame_AddMessageGroup(miscFrame, "LOOT")
+    ChatFrame_AddMessageGroup(miscFrame, "MONEY")
+    ChatFrame_AddMessageGroup(miscFrame, "TARGETICONS")
+    ChatFrame_AddMessageGroup(miscFrame, "TRADESKILLS")
+    ChatFrame_AddMessageGroup(miscFrame, "OPENING")
+    ChatFrame_AddMessageGroup(miscFrame, "PET_INFO")
+
+    
+    -- FCF_SetLocked(ChatFrame1, 1);
+    -- FCF_SetLocked(ChatFrame2, 2);
 end
 
 --
