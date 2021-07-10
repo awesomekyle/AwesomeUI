@@ -11,7 +11,13 @@ else
     wowVersion = "Retail"
 end
 
+--
+-- Configuration options
+--
 ACTION_BAR_OFFSET_Y = -160
+DEFAULT_CHAT_FONT_SIZE = 12
+PLAYER_TARGET_FRAMES_X_OFFSET = 140
+PLAYER_TARGET_FRAMES_Y_OFFSET = -120
 
 AwesomeUI = {}
 
@@ -261,12 +267,13 @@ AwesomeUI.Install = function(self)
     ChatFrame1:SetSize(450, 150)
     FCF_SavePositionAndDimensions(ChatFrame1)
 
-    FCF_SetChatWindowFontSize(nil, ChatFrame1, 14)
-    FCF_SetChatWindowFontSize(nil, ChatFrame2, 14)
-    FCF_SetChatWindowFontSize(nil, ChatFrame3, 14)
-    FCF_SetChatWindowFontSize(nil, whisperFrame, 14)
-    FCF_SetChatWindowFontSize(nil, guildFrame, 14)
-    FCF_SetChatWindowFontSize(nil, groupFrame, 14)
+    FCF_SetChatWindowFontSize(nil, ChatFrame1, DEFAULT_CHAT_FONT_SIZE)
+    FCF_SetChatWindowFontSize(nil, ChatFrame2, DEFAULT_CHAT_FONT_SIZE)
+    FCF_SetChatWindowFontSize(nil, ChatFrame3, DEFAULT_CHAT_FONT_SIZE)
+    FCF_SetChatWindowFontSize(nil, whisperFrame, DEFAULT_CHAT_FONT_SIZE)
+    FCF_SetChatWindowFontSize(nil, guildFrame, DEFAULT_CHAT_FONT_SIZE)
+    FCF_SetChatWindowFontSize(nil, groupFrame, DEFAULT_CHAT_FONT_SIZE)
+    FCF_SetChatWindowFontSize(nil, miscFrame, DEFAULT_CHAT_FONT_SIZE)
 
     -- Set up the general tab
     ChatFrame_RemoveMessageGroup(ChatFrame1, "PARTY")
@@ -352,13 +359,12 @@ AwesomeUI.Install = function(self)
     -- FCF_SetLocked(ChatFrame2, 2);
 
     -- Move player/target frames
-    local x,y=140,120
     PlayerFrame:ClearAllPoints()
-    PlayerFrame:SetPoint("RIGHT", UIParent, "CENTER",-x,-y)
+    PlayerFrame:SetPoint("RIGHT", UIParent, "CENTER",-PLAYER_TARGET_FRAMES_X_OFFSET,PLAYER_TARGET_FRAMES_Y_OFFSET)
     TargetFrame:ClearAllPoints()
-    TargetFrame:SetPoint("LEFT", UIParent, "CENTER",x,-y)
-    PlayerFrame:SetUserPlaced(true) 
-    TargetFrame:SetUserPlaced(true) 
+    TargetFrame:SetPoint("LEFT", UIParent, "CENTER",PLAYER_TARGET_FRAMES_X_OFFSET,PLAYER_TARGET_FRAMES_Y_OFFSET)
+    PlayerFrame:SetUserPlaced(true)
+    TargetFrame:SetUserPlaced(true)
 end
 
 --
