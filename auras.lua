@@ -201,12 +201,12 @@ local RetailAuras = {
             ["Assassination"] = {
             },
             ["Outlaw"] = {
-                -- "Ruthless Precision",
-                -- "Grand Melee",
-                -- "Broadside",
-                -- "Skull and Crossbones",
-                -- "Buried Treasure",
-                -- "True Bearing",
+                "Ruthless Precision",
+                "Grand Melee",
+                "Broadside",
+                "Skull and Crossbones",
+                "Buried Treasure",
+                "True Bearing",
             },
             ["Subtlety"] = {
                 "Shadow Dance",
@@ -241,8 +241,7 @@ local RetailAuras = {
     ["SHAMAN"] = {
         ["player"] = {
             ["Enhancement"] = {
-                "Flametongue",
-                "Frostbrand",
+                "Maelstrom Weapon",
             },
         },
         ["target"] = {
@@ -262,15 +261,32 @@ local RetailAuras = {
         ["player"] = {
             ["all"] = {
             },
+            ["Demonology"] = {
+                "Demonic Core",
+                "Sign of Iron",
+            },
+            ["Affliction"]= {
+                "Inevitable Demise",
+            },
         },
         ["target"] = {
             ["all"] = {
+                "Fear",
             },
             ["Affliction"] = {
                 "Corruption",
                 "Agony",
                 "Unstable Affliction",
+                "Siphon Life",
+                "Haunt",
             },
+            ["Demonology"] = {
+            },
+            ["Destruction"] = {
+                "Immolate",
+                "Eradication",
+            },
+
         },
     },
     ["WARRIOR"] = {
@@ -291,6 +307,7 @@ local RetailAuras = {
             },
             ["Arms"] = {
                 "Deep Wounds",
+                "Rend",
                 "Overpower",
                 "Sweeping Strikes",
                 "Test of Might",
