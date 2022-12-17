@@ -117,7 +117,7 @@ AwesomeUI.Refresh = function()
     AwesomeUIModifyButtonOverlay("HotKey", alpha)
 
     -- action bars
-    AwesomeUI:UpdateActionbars(AccountSettings.repositionActionBars)
+    AwesomeUI:UpdateActionbars(AccountSettings.repositionActionBars and wowVersion ~= "Retail")
 end
 
 AwesomeUI.UpdateActionbars = function(self, moveEnabled)
@@ -359,12 +359,14 @@ AwesomeUI.Install = function(self)
     -- FCF_SetLocked(ChatFrame2, 2);
 
     -- Move player/target frames
-    PlayerFrame:ClearAllPoints()
-    PlayerFrame:SetPoint("RIGHT", UIParent, "CENTER",-PLAYER_TARGET_FRAMES_X_OFFSET,PLAYER_TARGET_FRAMES_Y_OFFSET)
-    TargetFrame:ClearAllPoints()
-    TargetFrame:SetPoint("LEFT", UIParent, "CENTER",PLAYER_TARGET_FRAMES_X_OFFSET,PLAYER_TARGET_FRAMES_Y_OFFSET)
-    PlayerFrame:SetUserPlaced(true)
-    TargetFrame:SetUserPlaced(true)
+    if wowVersion ~= "Retail" then
+        PlayerFrame:ClearAllPoints()
+        PlayerFrame:SetPoint("RIGHT", UIParent, "CENTER",-PLAYER_TARGET_FRAMES_X_OFFSET,PLAYER_TARGET_FRAMES_Y_OFFSET)
+        TargetFrame:ClearAllPoints()
+        TargetFrame:SetPoint("LEFT", UIParent, "CENTER",PLAYER_TARGET_FRAMES_X_OFFSET,PLAYER_TARGET_FRAMES_Y_OFFSET)
+        PlayerFrame:SetUserPlaced(true)
+        TargetFrame:SetUserPlaced(true)
+    end
 end
 
 --
@@ -400,6 +402,9 @@ AwesomeUI.OnAddonLoaded = function(self)
 end
 
 AwesomeUI.OnTargetChange = function(self)
+    if wowVersion == "Retail" then
+        return
+    end
     -- Change color of player name bar
     if UnitIsPlayer("target") then
         c = RAID_CLASS_COLORS[select(2, UnitClass("target"))]
@@ -425,12 +430,14 @@ AwesomeUI.OnPlayerLogin = function(self)
     --
     -- Reposition tooltip --
     --
-    hooksecurefunc("GameTooltip_SetDefaultAnchor", function(tooltip, parent)
-        tooltip:SetOwner(parent, "ANCHOR_NONE")
-        tooltip:ClearAllPoints()
-        tooltip:SetPoint("BOTTOMLEFT", "UIParent", "CENTER", 300,-50)
-        tooltip.default = 1
-    end)
+    if wowVersion ~= "Retail" then
+        hooksecurefunc("GameTooltip_SetDefaultAnchor", function(tooltip, parent)
+            tooltip:SetOwner(parent, "ANCHOR_NONE")
+            tooltip:ClearAllPoints()
+            tooltip:SetPoint("BOTTOMLEFT", "UIParent", "CENTER", 300,-50)
+            tooltip.default = 1
+        end)
+    end
 
     --
     -- Class icons instead of portraits
@@ -457,7 +464,16 @@ AwesomeUI.OnPlayerLogin = function(self)
         if UnitIsPlayer(unit) and UnitIsConnected(unit) and unit == statusbar.unit and UnitClass(unit) then
             _, class = UnitClass(unit)
             c = CUSTOM_CLASS_COLORS and CUSTOM_CLASS_COLORS[class] or RAID_CLASS_COLORS[class]
-            statusbar:SetStatusBarColor(c.r, c.g, c.b)
+            if unit == "player" then
+                -- Only enabled for player right now. Currently, the color isn't reset when selecting
+                -- a non-player, but AFAICT, all non-players should be green. Play for a bit and
+                -- double check. If they're all green, then we I can re-enable this and set non-player
+                -- back to green.
+                statusbar:SetStatusBarDesaturated(1)
+                statusbar:SetStatusBarColor(c.r, c.g, c.b)
+            end
+
+            -- TargetFrame.TargetFrameContent.TargetFrameContentMain.HealthBarArea.HealthBar:SetStatusBarColor(1,0,1)
             if unit == "player" then
                 local health_percentage = UnitHealth("player") / UnitHealthMax("player")
                 local r, g = 0, 1
@@ -467,8 +483,10 @@ AwesomeUI.OnPlayerLogin = function(self)
                     r = 1
                     g = Lerp(0, 1, health_percentage * 2)
                 end
-                PlayerFrameHealthBar:SetStatusBarColor(r,g,0)
+                PlayerFrame.PlayerFrameContent.PlayerFrameContentMain.HealthBarArea.HealthBar:SetStatusBarColor(r,g,0)
             end
+        else
+            -- statusbar:SetStatusBarDesaturated(0)
         end
     end
 
@@ -480,96 +498,101 @@ AwesomeUI.OnPlayerLogin = function(self)
     --
     -- Move debuffs
     --
-    hooksecurefunc("CreateFrame", function(frameType, name, frame, ...)
-        local _, playerClass = UnitClass("player")
-        if (name ~= "DebuffButton1") then return end
+    if wowVersion ~= "Retail" then
+        hooksecurefunc("CreateFrame", function(frameType, name, frame, ...)
+            local _, playerClass = UnitClass("player")
+            if (name ~= "DebuffButton1") then return end
 
-        DebuffButton1:ClearAllPoints()
-        if playerClass == "PALADIN" and wowVersion == "Retail" then
-            DebuffButton1:SetPoint("TOPRIGHT", PaladinPowerBarFrame, "BOTTOMRIGHT", 0, -7)
-        elseif  playerClass == "DEATHKNIGHT" then
-            DebuffButton1:SetPoint("TOPRIGHT", RuneFrame, "BOTTOMRIGHT", 0, -13)
-        elseif  playerClass == "PRIEST" then
-            DebuffButton1:SetPoint("TOPRIGHT", PlayerFrame, "BOTTOMRIGHT", 0, 13)
-        elseif  playerClass == "SHAMAN" then
-            DebuffButton1:SetPoint("TOPRIGHT", TotemFrame, "BOTTOMRIGHT", 0, 0)
-        elseif  playerClass == "HUNTER" or playerClass == "WARLOCK"then
-            DebuffButton1:SetPoint("TOPRIGHT", PetFrame, "BOTTOMRIGHT", 9, -7)
-        elseif  playerClass == "MONK" then
-            DebuffButton1:SetPoint("TOPRIGHT", PlayerFrame, "BOTTOMRIGHT", 0, 0)
-        elseif  playerClass == "DRUID" then
-            DebuffButton1:SetPoint("TOPRIGHT", PlayerFrame, "BOTTOMRIGHT", 0, 0)
-        elseif  playerClass == "MAGE" then
-            DebuffButton1:SetPoint("TOPRIGHT", PlayerFrame, "BOTTOMRIGHT", 0,-8)
-        else
-            DebuffButton1:SetPoint("TOPRIGHT", PlayerFrame, "BOTTOMRIGHT", 0, 20)
-        end
-        DebuffButton1.SetPoint = function() end
-        DebuffButton1.SetParent = function() end
-    end)
+            DebuffButton1:ClearAllPoints()
+            if playerClass == "PALADIN" and wowVersion == "Retail" then
+                DebuffButton1:SetPoint("TOPRIGHT", PaladinPowerBarFrame, "BOTTOMRIGHT", 0, -7)
+            elseif  playerClass == "DEATHKNIGHT" then
+                DebuffButton1:SetPoint("TOPRIGHT", RuneFrame, "BOTTOMRIGHT", 0, -13)
+            elseif  playerClass == "PRIEST" then
+                DebuffButton1:SetPoint("TOPRIGHT", PlayerFrame, "BOTTOMRIGHT", 0, 13)
+            elseif  playerClass == "SHAMAN" then
+                DebuffButton1:SetPoint("TOPRIGHT", TotemFrame, "BOTTOMRIGHT", 0, 0)
+            elseif  playerClass == "HUNTER" or playerClass == "WARLOCK"then
+                DebuffButton1:SetPoint("TOPRIGHT", PetFrame, "BOTTOMRIGHT", 9, -7)
+            elseif  playerClass == "MONK" then
+                DebuffButton1:SetPoint("TOPRIGHT", PlayerFrame, "BOTTOMRIGHT", 0, 0)
+            elseif  playerClass == "DRUID" then
+                DebuffButton1:SetPoint("TOPRIGHT", PlayerFrame, "BOTTOMRIGHT", 0, 0)
+            elseif  playerClass == "MAGE" then
+                DebuffButton1:SetPoint("TOPRIGHT", PlayerFrame, "BOTTOMRIGHT", 0,-8)
+            else
+                DebuffButton1:SetPoint("TOPRIGHT", PlayerFrame, "BOTTOMRIGHT", 0, 20)
+            end
+            DebuffButton1.SetPoint = function() end
+            DebuffButton1.SetParent = function() end
+        end)
+    end
 
     --
     -- Setup cast bars
     --
-    CastingBarFrame:ClearAllPoints()
-    CastingBarFrame:SetPoint("BOTTOM", UIParent, "CENTER", 0, ACTION_BAR_OFFSET_Y - 85)
-    CastingBarFrame:SetHeight(12)
-    CastingBarFrame:SetWidth(CastingBarFrame:GetWidth() * 1.2)
-    CastingBarFrame.SetPoint = function() end
+    if wowVersion ~= "Retail" then
+        CastingBarFrame:ClearAllPoints()
+        CastingBarFrame:SetPoint("BOTTOM", UIParent, "CENTER", 0, ACTION_BAR_OFFSET_Y - 85)
+        CastingBarFrame:SetHeight(12)
+        CastingBarFrame:SetWidth(CastingBarFrame:GetWidth() * 1.2)
+        CastingBarFrame.SetPoint = function() end
 
-    CastingBarFrame.Border:ClearAllPoints()
-    CastingBarFrame.Border:SetPoint("TOP", 0, 26)
-    CastingBarFrame.Border:SetWidth(CastingBarFrame.Border:GetWidth() * 1.22)
-    CastingBarFrame.Border:SetTexture("Interface\\CastingBar\\UI-CastingBar-Border-Small.blp")
+        CastingBarFrame.Border:ClearAllPoints()
+        CastingBarFrame.Border:SetPoint("TOP", 0, 26)
+        CastingBarFrame.Border:SetWidth(CastingBarFrame.Border:GetWidth() * 1.22)
+        CastingBarFrame.Border:SetTexture("Interface\\CastingBar\\UI-CastingBar-Border-Small.blp")
 
-    CastingBarFrame.Flash:SetTexture(nil)
-    CastingBarFrame.Spark:SetTexture(nil)
+        CastingBarFrame.Flash:SetTexture(nil)
+        CastingBarFrame.Spark:SetTexture(nil)
 
-    CastingBarFrame.Text:ClearAllPoints()
-    CastingBarFrame.Text:SetPoint("CENTER",0,1)
+        CastingBarFrame.Text:ClearAllPoints()
+        CastingBarFrame.Text:SetPoint("CENTER",0,1)
+    end
 
     --
     -- Casting bar timer
     --
-    CastingBarFrame.timer = CastingBarFrame:CreateFontString(nil)
-    CastingBarFrame.timer:SetFont(STANDARD_TEXT_FONT,12,"OUTLINE")
-    CastingBarFrame.timer:SetPoint("RIGHT", CastingBarFrame, "RIGHT", 0, 0)
-    CastingBarFrame.update = .1
-    CastingBarFrame:HookScript("OnUpdate", function(self, elapsed)
-        if not self.timer then
-            return
-        end
-        if self.update and self.update < elapsed then
-            if self.casting then
-                self.timer:SetText(format("%2.1f/%1.1f", max(self.maxValue - self.value, 0), self.maxValue))
-                elseif self.channeling then
-                    self.timer:SetText(format("%.1f", max(self.value, 0)))
-                else
-                    self.timer:SetText("")
-                end
-                self.update = .1
-            else
-                self.update = self.update - elapsed
+    if wowVersion ~= "Retail" then
+        CastingBarFrame.timer = CastingBarFrame:CreateFontString(nil)
+        CastingBarFrame.timer:SetFont(STANDARD_TEXT_FONT,12,"OUTLINE")
+        CastingBarFrame.timer:SetPoint("RIGHT", CastingBarFrame, "RIGHT", 0, 0)
+        CastingBarFrame.update = .1
+        CastingBarFrame:HookScript("OnUpdate", function(self, elapsed)
+            if not self.timer then
+                return
             end
-        end)
+            if self.update and self.update < elapsed then
+                if self.casting then
+                    self.timer:SetText(format("%2.1f/%1.1f", max(self.maxValue - self.value, 0), self.maxValue))
+                    elseif self.channeling then
+                        self.timer:SetText(format("%.1f", max(self.value, 0)))
+                    else
+                        self.timer:SetText("")
+                    end
+                    self.update = .1
+                else
+                    self.update = self.update - elapsed
+                end
+            end)
+    end
 
     --
     -- Minimap tweaks
     --
-    MinimapZoomIn:Hide()
-    MinimapZoomOut:Hide()
-    Minimap:EnableMouseWheel(true)
-    Minimap:SetScript('OnMouseWheel', function(self, delta)
-        if delta > 0 then
-            Minimap_ZoomIn()
-        else
-            Minimap_ZoomOut()
-        end
-    end)
-    if wowVersion == "Retail" then
-        MiniMapTracking:ClearAllPoints()
-        MiniMapTracking:SetPoint("TOPRIGHT", -26, 7)
-    elseif wowVersion == "BC" then
+    if wowVersion ~= "Retail" then
+        MinimapZoomIn:Hide()
+        MinimapZoomOut:Hide()
+        Minimap:EnableMouseWheel(true)
+        Minimap:SetScript('OnMouseWheel', function(self, delta)
+            if delta > 0 then
+                Minimap_ZoomIn()
+            else
+                Minimap_ZoomOut()
+            end
+        end)
+    end
+    if wowVersion == "BC" then
         MiniMapTracking:ClearAllPoints()
         MiniMapTracking:SetPoint("TOPLEFT", 28, 0)
     end
