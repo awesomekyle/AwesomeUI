@@ -169,7 +169,7 @@ function CreateAuraTracker()
             "PLAYER_SPECIALIZATION_CHANGED",
             "PLAYER_ENTERING_WORLD",
         },
-        ["BC"] = {
+        ["Wrath"] = {
             "ADDON_LOADED",
             "PLAYER_LOGIN",
             "PLAYER_ENTERING_WORLD",
@@ -212,7 +212,7 @@ function CreateAuraTracker()
             self.ignorePainReader:SetOwner(UIParent,"ANCHOR_NONE")
             self.ignorePainReader:SetSpellByID(190456) -- Ignore Pain Spell ID
             self.ignorePainReader.GetValue = function(self)
-                local ignorePainMatch = AwesomeUIIgnorePainTooltipReaderTextLeft4:GetText():match("Fight through the pain, ignoring 55%% of damage taken, up to (.-) total damage prevented.")
+                local ignorePainMatch = AwesomeUIIgnorePainTooltipReaderTextLeft4:GetText():match("Fight through the pain, ignoring 50%% of damage taken, up to (.-) total damage prevented.")
                 local ignorePainMatch = string.gsub(ignorePainMatch, ",", "")
                 local nextIgnorePainValue = tonumber(ignorePainMatch)
                 return nextIgnorePainValue

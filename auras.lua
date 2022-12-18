@@ -307,7 +307,6 @@ local RetailAuras = {
             },
             ["Arms"] = {
                 "Deep Wounds",
-                "Rend",
                 "Overpower",
                 "Sweeping Strikes",
                 "Test of Might",
@@ -323,6 +322,7 @@ local RetailAuras = {
             },
             ["Arms"] = {
                 "Colossus Smash",
+                "Rend",
             },
             ["Protection"] = {
                 "Demoralizing Shout",
@@ -402,7 +402,7 @@ local BCAuras = {
 
 local AurasToTrack = {
     ["Retail"] = RetailAuras,
-    ["BC"] = BCAuras,
+    ["Wrath"] = BCAuras,
 }
 
 function GetAurasForVersion(wowVersion)

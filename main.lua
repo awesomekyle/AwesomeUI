@@ -1,3 +1,6 @@
+-- Decent layout
+-- 0 30 0 0 0 4 4 UIParent 0.0 -208.8 -1 ##$%%/&('%)$+$ 0 1 1 6 0 MainMenuBar 0.0 5.0 -1 ##$$%/&('%(#,$ 0 2 1 6 0 MultiBarBottomLeft 0.0 5.0 -1 ##$$%/&('%(#,$ 0 3 1 5 5 UIParent -5.0 -77.0 -1 #$$$%/&('%(#,$ 0 4 1 2 0 MultiBarRight -5.0 0.0 -1 #$$$%/&('%(#,$ 0 5 1 1 4 UIParent 0.0 0.0 -1 ##$$%/&('%(#,$ 0 6 1 1 7 MultiBar5 0.0 0.0 -1 ##$$%/&('%(#,$ 0 7 1 1 7 MultiBar6 0.0 0.0 -1 ##$$%/&('%(#,$ 0 10 1 6 0 MainMenuBar 0.0 5.0 -1 ##$$&('% 0 11 1 6 0 MainMenuBar 0.0 5.0 -1 ##$$&('%,# 0 12 1 6 0 MainMenuBar 0.0 5.0 -1 ##$$&('% 1 -1 0 4 4 UIParent 0.0 -292.3 -1 ##$# 2 -1 1 2 2 UIParent 0.0 0.0 -1 ##$# 3 0 0 1 1 UIParent -342.0 -626.0 -1 $#3# 3 1 0 1 1 UIParent 342.0 -624.0 -1 %#3# 3 2 1 3 5 TargetFrame -10.0 0.0 -1 %#&#3# 3 3 0 0 0 UIParent 798.1 -938.0 -1 '$(#)$-I.+/#1#3# 3 4 0 0 0 UIParent 158.1 -738.0 -1 ,$-#.#/#0%1#2( 3 5 1 5 5 UIParent 0.0 0.0 -1 &#*$3# 3 6 1 5 5 UIParent 0.0 0.0 -1 3# 4 -1 1 7 1 MainMenuBar 0.0 5.0 -1 # 5 -1 1 6 0 MainMenuBar 0.0 5.0 -1 # 6 0 1 2 0 MinimapCluster -10.0 -10.0 -1 ##$#%#&.(()(*# 6 1 0 3 3 UIParent 915.3 -181.2 -1 ##$#%#'+(()(*# 7 -1 0 1 1 UIParent -753.0 -562.0 -1 # 8 -1 0 3 3 UIParent 34.0 -508.0 -1 #'$S%$&E 9 -1 1 6 0 MainMenuBar 0.0 5.0 -1 # 10 -1 1 0 0 UIParent 16.0 -116.0 -1 # 11 -1 0 3 3 UIParent 1675.3 -249.2 -1 # 12 -1 1 2 2 UIParent -110.0 -275.0 -1 #K
+
 wowVersion = GetBuildInfo()
 local function starts_with(str, start)
     return str:sub(1, #start) == start
@@ -5,8 +8,8 @@ end
 
 if starts_with(wowVersion, "1.") then
     wowVersion = "Classic"
-elseif starts_with(wowVersion, "2.") then
-    wowVersion = "BC"
+elseif starts_with(wowVersion, "3.") then
+    wowVersion = "Wrath"
 else
     wowVersion = "Retail"
 end
@@ -143,7 +146,7 @@ AwesomeUI.UpdateActionbars = function(self, moveEnabled)
     local buttonSize = MultiBarBottomRightButton1:GetWidth()
 
     local bottomActionBarAnchor, anchorPosition = (function()
-        if wowVersion == "Classic" or wowVersion == "BC" then
+        if wowVersion == "Classic" or wowVersion == "Wrath" then
             return ReputationWatchBar, "TOP"
         else
             return StatusTrackingBarManager, "BOTTOM"
@@ -161,7 +164,7 @@ AwesomeUI.UpdateActionbars = function(self, moveEnabled)
     MultiBarBottomLeftButton7:SetPoint("LEFT", MultiBarBottomLeftButton6, "RIGHT", 6, 0)
 
     -- other bars and art frame
-    if wowVersion == "Classic" or wowVersion == "BC" then
+    if wowVersion == "Classic" or wowVersion == "Wrath" then
         PetActionBarFrame:ClearAllPoints()
         PetActionBarFrame:SetPoint("BOTTOMRIGHT", MultiBarBottomLeft, "TOPRIGHT", 31, buttonSpacing)
         PetActionBarFrame:SetScale(0.9)
@@ -192,7 +195,7 @@ AwesomeUI.UpdateActionbars = function(self, moveEnabled)
         -- move bars
         local width = CharacterMicroButton:GetWidth()
         CharacterMicroButton:ClearAllPoints()
-        CharacterMicroButton:SetPoint("BOTTOMLEFT", UIPARENT, "BOTTOMRIGHT", -width * 7.5, 0)
+        CharacterMicroButton:SetPoint("BOTTOMLEFT", UIPARENT, "BOTTOMRIGHT", -width * 9.0, 0)
 
         MainMenuBarBackpackButton:SetPoint("BOTTOMRIGHT", MainMenuMicroButton, "TOPRIGHT", 24, -20)
 
@@ -235,7 +238,7 @@ AwesomeUI.Install = function(self)
     SetCVar("ShowClassColorInNameplate", 1)
     SetCVar("xpBarText", 1)
     SetCVar("chatClassColorOverride", 0)
-    SetCVar("ffxglow", 0)
+    -- SetCVar("ffxglow", 0)
     SetCVar("nameplateShowSelf", 0)
     SetCVar("nameplateShowAll", 1)
     SetCVar("NamePlateHorizontalScale", 1.4)
@@ -243,12 +246,12 @@ AwesomeUI.Install = function(self)
     SetCVar("NamePlateClassificationScale", 1.25)
     -- SetCVar("worldPreloadNonCritical", 0)
 
-    if wowVersion ~= "Classic" and wowVersion ~= "BC" then
+    if wowVersion ~= "Classic" and wowVersion ~= "Wrath" then
         SetCVar("miniWorldMap", 1)
     end
 
     -- BC-specific options
-    if wowVersion == "BC" then
+    if wowVersion == "Wrath" then
         SetCVar("nameplateMaxDistance", "41")
     end
 
@@ -396,7 +399,7 @@ AwesomeUI.OnAddonLoaded = function(self)
     -- TODO: create classic aura tracker that doesn't depend on Specializations
     if wowVersion == "Retail" then
         AwesomeUI.auraTracker = CreateAuraTracker()
-    elseif wowVersion == "BC" then
+    elseif wowVersion == "Wrath" then
         AwesomeUI.auraTracker = CreateAuraTracker()
     end
 end
@@ -464,16 +467,11 @@ AwesomeUI.OnPlayerLogin = function(self)
         if UnitIsPlayer(unit) and UnitIsConnected(unit) and unit == statusbar.unit and UnitClass(unit) then
             _, class = UnitClass(unit)
             c = CUSTOM_CLASS_COLORS and CUSTOM_CLASS_COLORS[class] or RAID_CLASS_COLORS[class]
-            if unit == "player" then
-                -- Only enabled for player right now. Currently, the color isn't reset when selecting
-                -- a non-player, but AFAICT, all non-players should be green. Play for a bit and
-                -- double check. If they're all green, then we I can re-enable this and set non-player
-                -- back to green.
+            if wowVersion == "Retail" then
                 statusbar:SetStatusBarDesaturated(1)
-                statusbar:SetStatusBarColor(c.r, c.g, c.b)
             end
+            statusbar:SetStatusBarColor(c.r, c.g, c.b)
 
-            -- TargetFrame.TargetFrameContent.TargetFrameContentMain.HealthBarArea.HealthBar:SetStatusBarColor(1,0,1)
             if unit == "player" then
                 local health_percentage = UnitHealth("player") / UnitHealthMax("player")
                 local r, g = 0, 1
@@ -483,10 +481,15 @@ AwesomeUI.OnPlayerLogin = function(self)
                     r = 1
                     g = Lerp(0, 1, health_percentage * 2)
                 end
-                PlayerFrame.PlayerFrameContent.PlayerFrameContentMain.HealthBarArea.HealthBar:SetStatusBarColor(r,g,0)
+                if wowVersion == "Retail" then
+                    PlayerFrame.PlayerFrameContent.PlayerFrameContentMain.HealthBarArea.HealthBar:SetStatusBarColor(r,g,0)
+                else
+                    PlayerFrameHealthBar:SetStatusBarColor(r,g,0)
+                end
             end
-        else
-            -- statusbar:SetStatusBarDesaturated(0)
+        elseif wowVersion == "Retail" then
+            statusbar:SetStatusBarDesaturated(0)
+            statusbar:SetStatusBarColor(0,1,0,1)
         end
     end
 
@@ -592,7 +595,7 @@ AwesomeUI.OnPlayerLogin = function(self)
             end
         end)
     end
-    if wowVersion == "BC" then
+    if wowVersion == "Wrath" then
         MiniMapTracking:ClearAllPoints()
         MiniMapTracking:SetPoint("TOPLEFT", 28, 0)
     end
