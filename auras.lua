@@ -31,6 +31,25 @@ local RetailAuras = {
             },
         },
     },
+    ["DEMONHUNTER"] = {
+        ["player"] = {
+            ["all"] = {
+            },
+            ["Havoc"] = {
+                "Bone Shield",
+            },
+            ["Vengeance"] = {
+            },
+        },
+        ["target"] = {
+            ["all"] = {
+            },
+            ["Havoc"] = {
+            },
+            ["Vengeance"] = {
+            },
+        },
+    },
     ["DRUID"] = {
         ["player"] = {
             ["all"] = {
@@ -44,6 +63,8 @@ local RetailAuras = {
                 "Tiger's Fury",
                 "Berserk",
                 "Predatory Swiftness",
+                "Bloodtalons",
+                "Sudden Ambush",
             },
             ["Guardian"] = {
                 "Ironfur",
@@ -217,6 +238,7 @@ local RetailAuras = {
                 "Feint",
                 "Sprint",
                 "Slice and Dice",
+                "Evasion",
             },
         },
         ["target"] = {
@@ -233,6 +255,7 @@ local RetailAuras = {
                 "Kidney Shot",
             },
             ["all"] = {
+                "Rupture",
                 "Cheap Shot",
                 "Blind",
             },
