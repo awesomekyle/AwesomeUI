@@ -3,7 +3,7 @@
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 FILES=(auraTracker.lua AwesomeUI.xml main.lua auras.lua)
 # VERSIONS=(_retail_)
-VERSIONS=(_classic_ _classic_era_ _classic_ptr_ _classic_era_ptr_ _retail_ _ptr_)
+VERSIONS=(_classic_ _classic_era_ _classic_ptr_ _classic_era_ptr_ _retail_ _ptr_ _xptr_)
 
 RESET=false
 

@@ -143,7 +143,7 @@ local RetailAuras = {
             ["Arcane"] = {
                 "Clearcasting",
                 "Prismatic Barrier",
-
+                "Arcane Tempo",
             },
             ["Frost"] = {
                 "Brain Freeze",

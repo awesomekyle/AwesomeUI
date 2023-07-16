@@ -445,19 +445,22 @@ AwesomeUI.OnPlayerLogin = function(self)
     --
     -- Class icons instead of portraits
     --
-    hooksecurefunc("UnitFramePortrait_Update",function(self)
-        if self.portrait then
-            if UnitIsPlayer(self.unit) and self.unit ~= "player" then
-                local t = CLASS_ICON_TCOORDS[select(2, UnitClass(self.unit))]
-                if t then
-                    self.portrait:SetTexture("Interface\\TargetingFrame\\UI-Classes-Circles")
-                    self.portrait:SetTexCoord(unpack(t))
+    -- No longer needed as of 10.1.5!
+    if wowVersion ~= "Retail" then
+        hooksecurefunc("UnitFramePortrait_Update",function(self)
+            if self.portrait then
+                if UnitIsPlayer(self.unit) and self.unit ~= "player" then
+                    local t = CLASS_ICON_TCOORDS[select(2, UnitClass(self.unit))]
+                    if t then
+                        self.portrait:SetTexture("Interface\\TargetingFrame\\UI-Classes-Circles")
+                        self.portrait:SetTexCoord(unpack(t))
+                    end
+                else
+                    self.portrait:SetTexCoord(0,1,0,1)
                 end
-            else
-                self.portrait:SetTexCoord(0,1,0,1)
             end
-        end
-    end)
+        end)
+    end
 
     --
     -- Class color in HP bars
