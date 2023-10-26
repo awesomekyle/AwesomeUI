@@ -9,6 +9,7 @@ local RetailAuras = {
             },
             ["Blood"] = {
                 "Bone Shield",
+                "Blood Shield",
             },
             ["Frost"] = {
                 "Cold Heart",
@@ -34,6 +35,7 @@ local RetailAuras = {
     ["DEMONHUNTER"] = {
         ["player"] = {
             ["all"] = {
+                "Immolation Aura",
             },
             ["Havoc"] = {
                 "Bone Shield",
@@ -359,8 +361,8 @@ local BCAuras = {
     ["HUNTER"] = {
         ["player"] = {
             ["all"] = {
-                { "Aspect of the Hawk", "Aspect of the Monkey" },
-                "Aspect of the Cheetah",
+                { "Aspect of the Hawk", "Aspect of the Monkey", "Aspect of the Cheetah", "Aspect of the Viper", "Aspect of the Dragonhawk" },
+
             },
         },
         ["pet"] = {
