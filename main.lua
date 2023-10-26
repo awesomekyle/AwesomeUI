@@ -165,9 +165,11 @@ AwesomeUI.UpdateActionbars = function(self, moveEnabled)
 
     -- other bars and art frame
     if wowVersion == "Classic" or wowVersion == "Wrath" then
-        PetActionBarFrame:ClearAllPoints()
-        PetActionBarFrame:SetPoint("BOTTOMRIGHT", MultiBarBottomLeft, "TOPRIGHT", 31, buttonSpacing)
-        PetActionBarFrame:SetScale(0.9)
+        -- Currently there's an issue with the pet action bar frame that causes it's collision box to
+        -- be much larger than the frame. Until I resolve this, just don't move the pet bar.
+        -- PetActionBarFrame:ClearAllPoints()
+        -- PetActionBarFrame:SetPoint("BOTTOMRIGHT", MultiBarBottomLeft, "TOPRIGHT", 31, buttonSpacing)
+        -- PetActionBarFrame:SetScale(0.9)
 
         StanceButton1:ClearAllPoints()
         StanceButton1:SetPoint("BOTTOMLEFT", MultiBarBottomLeftButton1, "TOPLEFT", 10, buttonSpacing+2)
@@ -180,6 +182,7 @@ AwesomeUI.UpdateActionbars = function(self, moveEnabled)
         MainMenuBarRightEndCap:Hide()
         MainMenuBarPerformanceBarFrame:Hide()
 
+        MainMenuBarTextureExtender:Hide()
         MainMenuBarTexture0:Hide()
         MainMenuBarTexture1:Hide()
         MainMenuBarTexture2:Hide()
