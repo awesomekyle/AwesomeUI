@@ -178,6 +178,8 @@ local RetailAuras = {
                 "Shield of the Righteous",
                 "Ardent Defender",
                 "Consecration",
+                "Shining Light",
+                "Guardian of the Ancient Kings",
             },
             ["Holy"] = {
                 "Divine Protection",
@@ -191,12 +193,18 @@ local RetailAuras = {
                 "Blessing of Freedom",
                 "Blessing of Protection",
                 "Blessing of Sacrifice",
-                "Avenging Wrath",
+                { "Avenging Wrath", "Sentinel" },
+                "Blessing of Dawn",
+                "Blessing of Dusk",
+                "Divine Steed",
             },
         },
         ["target"] = {
             ["all"] = {
                 "Hammer of Justice",
+            },
+            ["Protection"] = {
+                "Eye of Tyr",
             },
         }
     },
