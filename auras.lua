@@ -95,6 +95,22 @@ local RetailAuras = {
             },
         },
     },
+    ["EVOKER"] = {
+        ["player"] = {
+            ["Devastation"] = {
+                "Essence Burst",
+            },
+            ["Augmentation"] = {
+                "Ebon Might",
+            },
+            ["all"] = {
+            },
+        },
+        ["target"] = {
+            ["all"] = {
+            },
+        }
+    },
     ["HUNTER"] = {
         ["player"] = {
             ["all"] = {
@@ -265,7 +281,6 @@ local RetailAuras = {
                 "Kidney Shot",
             },
             ["all"] = {
-                "Rupture",
                 "Cheap Shot",
                 "Blind",
             },
