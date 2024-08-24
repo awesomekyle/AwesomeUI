@@ -395,8 +395,9 @@ AwesomeUI.OnAddonLoaded = function(self)
     end
 
     -- add interface options
-    InterfaceOptions_AddCategory(AwesomeUI.frame)
-    InterfaceOptions_AddCategory(AwesomeUI.optionsFrame)
+    -- TODO: figure out what this was replaced with in 11.0
+    -- InterfaceOptions_AddCategory(AwesomeUI.frame)
+    -- InterfaceOptions_AddCategory(AwesomeUI.optionsFrame)
 
     -- set up aura tracker
     -- TODO: create classic aura tracker that doesn't depend on Specializations
@@ -488,7 +489,7 @@ AwesomeUI.OnPlayerLogin = function(self)
                     g = Lerp(0, 1, health_percentage * 2)
                 end
                 if wowVersion == "Retail" then
-                    PlayerFrame.PlayerFrameContent.PlayerFrameContentMain.HealthBarArea.HealthBar:SetStatusBarColor(r,g,0)
+                    PlayerFrame.PlayerFrameContent.PlayerFrameContentMain.HealthBarsContainer.HealthBar:SetStatusBarColor(r,g,0)
                 else
                     PlayerFrameHealthBar:SetStatusBarColor(r,g,0)
                 end

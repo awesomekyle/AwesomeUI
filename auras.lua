@@ -13,6 +13,8 @@ local RetailAuras = {
             },
             ["Frost"] = {
                 "Cold Heart",
+                "Killing Machine",
+                {"Icy Talons","Unleashed Frenzy",}
             },
             ["Unholy"] = {
             },
@@ -78,6 +80,7 @@ local RetailAuras = {
         ["target"] = {
             ["all"] = {
                 "Moonfire",
+                "Dreadful Wound",
             },
             ["Balance"] = {
                 "Sunfire",
@@ -185,6 +188,30 @@ local RetailAuras = {
             },
             ["Fire"] = {
                 "Dragon's Breath",
+            },
+        },
+    },
+    ["MONK"] = {
+        ["player"] = {
+            ["all"] = {
+            },
+            ["Brewmaster"] = {
+            },
+            ["Mistweaver"] = {
+            },
+            ["Windwalker"] = {
+                "Teachings of the Monastery",
+                "Last Emperor's Capacitor",
+            },
+        },
+        ["target"] = {
+            ["all"] = {
+            },
+            ["Brewmaster"] = {
+            },
+            ["Mistweaver"] = {
+            },
+            ["Windwalker"] = {
             },
         },
     },

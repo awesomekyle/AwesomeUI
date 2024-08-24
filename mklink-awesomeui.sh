@@ -3,7 +3,8 @@
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 FILES=(auraTracker.lua AwesomeUI.xml main.lua auras.lua)
 # VERSIONS=(_retail_)
-VERSIONS=(_classic_ _classic_era_ _classic_ptr_ _classic_era_ptr_ _retail_ _ptr_ _xptr_)
+VERSIONS=(_classic_ _classic_era_ _classic_ptr_ _classic_era_ptr_ _retail_ _ptr_ _xptr_ _beta_)
+mapfile -t VERSIONS < <( find .. -name "_*_" -type d )
 
 RESET=false
 
@@ -17,7 +18,7 @@ done
 
 echo $SCRIPT_DIR
 for version in ${VERSIONS[*]}; do
-    VERSION_PATH="$SCRIPT_DIR/../$version"
+    VERSION_PATH="$SCRIPT_DIR/$version"
     ADDON_FOLDER="$VERSION_PATH/Interface/AddOns"
     ADDON_PATH="$VERSION_PATH/Interface/AddOns/AwesomeUI"
     if [[ -d "$VERSION_PATH" ]]; then
