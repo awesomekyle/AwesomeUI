@@ -6,6 +6,7 @@ local RetailAuras = {
                 "Dark Succor",
                 "Anti-Magic Shell",
                 "Icebound Fortitude",
+                "Abomination Limb",
             },
             ["Blood"] = {
                 "Bone Shield",
@@ -14,7 +15,7 @@ local RetailAuras = {
             ["Frost"] = {
                 "Cold Heart",
                 "Killing Machine",
-                {"Icy Talons","Unleashed Frenzy",}
+                { "Icy Talons", "Unleashed Frenzy", },
             },
             ["Unholy"] = {
             },
@@ -340,7 +341,7 @@ local RetailAuras = {
                 "Demonic Core",
                 "Sign of Iron",
             },
-            ["Affliction"]= {
+            ["Affliction"] = {
                 "Inevitable Demise",
             },
         },
