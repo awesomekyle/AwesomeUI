@@ -2,6 +2,7 @@ local RetailAuras = {
     ["DEATHKNIGHT"] = {
         ["player"] = {
             ["all"] = {
+                "Death and Decay",
                 "Death's Advance",
                 "Dark Succor",
                 "Anti-Magic Shell",
